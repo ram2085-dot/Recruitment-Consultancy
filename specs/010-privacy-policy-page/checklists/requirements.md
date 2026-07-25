@@ -28,8 +28,9 @@
 
 ## Notes
 - Depends on `001-site-shell-navigation` (footer link + cookie notice link to this page).
-- **BLOCKING open item**: candidate data retention period is unresolved (BRD Section 12). This
-  page must not go live until the business owner confirms a specific retention period.
+- Retention period **resolved 2026-07-25**: 24 months from the candidate's last activity. This
+  closes the BRD Section 12 open item and is now recorded as constitution Principle VI, so the
+  Employee Portal modules that enforce deletion inherit the same rule.
 - Final wording should be reviewed by the business owner before launch; this spec defines the
   required disclosures, not legally binding wording.
 - All items pass; spec is ready for `/speckit-plan` (not yet requested).

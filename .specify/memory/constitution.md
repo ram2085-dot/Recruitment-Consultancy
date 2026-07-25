@@ -1,5 +1,17 @@
 <!--
-Sync Impact Report
+Sync Impact Report (v1.1.0 — 2026-07-25)
+- Version change: 1.0.0 → 1.1.0 (MINOR: new principle added)
+- Added principle: VI. Candidate Data Retention Is Bounded and Enforced — records the business
+  owner's 2026-07-25 decision resolving the BRD Section 12 open item (24 months from last
+  activity). Placed at VI so data-handling principles (II–IV, VI) sit together.
+- Renumbered: former VI (Performance and Scale Targets) → VII; former VII (Phase Discipline) →
+  VIII. Cross-references in Development Workflow updated accordingly.
+- Templates requiring updates: none beyond those already noted below — the new principle is
+  enforced through spec acceptance criteria, not template structure.
+- Downstream impact: specs/010-privacy-policy-page (publishes the period) and the future
+  Employee Portal / candidate database modules (enforce the deletion) must stay in agreement.
+
+Sync Impact Report (v1.0.0 — 2026-07-25)
 - Version change: TEMPLATE → 1.0.0 (initial ratification)
 - Modified principles: n/a (first fill of template placeholders)
 - Added sections: Core Principles I–VII, Technical Constraints, Development Workflow, Governance
@@ -56,14 +68,24 @@ remove employee accounts; no direct public access to the database layer. Rationa
 Section 8 (Non-Functional Requirements) and Section 6.1 set these as hard requirements,
 not aspirations.
 
-### VI. Performance and Scale Targets Are Binding
+### VI. Candidate Data Retention Is Bounded and Enforced
+Candidate personal data MUST be retained for no longer than 24 months from the candidate's last
+activity with the firm (last profile update or last engagement, whichever is later), after which
+it MUST be deleted. Re-engagement within the window restarts the clock. The retention period
+published in the public Privacy Policy and the period enforced by the candidate database MUST
+always match. Rationale: BRD Section 12 left retention open; it was resolved on 2026-07-25.
+Holding candidate PII indefinitely is both a legal exposure under India's data protection
+framework and a breach of the promise made to candidates on the public site — and a policy that
+is published but not enforced in the system is worse than no policy at all.
+
+### VII. Performance and Scale Targets Are Binding
 Public pages MUST load in under 3 seconds; employee portal search MUST return results in
 under 2 seconds; the system MUST remain performant with up to 10,000 candidate profiles
 in Phase 1 (BRD Section 8). Any design or query approach that cannot demonstrably meet
 these targets at that scale MUST be reworked before merge, not deferred as "optimize
 later."
 
-### VII. Phase Discipline — No Scope Creep
+### VIII. Phase Discipline — No Scope Creep
 The following are explicitly OUT of scope for this phase and MUST NOT be implemented,
 even partially, without a constitution amendment: full Applicant Tracking System (ATS),
 client/employer login portal, CRM integration, interview scheduling/calendar
@@ -93,11 +115,11 @@ wastes budget and risks scope creep the business owner has not approved.
   `/speckit-tasks` → (optional `/speckit-analyze`) → `/speckit-implement`. Code is not
   written ahead of an approved spec and plan for that feature.
 - Every `/speckit-plan` MUST include a Constitution Check that explicitly verifies the
-  feature against Principles I–VII before implementation begins.
+  feature against Principles I–VIII before implementation begins.
 - Features touching candidate data (upload, search, review/approval) MUST include a
   verification step for Principles II, III, and IV in their spec's acceptance criteria —
   these are not implicit, they must be testable.
-- Non-functional requirements (Principles V and VI) MUST be included as explicit
+- Non-functional requirements (Principles V and VII) MUST be included as explicit
   acceptance criteria for any feature they apply to, not left to a final "performance
   pass."
 
@@ -118,4 +140,4 @@ Every `/speckit-plan` and `/speckit-implement` pass MUST verify compliance with 
 constitution. Complexity or deviation from a principle must be explicitly justified in
 the plan's Constitution Check section, not silently introduced.
 
-**Version**: 1.0.0 | **Ratified**: 2026-07-25 | **Last Amended**: 2026-07-25
+**Version**: 1.1.0 | **Ratified**: 2026-07-25 | **Last Amended**: 2026-07-25
