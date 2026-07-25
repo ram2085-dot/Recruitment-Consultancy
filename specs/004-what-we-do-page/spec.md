@@ -77,6 +77,7 @@ secondary) render together — independent of any other page being finished.
   consistent header/footer navigation.
 - **FR-006**: Page MUST include a unique page title and meta description for SEO.
 - **FR-007**: Page MUST render responsively on desktop, tablet, and mobile viewports.
+- **FR-008**: All images on the page MUST have descriptive alt text.
 
 ### Key Entities *(include if feature involves data)*
 

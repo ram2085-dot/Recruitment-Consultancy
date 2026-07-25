@@ -28,6 +28,8 @@
 
 ## Notes
 - Depends on `001-site-shell-navigation`.
+- Publishing consent is a hard requirement (FR-008/FR-009): no testimonial naming a person or
+  company may be published without documented consent.
 - Testimonial content/logos are placeholders pending business-owner delivery (see spec.md
   Assumptions).
 - All items pass; spec is ready for `/speckit-plan` (not yet requested).

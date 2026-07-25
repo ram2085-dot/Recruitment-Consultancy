@@ -28,5 +28,7 @@
 
 ## Notes
 - Depends on `001-site-shell-navigation`.
+- Publishing permission is a hard requirement (FR-008): photographs of identifiable third parties
+  may not be published without documented permission, and must be withdrawable on request.
 - Gallery images are placeholders pending business-owner delivery (see spec.md Assumptions).
 - All items pass; spec is ready for `/speckit-plan` (not yet requested).

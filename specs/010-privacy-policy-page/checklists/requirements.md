@@ -1,4 +1,4 @@
-# Specification Quality Checklist: Site Shell & Global Navigation
+# Specification Quality Checklist: Privacy Policy Page
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-07-25
@@ -27,8 +27,9 @@
 - [x] No implementation details leak into specification
 
 ## Notes
-- This spec is a dependency for all page specs (002–010).
-- Now also covers cross-cutting concerns identified in the 2026-07-25 spec review: analytics
-  (BRD 7.1 must-have), cookie/privacy notice, CMS content-editability (BRD 11), and the firm
-  logo in the header.
+- Depends on `001-site-shell-navigation` (footer link + cookie notice link to this page).
+- **BLOCKING open item**: candidate data retention period is unresolved (BRD Section 12). This
+  page must not go live until the business owner confirms a specific retention period.
+- Final wording should be reviewed by the business owner before launch; this spec defines the
+  required disclosures, not legally binding wording.
 - All items pass; spec is ready for `/speckit-plan` (not yet requested).

@@ -20,8 +20,8 @@ A prospective client or candidate wants to know who they'd be working with — t
 values, and the people leading it — before deciding to engage further.
 
 **Why this priority**: Credibility is the core value this page delivers (BRD Objective:
-"Establish a credible and professional online identity"). It's the second most-visited page after
-Home for a visitor doing due diligence.
+"Establish a credible and professional online identity"). It is a standard stop for a visitor
+doing due diligence on a firm before making contact.
 
 **Independent Test**: Can be fully tested by loading the About Us page as an anonymous visitor
 and confirming all four content sections render — independent of any other page being finished.
@@ -59,6 +59,9 @@ and confirming all four content sections render — independent of any other pag
   with consistent header/footer navigation.
 - **FR-006**: About Us page MUST include a unique page title and meta description for SEO.
 - **FR-007**: About Us page MUST render responsively on desktop, tablet, and mobile viewports.
+- **FR-008**: All images on the page, including leadership photos, MUST have descriptive alt text.
+- **FR-009**: Leadership photos and biographical details MUST only be published with the consent
+  of the individual concerned.
 
 ### Key Entities *(include if feature involves data)*
 

@@ -59,6 +59,7 @@ requirement-submission form, which is out of scope for this spec.
 - **FR-006**: For Employers page MUST include a unique page title and meta description for SEO.
 - **FR-007**: For Employers page MUST render responsively on desktop, tablet, and mobile
   viewports.
+- **FR-008**: All images on the page MUST have descriptive alt text.
 
 ## Success Criteria *(mandatory)*
 

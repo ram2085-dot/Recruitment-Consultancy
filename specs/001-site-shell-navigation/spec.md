@@ -44,6 +44,32 @@ finished.
    loads, **Then** they see a clear "coming soon" message rather than a broken link or error.
 6. **Given** a visitor navigates to a URL that doesn't exist, **When** the page attempts to load,
    **Then** a styled 404 page is shown with a link back to Home.
+7. **Given** a visitor lands on any page, **When** the page loads, **Then** site traffic is
+   recorded in the firm's analytics, and a cookie/privacy notice is presented with a link to the
+   Privacy Policy page.
+
+---
+
+### User Story 2 - Business Owner Updates Site Content Without a Developer (Priority: P1)
+
+The business owner needs to correct a phone number, swap a photo, or reword a section without
+raising a request with a developer and waiting for a deployment.
+
+**Why this priority**: Every content page spec assumes final copy arrives from the business owner
+after build (BRD Section 9). Without owner-editable content, each of those handovers becomes a
+developer task, and the site goes stale the moment the developer engagement ends.
+
+**Independent Test**: Can be fully tested by logging into the content management interface as the
+business owner, editing text and an image on any page, publishing, and confirming the change
+appears on the live page — independent of any specific content page being finished.
+
+**Acceptance Scenarios**:
+
+1. **Given** the business owner is logged into the content management interface, **When** they
+   edit text on any public page and publish, **Then** the change appears on the live page without
+   developer involvement or a code deployment.
+2. **Given** the business owner is logged into the content management interface, **When** they
+   replace or add an image, **Then** they are able to set that image's alt text at the same time.
 
 ---
 
@@ -55,6 +81,11 @@ finished.
   without clipping or requiring horizontal scroll.
 - What happens if a social media link's target platform/URL isn't yet confirmed? → Placeholder
   links are omitted or disabled rather than pointing to a dead or incorrect URL.
+- What happens if a visitor declines non-essential cookies? → The site remains fully usable;
+  non-essential analytics tracking is not activated for that visitor.
+- What happens if the business owner edits content into a state that breaks layout (e.g. a very
+  long heading, or an image of unexpected dimensions)? → The layout degrades gracefully rather
+  than breaking, and the owner is not able to publish content that produces a broken page.
 
 ## Requirements *(mandatory)*
 
@@ -64,7 +95,7 @@ finished.
   to Home, About Us, What We Do, For Employers, For Candidates, Testimonials, Industry Leaders
   We've Met, Contact Us, and Employee Login.
 - **FR-002**: System MUST provide a consistent footer, present on every page, including social
-  media links.
+  media links and a link to the Privacy Policy page (see `010-privacy-policy-page`).
 - **FR-003**: Every page MUST be reachable from Home within 2 clicks via the navigation.
 - **FR-004**: Navigation MUST collapse into a mobile-friendly menu on narrow viewports without
   clipping content or requiring horizontal scrolling.
@@ -80,6 +111,15 @@ finished.
   seconds under standard broadband/4G conditions.
 - **FR-010**: The shell MUST follow basic WCAG practices: readable font sizing/contrast, and alt
   text on all navigation/footer imagery (e.g. logo, social icons).
+- **FR-011**: The header MUST display the firm's logo on every page, linking back to Home.
+- **FR-012**: System MUST record page traffic in the firm's analytics on every public page.
+- **FR-013**: System MUST present a cookie/privacy notice to first-time visitors, linking to the
+  Privacy Policy page, and MUST NOT activate non-essential analytics tracking for a visitor who
+  declines.
+- **FR-014**: All public page content (text and images) MUST be editable by the business owner
+  through a content management interface, without developer involvement or a code deployment.
+- **FR-015**: The content management interface MUST allow the business owner to set alt text
+  whenever they add or replace an image.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -98,11 +138,19 @@ finished.
   desktop, tablet, and mobile viewport widths.
 - **SC-004**: Any page wrapped in the shell loads in under 3 seconds on a standard broadband/4G
   connection.
+- **SC-005**: The business owner can independently change text and replace an image on any public
+  page, and see it live, without contacting a developer.
+- **SC-006**: 100% of public page views are recorded in the firm's analytics.
+- **SC-007**: A visitor who declines non-essential cookies can still use 100% of the public site.
 
 ## Assumptions
 
-- This spec is a dependency for all content-page specs (002–009): each page assumes it renders
-  inside this shell and does not redefine header/footer/navigation behavior itself.
+- This spec is a dependency for all content-page specs (002–010): each page assumes it renders
+  inside this shell and does not redefine header/footer/navigation, analytics, cookie-notice, or
+  content-editability behavior itself.
+- The Privacy Policy page (`010-privacy-policy-page`) is linked from the footer rather than the
+  main header navigation, which is standard practice and keeps the primary nav focused on the 8
+  content pages.
 - Services and Industries were originally planned as two separate nav entries/pages but were
   merged into a single "What We Do" page (see `004-what-we-do-page`) to match the firm's actual
   scope: placement services concentrated in the Transformer industry.

@@ -17,8 +17,8 @@ the Site Shell (001); no forms or backend logic."
 ### User Story 1 - First-Time Visitor Understands the Firm in Seconds (Priority: P1)
 
 A visitor arriving from a search engine or referral needs to immediately understand what the firm
-does and who it serves, then be guided toward the next relevant action (learn more, view
-services, or find their own path as a client or candidate).
+does and who it serves, then be guided toward the next relevant action (learn more, see what the
+firm does, or find their own path as a client or candidate).
 
 **Why this priority**: The Home page is the primary entry point for both target audiences
 (clients and candidates) and directly drives the BRD objectives of attracting clients and
@@ -36,9 +36,12 @@ independent of whether other content pages are finished (they may resolve to pla
 2. **Given** a visitor is viewing the Home page, **When** they scroll past the hero, **Then**
    they see a summary of the firm's key services.
 3. **Given** a visitor wants to act, **When** they view the page, **Then** they see clear
-   call-to-action buttons (e.g. toward Services, For Employers, For Candidates, or Contact).
+   call-to-action buttons (e.g. toward What We Do, For Employers, For Candidates, or Contact Us).
 4. **Given** a visitor clicks a call-to-action button, **When** the target page loads, **Then**
    they land on the correct corresponding page (or its placeholder, if not yet built).
+5. **Given** a visitor is either a hiring client or a job seeker, **When** they view the first
+   screen of the page, **Then** they see two visually distinct entry paths — one addressed to
+   employers/clients and one addressed to candidates — each labelled for its audience.
 
 ---
 
@@ -56,11 +59,15 @@ independent of whether other content pages are finished (they may resolve to pla
 - **FR-001**: Home page MUST include a hero banner displaying the firm's tagline.
 - **FR-002**: Home page MUST include a summary of the firm's key services.
 - **FR-003**: Home page MUST include call-to-action buttons directing visitors toward key pages
-  (e.g. Services, For Employers, For Candidates, Contact Us).
-- **FR-004**: Home page MUST render inside the shared Site Shell (see `001-site-shell-navigation`)
+  (e.g. What We Do, For Employers, For Candidates, Contact Us).
+- **FR-004**: Home page MUST present two visually distinct, audience-labelled entry paths within
+  the first screen — one for employers/clients and one for candidates — so each audience can
+  self-identify without scrolling.
+- **FR-005**: Home page MUST render inside the shared Site Shell (see `001-site-shell-navigation`)
   with consistent header/footer navigation.
-- **FR-005**: Home page MUST include a unique page title and meta description for SEO.
-- **FR-006**: Home page MUST render responsively on desktop, tablet, and mobile viewports.
+- **FR-006**: Home page MUST include a unique page title and meta description for SEO.
+- **FR-007**: Home page MUST render responsively on desktop, tablet, and mobile viewports.
+- **FR-008**: All images on the Home page MUST have descriptive alt text.
 
 ## Success Criteria *(mandatory)*
 

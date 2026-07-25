@@ -43,6 +43,8 @@ images — independent of any other page being finished.
   omitted gracefully rather than showing a broken image or blank slide.
 - What happens if no images are available yet at launch? → The page shows a presentable "coming
   soon" state rather than an empty or broken gallery.
+- What happens if permission for a photograph cannot be evidenced, or is later withdrawn? → That
+  image is not published, or is removed promptly if already live.
 
 ## Requirements *(mandatory)*
 
@@ -57,6 +59,12 @@ images — independent of any other page being finished.
   consistent header/footer navigation.
 - **FR-005**: Page MUST include a unique page title and meta description for SEO.
 - **FR-006**: Page MUST render responsively on desktop, tablet, and mobile viewports.
+- **FR-007**: Every gallery image MUST have descriptive alt text.
+- **FR-008**: A photograph showing an identifiable individual MUST only be published where
+  documented permission has been obtained from that individual, covering the photograph and any
+  name, job title, or company shown with it.
+- **FR-009**: The gallery MUST allow an image to be withdrawn promptly if permission is later
+  revoked.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -68,11 +76,17 @@ images — independent of any other page being finished.
 
 - **SC-001**: The tagline is visible on page load without requiring interaction.
 - **SC-002**: 100% of gallery slides render without broken images.
-- **SC-003**: The page loads in under 3 seconds on a standard broadband/4G connection.
-- **SC-004**: The page renders without layout breakage at desktop, tablet, and mobile widths.
+- **SC-003**: 100% of published photographs showing identifiable individuals have documented
+  permission from those individuals.
+- **SC-004**: The page loads in under 3 seconds on a standard broadband/4G connection.
+- **SC-005**: The page renders without layout breakage at desktop, tablet, and mobile widths.
 
 ## Assumptions
 
 - Gallery images/photos from industry events are pending delivery from the business owner (BRD
   Section 9); a presentable placeholder/coming-soon state is used until real images are supplied.
+- This page publishes photographs of named third parties who are not the firm's customers, which
+  carries reputational and personality-rights exposure if published without permission. Obtaining
+  and retaining that permission is the business owner's responsibility; this spec requires that
+  nothing is published without it.
 - Depends on `001-site-shell-navigation` for header, footer, and navigation behavior.
