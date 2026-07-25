@@ -1,6 +1,6 @@
 # Feature Specification: Industry Leaders We've Met Page
 
-**Feature Branch**: `009-industry-leaders-page`
+**Feature Branch**: `008-industry-leaders-page`
 
 **Created**: 2026-07-25
 

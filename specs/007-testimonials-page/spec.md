@@ -1,6 +1,6 @@
 # Feature Specification: Testimonials Page
 
-**Feature Branch**: `008-testimonials-page`
+**Feature Branch**: `007-testimonials-page`
 
 **Created**: 2026-07-25
 

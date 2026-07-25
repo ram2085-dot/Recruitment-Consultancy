@@ -1,4 +1,4 @@
-# Specification Quality Checklist: Industries Page
+# Specification Quality Checklist: What We Do Page (Services + Industry Focus)
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-07-25
@@ -28,5 +28,8 @@
 
 ## Notes
 - Depends on `001-site-shell-navigation`.
-- Industries list is a placeholder pending business-owner confirmation (see spec.md Assumptions).
+- Replaces the previously separate Services and Industries page specs (merged per business
+  scope: placement services, Transformer-industry focused).
+- Service descriptions and secondary industries list are placeholders pending business-owner
+  confirmation (see spec.md Assumptions).
 - All items pass; spec is ready for `/speckit-plan` (not yet requested).

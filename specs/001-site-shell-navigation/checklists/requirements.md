@@ -27,5 +27,5 @@
 - [x] No implementation details leak into specification
 
 ## Notes
-- This spec is a dependency for all page specs (002–010).
+- This spec is a dependency for all page specs (002–009).
 - All items pass; spec is ready for `/speckit-plan` (not yet requested).

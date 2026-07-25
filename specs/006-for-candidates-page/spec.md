@@ -1,6 +1,6 @@
 # Feature Specification: For Candidates Page
 
-**Feature Branch**: `007-for-candidates-page`
+**Feature Branch**: `006-for-candidates-page`
 
 **Created**: 2026-07-25
 

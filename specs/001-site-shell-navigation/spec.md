@@ -9,9 +9,9 @@
 **Input**: User description: "Foundational cross-cutting shell for the public static website:
 consistent header/footer navigation, responsive frame, basic SEO infrastructure (sitemap), 404
 page, social media links, and the Employee Login navigation entry point (placeholder page only —
-real authentication ships in Module 2). Every content page (Home, About, Services, Industries,
-For Employers, For Candidates, Testimonials, Industry Leaders We've Met, Contact Us) renders
-inside this shell."
+real authentication ships in Module 2). Every content page (Home, About Us, What We Do, For
+Employers, For Candidates, Testimonials, Industry Leaders We've Met, Contact Us) renders inside
+this shell."
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -31,8 +31,8 @@ finished.
 **Acceptance Scenarios**:
 
 1. **Given** a visitor is on any page, **When** the page loads, **Then** a consistent header
-   navigation is present linking to Home, About Us, Services, Industries, For Employers, For
-   Candidates, Testimonials, Industry Leaders We've Met, Contact Us, and Employee Login.
+   navigation is present linking to Home, About Us, What We Do, For Employers, For Candidates,
+   Testimonials, Industry Leaders We've Met, Contact Us, and Employee Login.
 2. **Given** a visitor is on any page, **When** the page loads, **Then** a consistent footer is
    present, including social media links.
 3. **Given** a visitor is on the Home page, **When** they use the navigation, **Then** they can
@@ -61,8 +61,8 @@ finished.
 ### Functional Requirements
 
 - **FR-001**: System MUST provide a consistent header navigation, present on every page, linking
-  to Home, About Us, Services, Industries, For Employers, For Candidates, Testimonials, Industry
-  Leaders We've Met, Contact Us, and Employee Login.
+  to Home, About Us, What We Do, For Employers, For Candidates, Testimonials, Industry Leaders
+  We've Met, Contact Us, and Employee Login.
 - **FR-002**: System MUST provide a consistent footer, present on every page, including social
   media links.
 - **FR-003**: Every page MUST be reachable from Home within 2 clicks via the navigation.
@@ -90,7 +90,7 @@ finished.
 
 ### Measurable Outcomes
 
-- **SC-001**: A visitor can reach any of the 9 content pages from Home in 2 clicks or fewer, on
+- **SC-001**: A visitor can reach any of the 8 content pages from Home in 2 clicks or fewer, on
   100% of pages tested.
 - **SC-002**: Navigating to a non-existent URL shows a styled 404 page (never a raw server error)
   100% of the time.
@@ -101,8 +101,11 @@ finished.
 
 ## Assumptions
 
-- This spec is a dependency for all content-page specs (002–010): each page assumes it renders
+- This spec is a dependency for all content-page specs (002–009): each page assumes it renders
   inside this shell and does not redefine header/footer/navigation behavior itself.
+- Services and Industries were originally planned as two separate nav entries/pages but were
+  merged into a single "What We Do" page (see `004-what-we-do-page`) to match the firm's actual
+  scope: placement services concentrated in the Transformer industry.
 - The Employee Login page delivered here is a placeholder only; real login/authentication is
   covered by the separate Employee Portal module discussed later.
 - Social media account URLs are not yet confirmed by the business owner (BRD Sections 4.1, 9);
