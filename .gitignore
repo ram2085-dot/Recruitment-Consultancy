@@ -1,0 +1,12 @@
+# Claude Code local state (may contain credentials/tokens)
+.claude/settings.local.json
+
+# WordPress / PHP
+wp-config.php
+*.log
+vendor/
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
