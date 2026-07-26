@@ -31,6 +31,19 @@ add_action(
 		add_theme_support( 'editor-styles' );
 		add_editor_style( 'assets/css/theme.css' );
 
+		// Business owner's real logo (assets/images/logo.png), set via
+		// Appearance -> Customize -> Site Identity. header.php falls back to an inline
+		// SVG mark + wordmark when no custom logo is set.
+		add_theme_support(
+			'custom-logo',
+			array(
+				'height'      => 80,
+				'width'       => 80,
+				'flex-height' => true,
+				'flex-width'  => true,
+			)
+		);
+
 		// Consistent editable image sizing across content pages (US2 T028).
 		add_image_size( 'eminence-content', 1200, 675, true );
 

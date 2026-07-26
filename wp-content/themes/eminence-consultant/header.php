@@ -30,10 +30,13 @@ $eminence_header_class = is_front_page() ? 'eminence-site-header eminence-site-h
 
 	<header id="masthead" class="<?php echo esc_attr( $eminence_header_class ); ?>">
 		<div class="eminence-header-inner">
-			<a class="eminence-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<?php if ( has_custom_logo() ) : ?>
+			<?php if ( has_custom_logo() ) : ?>
+				<div class="eminence-logo eminence-logo--custom">
+					<?php // the_custom_logo() prints its own <a> — do not nest inside another one. ?>
 					<?php the_custom_logo(); ?>
-				<?php else : ?>
+				</div>
+			<?php else : ?>
+				<a class="eminence-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 					<span class="eminence-logo-mark" aria-hidden="true">
 						<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="20" cy="20" r="19" fill="none" stroke="url(#eminence-logo-gradient)" stroke-width="2.5"/>
@@ -41,15 +44,15 @@ $eminence_header_class = is_front_page() ? 'eminence-site-header eminence-site-h
 							<path d="M20 17 L14 34 L20 30 L26 34 Z" fill="url(#eminence-logo-gradient)"/>
 							<defs>
 								<linearGradient id="eminence-logo-gradient" x1="0" y1="0" x2="40" y2="40">
-									<stop offset="0" stop-color="#c1502e"/>
-									<stop offset="1" stop-color="#e0a458"/>
+									<stop offset="0" stop-color="#781828"/>
+									<stop offset="1" stop-color="#f8b000"/>
 								</linearGradient>
 							</defs>
 						</svg>
 					</span>
 					<span class="eminence-logo-text"><?php bloginfo( 'name' ); ?></span>
-				<?php endif; ?>
-			</a>
+				</a>
+			<?php endif; ?>
 
 			<?php get_template_part( 'template-parts/navigation' ); ?>
 

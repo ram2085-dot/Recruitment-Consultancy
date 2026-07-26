@@ -4,21 +4,22 @@
  * No CSS framework dependency (research.md #4) — kept deliberately small for the <3s
  * performance target (constitution Principle VII).
  *
- * Visual system updated 2026-07-26 to match a reference design the business owner
- * supplied (recruitment-firm hero + inline nav + phone CTA), then shifted to a warmer
- * palette (terracotta/gold, warm-toned neutrals) per follow-up feedback the same day —
- * the constitution and specs still mark the final brand palette as pending business-owner
- * confirmation (BRD Section 10); swap the custom-property values below when that lands.
+ * Visual system updated 2026-07-26: first matched a reference recruitment-site design
+ * (hero + inline nav + phone CTA), then shifted to a warmer placeholder palette, then
+ * — once the business owner supplied their real logo (assets/images/logo.png, a
+ * multi-stroke "C" mark) — replaced that placeholder with colors sampled directly from
+ * the logo's own pixels (gold #f8b000, orange #e88800, red #e03018, deep maroon #781828,
+ * rose #d85068), which also resolves the BRD Section 10 "align with logo colors" item.
  */
 
 :root {
-	--eminence-color-ink: #2b2019;
-	--eminence-color-body: #4a3f38;
-	--eminence-color-primary: #c1502e;
-	--eminence-color-primary-dark: #9c3f22;
-	--eminence-color-accent: #e0a458;
-	--eminence-color-border: #e8ddd2;
-	--eminence-color-footer-bg: #2b1d17;
+	--eminence-color-ink: #2b1216;
+	--eminence-color-body: #453a38;
+	--eminence-color-primary: #a02020;
+	--eminence-color-primary-dark: #781828;
+	--eminence-color-accent: #f8b000;
+	--eminence-color-border: #ecdfd6;
+	--eminence-color-footer-bg: #2b1216;
 	--eminence-font-heading: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	--eminence-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -178,6 +179,32 @@ h4 {
 	text-transform: uppercase;
 }
 
+/*
+ * The business owner's logo file (assets/images/logo.png) has an opaque white
+ * background baked in, not real transparency (confirmed by inspecting the PNG's alpha
+ * channel) — a flat rectangle on the dark hero overlay would look like a mistake, so it
+ * gets a small white rounded chip here rather than sitting directly on the gradient.
+ * Replace this treatment if a transparent version of the logo becomes available.
+ */
+.eminence-logo--custom {
+	display: inline-flex;
+	align-items: center;
+	background: #ffffff;
+	border-radius: 10px;
+	padding: 0.35rem 0.6rem;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.eminence-logo--custom .custom-logo-link {
+	display: block;
+}
+
+.eminence-logo--custom img.custom-logo {
+	display: block;
+	height: 40px;
+	width: auto;
+}
+
 .eminence-header-phone {
 	display: none;
 	align-items: center;
@@ -269,7 +296,7 @@ h4 {
 	display: flex;
 	align-items: center;
 	padding: 7rem 1.5rem 4rem;
-	background: linear-gradient(135deg, #2b1d17 0%, #c1502e 55%, #e0a458 130%);
+	background: linear-gradient(135deg, #2b1216 0%, #781828 30%, #e03018 65%, #f8b000 130%);
 	color: #ffffff;
 	overflow: hidden;
 }
