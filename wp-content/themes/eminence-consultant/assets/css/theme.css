@@ -5,21 +5,24 @@
  * performance target (constitution Principle VII).
  *
  * Visual system updated 2026-07-26: first matched a reference recruitment-site design
- * (hero + inline nav + phone CTA), then shifted to a warmer placeholder palette, then
- * — once the business owner supplied their real logo (assets/images/logo.png, a
- * multi-stroke "C" mark) — replaced that placeholder with colors sampled directly from
- * the logo's own pixels (gold #f8b000, orange #e88800, red #e03018, deep maroon #781828,
- * rose #d85068), which also resolves the BRD Section 10 "align with logo colors" item.
+ * (hero + inline nav + phone CTA), then a warmer placeholder palette, then — once the
+ * business owner supplied their real logo (assets/images/logo.png, a multi-stroke "C"
+ * mark in gold/orange/red/maroon/rose) — colors sampled directly from the logo itself.
+ * That made the site chrome and the logo blend together (same warm hue family), so per
+ * follow-up feedback this is now a deliberately CONTRASTING neutral-navy palette instead:
+ * cool, understated chrome (buttons, hero, footer, links) so the logo's warm colors read
+ * as the one vivid accent on the page rather than disappearing into matching buttons and
+ * a matching hero. The logo's own colors are untouched — only the site's chrome changed.
  */
 
 :root {
-	--eminence-color-ink: #2b1216;
-	--eminence-color-body: #453a38;
-	--eminence-color-primary: #a02020;
-	--eminence-color-primary-dark: #781828;
-	--eminence-color-accent: #f8b000;
-	--eminence-color-border: #ecdfd6;
-	--eminence-color-footer-bg: #2b1216;
+	--eminence-color-ink: #1a1d21;
+	--eminence-color-body: #454b52;
+	--eminence-color-primary: #1f3a5f;
+	--eminence-color-primary-dark: #15283f;
+	--eminence-color-accent: #3b7dd8;
+	--eminence-color-border: #e2e5e8;
+	--eminence-color-footer-bg: #14181c;
 	--eminence-font-heading: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	--eminence-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -296,7 +299,7 @@ h4 {
 	display: flex;
 	align-items: center;
 	padding: 7rem 1.5rem 4rem;
-	background: linear-gradient(135deg, #2b1216 0%, #781828 30%, #e03018 65%, #f8b000 130%);
+	background: linear-gradient(135deg, #10161c 0%, #1f3a5f 55%, #3b7dd8 130%);
 	color: #ffffff;
 	overflow: hidden;
 }
@@ -415,7 +418,7 @@ h4 {
 
 .eminence-btn--primary {
 	background: var(--eminence-color-accent);
-	color: #1a1200;
+	color: #ffffff;
 }
 
 .eminence-btn--secondary {
