@@ -51,10 +51,20 @@ add_action(
 	function () {
 		$theme_version = wp_get_theme()->get( 'Version' );
 
+		// Poppins (headings/logo) + Inter (body) — matches the BRD's suggested typography
+		// (Section 10: "Modern sans-serif fonts, e.g. Inter, Poppins"). Loaded from Google
+		// Fonts for now; self-hosting is a reasonable later optimization, not a blocker.
+		wp_enqueue_style(
+			'eminence-fonts',
+			'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap',
+			array(),
+			null
+		);
+
 		wp_enqueue_style(
 			'eminence-theme',
 			get_template_directory_uri() . '/assets/css/theme.css',
-			array(),
+			array( 'eminence-fonts' ),
 			$theme_version
 		);
 
@@ -125,6 +135,32 @@ add_action(
 				)
 			);
 		}
+	}
+);
+
+/**
+ * Customizer: header phone number (visual reference: reference-design screenshot's header
+ * CTA). Placeholder until the business owner confirms a real number (BRD Section 9).
+ */
+add_action(
+	'customize_register',
+	function ( $wp_customize ) {
+		$wp_customize->add_setting(
+			'eminence_phone_number',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+
+		$wp_customize->add_control(
+			'eminence_phone_number',
+			array(
+				'label'   => __( 'Header Phone Number', 'eminence-consultant' ),
+				'section' => 'title_tagline',
+				'type'    => 'text',
+			)
+		);
 	}
 );
 
