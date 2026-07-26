@@ -120,11 +120,16 @@ appears on the live page — independent of any specific content page being fini
   through a content management interface, without developer involvement or a code deployment.
 - **FR-015**: The content management interface MUST allow the business owner to set alt text
   whenever they add or replace an image.
+- **FR-016**: The header MUST display the firm's phone number as a `tel:` link, editable by the
+  business owner without a code deployment, and MUST be omitted when no number is set (same
+  omit-gracefully rule as Social Links, FR-006) rather than showing an empty or broken link.
 
 ### Key Entities *(include if feature involves data)*
 
 - **Navigation Link**: A single nav item — label and target page/URL.
 - **Social Link**: A social media reference — platform name and URL.
+- **Header Phone Number**: A single phone number displayed in the header, editable by the
+  business owner.
 
 ## Success Criteria *(mandatory)*
 
@@ -156,6 +161,7 @@ appears on the live page — independent of any specific content page being fini
   scope: placement services concentrated in the Transformer industry.
 - The Employee Login page delivered here is a placeholder only; real login/authentication is
   covered by the separate Employee Portal module discussed later.
+- Header phone number confirmed by the business owner (2026-07-26): +91 99995 03368.
 - Social media account URLs are not yet confirmed by the business owner (BRD Sections 4.1, 9);
   placeholder or omitted links are used until confirmed.
 - The production domain name is not yet registered (BRD Section 12); this shell is built and

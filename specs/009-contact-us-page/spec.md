@@ -78,6 +78,7 @@ the functional contact form, which is out of scope for this spec.
 - The functional contact form with email notification to the business owner (BRD Section 7.1) is
   explicitly out of scope for this spec and is delivered as part of the later Client-Facing Forms
   module.
-- Final office address, phone number(s), and email address(es) are pending confirmation from the
-  business owner (BRD Section 9); placeholder contact details are used until confirmed.
+- Phone number confirmed by the business owner (2026-07-26): +91 99995 03368. Office address and
+  email address(es) are still pending confirmation (BRD Section 9); placeholder values remain for
+  those until confirmed.
 - Depends on `001-site-shell-navigation` for header, footer, and navigation behavior.
