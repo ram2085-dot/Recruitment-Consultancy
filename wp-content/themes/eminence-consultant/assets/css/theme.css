@@ -183,19 +183,16 @@ h4 {
 }
 
 /*
- * The business owner's logo file (assets/images/logo.png) has an opaque white
- * background baked in, not real transparency (confirmed by inspecting the PNG's alpha
- * channel) — a flat rectangle on the dark hero overlay would look like a mistake, so it
- * gets a small white rounded chip here rather than sitting directly on the gradient.
- * Replace this treatment if a transparent version of the logo becomes available.
+ * No background chip behind the logo, per request. Note: assets/images/logo.png has an
+ * opaque white background baked into the pixels, not real transparency (confirmed by
+ * inspecting the PNG's alpha channel), so on the dark hero overlay (Home page) the
+ * logo's own white square will still be visible around the mark — that's the source
+ * image, not something CSS can remove. Fixed by swapping in a transparent-background
+ * export of the logo when one is available.
  */
 .eminence-logo--custom {
 	display: inline-flex;
 	align-items: center;
-	background: #ffffff;
-	border-radius: 10px;
-	padding: 0.35rem 0.6rem;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .eminence-logo--custom .custom-logo-link {
