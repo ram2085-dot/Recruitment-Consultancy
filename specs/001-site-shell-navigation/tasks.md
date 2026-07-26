@@ -11,10 +11,34 @@ explicit tasks below rather than as a separate `tests/` phase.
 **Organization**: Tasks are grouped by the two P1 user stories in spec.md.
 
 **Implementation status (2026-07-26)**: All pure-code tasks are implemented in
-`wp-content/themes/eminence-consultant/`. Tasks requiring a live WordPress/MySQL install,
-`wp-admin` access, a browser, or a plugin directory (T004, T005, T027, T031, T032, T034–T038)
-could not be executed in this environment — no PHP/WordPress runtime is available here. They
-remain unchecked below with a note on what's needed to complete them.
+`wp-content/themes/eminence-consultant/`. A local preview environment was then set up
+(PHP 8.3 via winget, WordPress core + the official SQLite integration plugin so no MySQL
+install was needed, Yoast SEO, the 9 pages + Employee Login + nav menus created via WP-CLI)
+and actually run at `http://localhost:8000`, which surfaced two real bugs — both are now
+fixed in the theme source, not just worked around in the preview:
+
+1. **Missing `index.php`**: WordPress refused to activate the theme at all ("Template is
+   missing") because a theme needs `index.php` as the template-hierarchy fallback even
+   when `page.php`/`front-page.php`/`404.php` cover every URL this site serves. Added
+   `index.php`.
+2. **Wrong Privacy Policy link**: `footer-widgets.php` and `cookie-notice.php` used
+   `get_page_by_path('privacy-policy')`, but WordPress core auto-creates its own draft
+   "Privacy Policy" page on install that claims that exact slug — our real page got
+   silently suffixed to `privacy-policy-2` and the link pointed at the wrong (draft, WP
+   boilerplate) page. Fixed to use `get_privacy_policy_url()`, the WordPress API built for
+   exactly this, which respects the Settings → Privacy page designation instead of guessing
+   by slug.
+
+Confirmed working end-to-end in the browser-servable HTML: primary + footer nav, mobile
+menu markup, cookie consent banner (hidden by default, GA4 script genuinely absent until
+consent), Employee Login placeholder, Yoast SEO meta/OG/schema tags, and a real HTTP 404
+(`body class="error404"`) rendering our styled 404.php.
+
+Tasks still requiring `wp-admin` UI interaction, a real browser, or a properly configured
+web server (T027, T032, T034–T038) remain unchecked below — this session's environment has
+no browser tool, and the sitemap (T037) specifically needs "pretty" permalinks with a real
+Apache/Nginx rewrite (or a WP-aware router script), which PHP's bare built-in server
+doesn't provide. T004/T005 are now done (see above) and checked off.
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -32,8 +56,8 @@ remain unchecked below with a note on what's needed to complete them.
 - [x] T001 Create theme directory and `style.css` header block (theme name, author, version — WordPress's required theme metadata comment) at `style.css`
 - [x] T002 Create `functions.php` with theme setup: `add_theme_support('title-tag')`, `add_theme_support('html5', [...])`, `register_nav_menus(['primary' => 'Primary Navigation', 'footer' => 'Footer Navigation'])`
 - [x] T003 [P] Add a placeholder `screenshot.png` (WordPress admin theme-list requirement) — 1x1 stub only; replace with a real screenshot before launch
-- [ ] T004 [P] **BLOCKED — needs wp-admin**: Install and activate the SEO plugin chosen in research.md #1; disable its XML sitemap module; confirm WordPress core's native sitemap is reachable at `/wp-sitemap.xml`
-- [ ] T005 **BLOCKED — needs wp-admin**: Create the 9 WordPress Pages (Home, About Us, What We Do, For Employers, For Candidates, Testimonials, Industry Leaders We've Met, Contact Us, Privacy Policy) plus the Employee Login page, each with placeholder body text; set Home as the static front page in Settings → Reading; assign the "Employee Login (Placeholder)" template to the Employee Login page
+- [x] T004 [P] Install and activate Yoast SEO (research.md #1) — done via WP-CLI in the local preview; confirmed rendering per-page title/meta description/OG/schema tags (T031). Sitemap module disable + native `/wp-sitemap.xml` reachability NOT confirmed — see T037; this bare preview has no pretty-permalink rewrite. **Repeat on the real staging/production site.**
+- [x] T005 Create the 9 WordPress Pages + Employee Login page, set Home as static front page — done via WP-CLI in the local preview (placeholder body text per page, Employee Login assigned the `page-employee-login.php` template, nav menus built and assigned to both theme locations). **Repeat on the real staging/production site** — this was the throwaway preview DB, not persisted infrastructure.
 
 **Checkpoint**: Theme is installable and activatable; content shell exists to render into.
 
@@ -82,7 +106,7 @@ editability) being finished, since placeholder content is enough to test navigat
 - [x] T024 [P] [US1] Build `assets/js/consent.js`: read/write the `eminence_consent` first-party cookie; expose a function reporting current consent state
 - [x] T025 [US1] Add gated GA4 `gtag.js` injection to `footer.php`: only output the tag when `consent.js` reports "accepted" (depends on T014, T023, T024)
 - [x] T026 [US1] Wire `cookie-notice.php` into `footer.php` and enqueue `consent.js` (depends on T023, T024)
-- [ ] T027 [US1] **BLOCKED — needs a running WordPress site + browser**: Manual QA: execute quickstart.md scenarios 1–9 against a local WordPress install; fix any failures (depends on T015–T026)
+- [ ] T027 [US1] Manual QA: execute quickstart.md scenarios 1–9. **Confirmed via HTTP/HTML inspection** (no browser tool available this session): nav present on every page (1), footer + social/Privacy Policy link present (2), every page reachable from Home in 1 click (3, exceeds the ≤2 requirement), Employee Login placeholder renders cleanly (5), real WordPress 404 renders our styled template (6), GA4's `gtag.js` genuinely absent from the HTML with the consent banner hidden by default (7). **NOT yet confirmed** — need an actual browser: mobile hamburger toggle interaction (4), clicking Accept fires GA4 / clicking Decline doesn't (8, 9)
 
 **Checkpoint**: User Story 1 complete and independently testable — this is the MVP.
 
@@ -103,8 +127,8 @@ US1's navigation work being finished, since this only exercises the editor and `
 - [x] T028 [P] [US2] Add `add_theme_support('post-thumbnails')` and register at least one custom image size for content images in `functions.php`
 - [x] T029 [P] [US2] Add `add_theme_support('editor-styles')` + `add_editor_style()` so the block-editor preview matches front-end styling
 - [x] T030 [US2] Verify `page.php` renders 100% of visible text/images via `the_content()`/featured image with zero hardcoded copy (depends on T010, T028) — confirmed by inspection: no hardcoded body copy exists in page.php
-- [ ] T031 [US2] **BLOCKED — depends on T004**: Confirm the SEO plugin's per-page title/description fields render into `<head>` via `header.php` on every Page (the `wp_head()` hook point that will receive them is in place)
-- [ ] T032 [US2] **BLOCKED — needs a running WordPress site + browser**: Manual QA: execute quickstart.md scenarios 10–11 (owner edits text and an image including alt text; change appears live) (depends on T030, T031)
+- [x] T031 [US2] Confirmed in the local preview: Yoast SEO renders `<title>`, meta description, canonical, Open Graph, Twitter card, and schema.org JSON-LD into `<head>` via the `wp_head()` hook in `header.php`, with no template changes needed
+- [ ] T032 [US2] **BLOCKED — needs a browser + wp-admin UI**: Manual QA: execute quickstart.md scenarios 10–11 (owner edits text and an image including alt text; change appears live)
 
 **Checkpoint**: Both P1 user stories complete and independently functional.
 
@@ -115,11 +139,11 @@ US1's navigation work being finished, since this only exercises the editor and `
 **Purpose**: Site-wide validation against spec.md Success Criteria
 
 - [x] T033 [P] Create a minimal `front-page.php` (`get_header()` / `the_content()` / `get_footer()`) as Home's shell wrapper — hero-specific markup is deferred to the `002-home-page` implementation; this only ensures Home renders inside the shell without erroring
-- [ ] T034 [P] **BLOCKED — needs a running WordPress site + browser**: Run Lighthouse (Performance/Accessibility/SEO) against Home and one content page per quickstart.md; remediate any failures against the SC-004 <3s target
-- [ ] T035 [P] **BLOCKED — needs a running WordPress site + browser**: Run an axe-core scan against the same two pages per quickstart.md; remediate any critical/serious violations
-- [ ] T036 **BLOCKED — needs a running WordPress site**: Run a broken-link check across the primary and footer navigation per quickstart.md
-- [ ] T037 **BLOCKED — needs a running WordPress site**: Verify `/wp-sitemap.xml` lists all 9 published pages
-- [ ] T038 **BLOCKED — depends on T005, T027, T032, T034–T037**: Final sign-off: confirm every quickstart.md "Done when" item passes; update spec.md Status from Draft to Implemented
+- [ ] T034 [P] **BLOCKED — needs a browser**: Run Lighthouse (Performance/Accessibility/SEO) against Home and one content page per quickstart.md; remediate any failures against the SC-004 <3s target
+- [ ] T035 [P] **BLOCKED — needs a browser**: Run an axe-core scan against the same two pages per quickstart.md; remediate any critical/serious violations
+- [x] T036 Broken-link check across the primary and footer navigation — confirmed via curl: all 9 nav-linked pages return HTTP 200
+- [ ] T037 **BLOCKED — needs pretty permalinks + a real web server**: Verify `/wp-sitemap.xml` lists all 9 published pages. Not a theme defect: WordPress's sitemap endpoint requires rewrite-rule routing (Apache/Nginx, or a WP-aware router script) that PHP's bare built-in server doesn't provide under "plain" permalinks — confirmed `/wp-sitemap.xml` 404s in this preview for that reason, not a code issue
+- [ ] T038 **BLOCKED — depends on T032, T034, T035, T037**: Final sign-off: confirm every quickstart.md "Done when" item passes; update spec.md Status from Draft to Implemented
 
 ---
 

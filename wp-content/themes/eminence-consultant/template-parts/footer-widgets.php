@@ -6,7 +6,12 @@
  */
 
 $eminence_social_links = eminence_get_social_links();
-$eminence_privacy_page = get_page_by_path( 'privacy-policy' );
+// get_privacy_policy_url() (not get_page_by_path()) is the correct WordPress API here:
+// WordPress core auto-creates its own draft "Privacy Policy" page on install and claims
+// the privacy-policy slug, which caused get_page_by_path('privacy-policy') to resolve to
+// that page instead of ours during live testing. Settings -> Privacy in wp-admin is where
+// the site owner designates the real page; this function respects that setting.
+$eminence_privacy_url = get_privacy_policy_url();
 ?>
 <div class="eminence-footer-inner">
 
@@ -37,8 +42,8 @@ $eminence_privacy_page = get_page_by_path( 'privacy-policy' );
 	<?php endif; ?>
 
 	<div class="eminence-footer-legal">
-		<?php if ( $eminence_privacy_page ) : ?>
-			<a href="<?php echo esc_url( get_permalink( $eminence_privacy_page ) ); ?>">
+		<?php if ( $eminence_privacy_url ) : ?>
+			<a href="<?php echo esc_url( $eminence_privacy_url ); ?>">
 				<?php esc_html_e( 'Privacy Policy', 'eminence-consultant' ); ?>
 			</a>
 		<?php endif; ?>

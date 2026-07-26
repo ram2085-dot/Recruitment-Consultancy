@@ -4,8 +4,10 @@
  * consent.js only when no consent decision is recorded yet (first-time visitors).
  */
 
-$eminence_privacy_page = get_page_by_path( 'privacy-policy' );
-$eminence_privacy_url  = $eminence_privacy_page ? get_permalink( $eminence_privacy_page ) : '';
+// get_privacy_policy_url(), not get_page_by_path() — see the matching comment in
+// template-parts/footer-widgets.php for why (slug collision with WP core's own
+// auto-created privacy page, found via live testing).
+$eminence_privacy_url = get_privacy_policy_url();
 ?>
 <div id="eminence-cookie-notice" class="eminence-cookie-notice" hidden>
 	<p class="eminence-cookie-notice-text">
