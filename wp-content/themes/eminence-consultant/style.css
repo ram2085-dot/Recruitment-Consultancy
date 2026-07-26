@@ -1,0 +1,18 @@
+/*
+Theme Name: Eminence Consultant
+Theme URI: https://example.com
+Author: Eminence Consultant
+Description: Custom theme for the Eminence Consultant recruitment/staffing firm public
+website. Implements specs/001-site-shell-navigation (header/footer navigation, responsive
+frame, GA4 behind cookie consent, Employee Login placeholder) per this project's spec-driven
+development workflow. See specs/001-site-shell-navigation/plan.md for the technical plan.
+Version: 0.1.0
+Requires at least: 6.0
+Requires PHP: 8.1
+License: Proprietary
+Text Domain: eminence-consultant
+
+This file intentionally holds only the required WordPress theme header comment above.
+Actual styles are enqueued separately from assets/css/theme.css (see functions.php) so the
+stylesheet can be organised normally instead of living entirely in this metadata file.
+*/

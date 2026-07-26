@@ -1,0 +1,357 @@
+/*
+ * Theme styles for Eminence Consultant (specs/001-site-shell-navigation).
+ * Mobile-first: base rules target small viewports; breakpoints add layout for larger ones.
+ * No CSS framework dependency (research.md #4) — kept deliberately small for the <3s
+ * performance target (constitution Principle VII).
+ */
+
+/* ---------- Reset & base ---------- */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.6;
+	color: #1a1a1a;
+	background: #ffffff;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+a {
+	color: #0b5fa5;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	line-height: 1.2;
+	margin: 0 0 0.6em;
+}
+
+/* ---------- Accessibility utilities ---------- */
+
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.skip-link {
+	position: absolute;
+	top: -100px;
+	left: 0;
+	background: #1a1a1a;
+	color: #ffffff;
+	padding: 0.75em 1.25em;
+	z-index: 1000;
+	transition: top 0.15s ease-in-out;
+}
+
+.skip-link:focus {
+	top: 0;
+}
+
+:focus-visible {
+	outline: 3px solid #0b5fa5;
+	outline-offset: 2px;
+}
+
+/* ---------- Layout wrapper ---------- */
+
+.eminence-site-wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.eminence-site-main {
+	flex: 1 0 auto;
+	width: 100%;
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 1.5rem 1.25rem 3rem;
+}
+
+/* ---------- Header & primary nav ---------- */
+
+.eminence-site-header {
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.eminence-header-inner {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 1rem 1.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.eminence-logo {
+	text-decoration: none;
+	color: inherit;
+}
+
+.eminence-logo-text {
+	font-weight: 700;
+	font-size: 1.25rem;
+}
+
+.eminence-nav-toggle {
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 4px;
+	width: 44px;
+	height: 44px;
+	border: 1px solid #d0d0d0;
+	border-radius: 4px;
+	background: #ffffff;
+	cursor: pointer;
+}
+
+.eminence-nav-toggle-bar {
+	display: block;
+	width: 20px;
+	height: 2px;
+	margin: 0 auto;
+	background: #1a1a1a;
+}
+
+.eminence-primary-nav {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 100%;
+	background: #ffffff;
+	border-bottom: 1px solid #e5e5e5;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-in-out;
+}
+
+.eminence-primary-nav.is-open {
+	max-height: 600px;
+}
+
+.eminence-primary-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0.5rem 1.25rem 1rem;
+}
+
+.eminence-primary-menu li {
+	border-top: 1px solid #f0f0f0;
+}
+
+.eminence-primary-menu a {
+	display: block;
+	padding: 0.85rem 0;
+	text-decoration: none;
+	color: #1a1a1a;
+}
+
+/* ---------- Footer ---------- */
+
+.eminence-site-footer {
+	background: #14213d;
+	color: #f5f5f5;
+	margin-top: auto;
+}
+
+.eminence-footer-inner {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 2rem 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.eminence-footer-menu {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1.25rem;
+	margin: 0;
+	padding: 0;
+}
+
+.eminence-footer-menu a,
+.eminence-footer-legal a {
+	color: #f5f5f5;
+	text-decoration: none;
+}
+
+.eminence-social-links {
+	list-style: none;
+	display: flex;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0;
+}
+
+.eminence-social-link a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.12);
+}
+
+.eminence-footer-legal {
+	font-size: 0.875rem;
+	opacity: 0.85;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+	align-items: center;
+}
+
+.eminence-footer-copyright {
+	margin: 0;
+}
+
+/* ---------- Buttons ---------- */
+
+.eminence-btn {
+	display: inline-block;
+	padding: 0.65rem 1.25rem;
+	border-radius: 4px;
+	border: 1px solid transparent;
+	text-decoration: none;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.eminence-btn--primary {
+	background: #0b5fa5;
+	color: #ffffff;
+}
+
+.eminence-btn--secondary {
+	background: transparent;
+	border-color: #c9c9c9;
+	color: #1a1a1a;
+}
+
+/* ---------- Content pages ---------- */
+
+.eminence-page-header {
+	margin-bottom: 1.5rem;
+}
+
+.eminence-page-featured-image {
+	margin-bottom: 1.5rem;
+}
+
+.eminence-page-content {
+	max-width: 75ch;
+}
+
+/* ---------- Cookie consent banner ---------- */
+
+.eminence-cookie-notice {
+	position: fixed;
+	left: 1rem;
+	right: 1rem;
+	bottom: 1rem;
+	z-index: 1000;
+	background: #ffffff;
+	border: 1px solid #d0d0d0;
+	border-radius: 8px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+	padding: 1rem 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.eminence-cookie-notice[hidden] {
+	display: none;
+}
+
+.eminence-cookie-notice-text {
+	margin: 0;
+	font-size: 0.9rem;
+}
+
+.eminence-cookie-notice-actions {
+	display: flex;
+	gap: 0.75rem;
+	justify-content: flex-end;
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 768px) {
+	.eminence-nav-toggle {
+		display: none;
+	}
+
+	.eminence-primary-nav {
+		position: static;
+		max-height: none;
+		overflow: visible;
+		border-bottom: none;
+	}
+
+	.eminence-primary-menu {
+		display: flex;
+		gap: 1.5rem;
+		padding: 0;
+	}
+
+	.eminence-primary-menu li {
+		border-top: none;
+	}
+
+	.eminence-primary-menu a {
+		padding: 0.25rem 0;
+	}
+
+	.eminence-footer-inner {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.eminence-cookie-notice {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		max-width: 720px;
+		left: auto;
+	}
+}
+
+@media (min-width: 1280px) {
+	.eminence-site-main {
+		padding-top: 2.5rem;
+	}
+}
