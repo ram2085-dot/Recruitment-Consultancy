@@ -5,20 +5,20 @@
  * performance target (constitution Principle VII).
  *
  * Visual system updated 2026-07-26 to match a reference design the business owner
- * supplied (recruitment-firm hero + inline nav + phone CTA). Colors below are a
- * placeholder palette in that reference's spirit (teal/amber, warm neutrals) — the
- * constitution and specs still mark the final brand palette as pending business-owner
+ * supplied (recruitment-firm hero + inline nav + phone CTA), then shifted to a warmer
+ * palette (terracotta/gold, warm-toned neutrals) per follow-up feedback the same day —
+ * the constitution and specs still mark the final brand palette as pending business-owner
  * confirmation (BRD Section 10); swap the custom-property values below when that lands.
  */
 
 :root {
-	--eminence-color-ink: #14181a;
-	--eminence-color-body: #3a4144;
-	--eminence-color-teal: #0f9b8e;
-	--eminence-color-teal-dark: #0b7a70;
-	--eminence-color-amber: #f2994a;
-	--eminence-color-border: #e4e4e4;
-	--eminence-color-footer-bg: #12292a;
+	--eminence-color-ink: #2b2019;
+	--eminence-color-body: #4a3f38;
+	--eminence-color-primary: #c1502e;
+	--eminence-color-primary-dark: #9c3f22;
+	--eminence-color-accent: #e0a458;
+	--eminence-color-border: #e8ddd2;
+	--eminence-color-footer-bg: #2b1d17;
 	--eminence-font-heading: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	--eminence-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -51,7 +51,7 @@ img {
 }
 
 a {
-	color: var(--eminence-color-teal-dark);
+	color: var(--eminence-color-primary-dark);
 }
 
 h1,
@@ -95,7 +95,7 @@ h4 {
 }
 
 :focus-visible {
-	outline: 3px solid var(--eminence-color-teal);
+	outline: 3px solid var(--eminence-color-primary);
 	outline-offset: 2px;
 }
 
@@ -269,7 +269,7 @@ h4 {
 	display: flex;
 	align-items: center;
 	padding: 7rem 1.5rem 4rem;
-	background: linear-gradient(135deg, #103b3a 0%, #0f9b8e 55%, #f2994a 130%);
+	background: linear-gradient(135deg, #2b1d17 0%, #c1502e 55%, #e0a458 130%);
 	color: #ffffff;
 	overflow: hidden;
 }
@@ -387,7 +387,7 @@ h4 {
 }
 
 .eminence-btn--primary {
-	background: var(--eminence-color-amber);
+	background: var(--eminence-color-accent);
 	color: #1a1200;
 }
 

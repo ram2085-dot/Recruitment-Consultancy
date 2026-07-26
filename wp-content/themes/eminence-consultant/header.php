@@ -41,8 +41,8 @@ $eminence_header_class = is_front_page() ? 'eminence-site-header eminence-site-h
 							<path d="M20 17 L14 34 L20 30 L26 34 Z" fill="url(#eminence-logo-gradient)"/>
 							<defs>
 								<linearGradient id="eminence-logo-gradient" x1="0" y1="0" x2="40" y2="40">
-									<stop offset="0" stop-color="#14b8a6"/>
-									<stop offset="1" stop-color="#f59e0b"/>
+									<stop offset="0" stop-color="#c1502e"/>
+									<stop offset="1" stop-color="#e0a458"/>
 								</linearGradient>
 							</defs>
 						</svg>
