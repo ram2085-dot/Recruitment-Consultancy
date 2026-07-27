@@ -111,6 +111,57 @@ add_action(
 );
 
 /**
+ * Customizer: Home page hero content (002-home-page data-model.md "Hero Content").
+ * Keeps hero copy editable by the business owner instead of hardcoded in front-page.php.
+ */
+add_action(
+	'customize_register',
+	function ( $wp_customize ) {
+		$wp_customize->add_section(
+			'eminence_hero',
+			array(
+				'title'    => __( 'Homepage Hero', 'eminence-consultant' ),
+				'priority' => 155,
+			)
+		);
+
+		$wp_customize->add_setting(
+			'eminence_hero_headline',
+			array(
+				'default'           => __( 'Hire the Best Talent for Your Business with Eminence Consultant', 'eminence-consultant' ),
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+
+		$wp_customize->add_control(
+			'eminence_hero_headline',
+			array(
+				'label'   => __( 'Hero Headline', 'eminence-consultant' ),
+				'section' => 'eminence_hero',
+				'type'    => 'text',
+			)
+		);
+
+		$wp_customize->add_setting(
+			'eminence_hero_subtitle',
+			array(
+				'default'           => __( 'Permanent staffing and executive search, with deep expertise in the Transformer industry.', 'eminence-consultant' ),
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+
+		$wp_customize->add_control(
+			'eminence_hero_subtitle',
+			array(
+				'label'   => __( 'Hero Subtitle', 'eminence-consultant' ),
+				'section' => 'eminence_hero',
+				'type'    => 'text',
+			)
+		);
+	}
+);
+
+/**
  * Customizer: Social Link fields (data-model.md "Social Link").
  * A URL left blank means: omit that icon (spec Edge Case), enforced in
  * template-parts/footer-widgets.php, not here.

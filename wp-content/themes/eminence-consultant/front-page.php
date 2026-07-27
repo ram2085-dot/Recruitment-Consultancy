@@ -1,14 +1,12 @@
 <?php
 /**
- * Home page shell wrapper (T033), extended with a hero section matching the
- * reference design (2026-07-26): full-bleed gradient banner behind a transparent
- * header, bold headline, CTA buttons.
+ * Home page (002-home-page): hero (headline/subtitle from Customizer — see
+ * functions.php "Homepage Hero" section — so the business owner can edit them without a
+ * deployment, per constitution Principle I / spec 001 FR-014) plus a key-services summary
+ * from the Page's own the_content(). Renders inside the Site Shell (001).
  *
- * The hero's visual system (colors, type, layout) belongs here because it's shared
- * theme styling. The hero's actual COPY (tagline, services summary) is
- * 002-home-page's job per contracts/theme-shell-contract.md — everything below is
- * placeholder text standing in for that, not final content. A real photo replaces
- * the gradient once the business owner supplies one (BRD Section 9).
+ * A real photo can replace the gradient background once the business owner supplies one
+ * (BRD Section 9); this is styled as a placeholder gradient hero until then.
  */
 
 get_header();
@@ -22,10 +20,10 @@ $eminence_candidates_page = get_page_by_path( 'for-candidates' );
 <section class="eminence-hero">
 	<div class="eminence-hero-inner">
 		<h1 class="eminence-hero-title">
-			<?php esc_html_e( 'Hire the Best Talent for Your Business with Eminence Consultant', 'eminence-consultant' ); ?>
+			<?php echo esc_html( get_theme_mod( 'eminence_hero_headline', __( 'Hire the Best Talent for Your Business with Eminence Consultant', 'eminence-consultant' ) ) ); ?>
 		</h1>
 		<p class="eminence-hero-subtitle">
-			<?php esc_html_e( 'Permanent staffing and executive search, with deep expertise in the Transformer industry.', 'eminence-consultant' ); ?>
+			<?php echo esc_html( get_theme_mod( 'eminence_hero_subtitle', __( 'Permanent staffing and executive search, with deep expertise in the Transformer industry.', 'eminence-consultant' ) ) ); ?>
 		</p>
 		<div class="eminence-hero-actions">
 			<a class="eminence-btn eminence-btn--primary" href="<?php echo esc_url( $eminence_employers_page ? get_permalink( $eminence_employers_page ) : home_url( '/' ) ); ?>">
