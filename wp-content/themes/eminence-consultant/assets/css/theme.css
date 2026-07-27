@@ -489,6 +489,63 @@ h4 {
 	}
 }
 
+/* ---------- Industry Leaders slider (008-industry-leaders-page) ---------- */
+
+.eminence-industry-leaders-tagline {
+	font-style: italic;
+	color: var(--eminence-color-body);
+}
+
+.eminence-slider {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.eminence-slider-track {
+	display: flex;
+	gap: 1rem;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	padding-bottom: 0.5rem;
+}
+
+.eminence-slider-slide {
+	flex: 0 0 min(320px, 85vw);
+	scroll-snap-align: start;
+	margin: 0;
+}
+
+.eminence-slider-slide img {
+	border-radius: 8px;
+	width: 100%;
+}
+
+.eminence-slider-slide figcaption {
+	margin-top: 0.5rem;
+	font-size: 0.9rem;
+	color: var(--eminence-color-body);
+}
+
+.eminence-slider-btn {
+	flex: none;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: 1px solid var(--eminence-color-border);
+	background: #ffffff;
+	font-size: 1.25rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.eminence-slider-empty {
+	color: var(--eminence-color-body);
+	font-style: italic;
+}
+
 /* ---------- Cookie consent banner ---------- */
 
 .eminence-cookie-notice {

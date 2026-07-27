@@ -107,6 +107,18 @@ add_action(
 				'cookieName' => EMINENCE_CONSENT_COOKIE,
 			)
 		);
+
+		// Slider controls only where the slider actually is (008-industry-leaders-page) —
+		// no reason to ship this JS to every page.
+		if ( is_page_template( 'page-industry-leaders.php' ) ) {
+			wp_enqueue_script(
+				'eminence-industry-leaders-slider',
+				get_template_directory_uri() . '/assets/js/industry-leaders-slider.js',
+				array(),
+				$theme_version,
+				true
+			);
+		}
 	}
 );
 
@@ -331,63 +343,75 @@ add_action(
 );
 
 /**
- * Consent meta box (research.md #2). A checkbox is the editorial interface; the real
- * enforcement is the save_post hook below, not this control by itself.
+ * Registers a "Publishing Consent" meta box + save_post enforcement for any post type
+ * that needs it (008-industry-leaders-page/research.md #1 — extracted from what was
+ * originally 007-only code, so both features enforce the identical rule instead of two
+ * copies of the same logic). A checkbox is the editorial interface; the real enforcement
+ * is the save_post hook, not the control by itself.
+ *
+ * @param string $post_type       The post type to gate.
+ * @param string $box_title       Meta box title.
+ * @param string $checkbox_label  Label shown next to the consent checkbox.
  */
-add_action(
-	'add_meta_boxes',
-	function () {
-		add_meta_box(
-			'eminence_testimonial_consent',
-			__( 'Publishing Consent', 'eminence-consultant' ),
-			function ( $post ) {
-				wp_nonce_field( 'eminence_testimonial_consent', 'eminence_testimonial_consent_nonce' );
-				$checked = get_post_meta( $post->ID, 'eminence_consent_obtained', true );
-				?>
-				<label>
-					<input type="checkbox" name="eminence_consent_obtained" value="1" <?php checked( $checked, '1' ); ?> />
-					<?php esc_html_e( 'Documented consent has been obtained from the person or company named in this testimonial (required to publish).', 'eminence-consultant' ); ?>
-				</label>
-				<?php
-			},
-			'eminence_testimonial',
-			'side',
-			'high'
-		);
-	}
-);
+function eminence_register_consent_gate( $post_type, $box_title, $checkbox_label ) {
+	$nonce_action = "eminence_{$post_type}_consent";
+	$nonce_name   = "eminence_{$post_type}_consent_nonce";
 
-/**
- * FR-008 enforcement: a testimonial cannot be `publish` status unless consent is
- * recorded, regardless of what the editor tried to save — see research.md #2 for why
- * this has to be a save_post hook rather than only a UI checkbox.
- */
-add_action(
-	'save_post_eminence_testimonial',
-	function ( $post_id ) {
-		if ( ! isset( $_POST['eminence_testimonial_consent_nonce'] )
-			|| ! wp_verify_nonce( $_POST['eminence_testimonial_consent_nonce'], 'eminence_testimonial_consent' ) ) {
-			return;
-		}
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
-		}
-
-		$consent_given = ! empty( $_POST['eminence_consent_obtained'] );
-		update_post_meta( $post_id, 'eminence_consent_obtained', $consent_given ? '1' : '' );
-
-		// wp_update_post() re-fires this same hook, but by then the post row already
-		// shows post_status = draft, so the condition below is false on that second pass
-		// and the recursion terminates itself after one extra (harmless) invocation.
-		if ( ! $consent_given && 'publish' === get_post_status( $post_id ) ) {
-			wp_update_post(
-				array(
-					'ID'          => $post_id,
-					'post_status' => 'draft',
-				)
+	add_action(
+		'add_meta_boxes',
+		function () use ( $post_type, $box_title, $checkbox_label, $nonce_action, $nonce_name ) {
+			add_meta_box(
+				"eminence_{$post_type}_consent",
+				$box_title,
+				function ( $post ) use ( $checkbox_label, $nonce_action, $nonce_name ) {
+					wp_nonce_field( $nonce_action, $nonce_name );
+					$checked = get_post_meta( $post->ID, 'eminence_consent_obtained', true );
+					?>
+					<label>
+						<input type="checkbox" name="eminence_consent_obtained" value="1" <?php checked( $checked, '1' ); ?> />
+						<?php echo esc_html( $checkbox_label ); ?>
+					</label>
+					<?php
+				},
+				$post_type,
+				'side',
+				'high'
 			);
 		}
-	}
+	);
+
+	add_action(
+		"save_post_{$post_type}",
+		function ( $post_id ) use ( $nonce_action, $nonce_name ) {
+			if ( ! isset( $_POST[ $nonce_name ] ) || ! wp_verify_nonce( $_POST[ $nonce_name ], $nonce_action ) ) {
+				return;
+			}
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return;
+			}
+
+			$consent_given = ! empty( $_POST['eminence_consent_obtained'] );
+			update_post_meta( $post_id, 'eminence_consent_obtained', $consent_given ? '1' : '' );
+
+			// wp_update_post() re-fires this same hook, but by then the post row already
+			// shows post_status = draft, so the condition below is false on that second
+			// pass and the recursion terminates itself after one extra (harmless) call.
+			if ( ! $consent_given && 'publish' === get_post_status( $post_id ) ) {
+				wp_update_post(
+					array(
+						'ID'          => $post_id,
+						'post_status' => 'draft',
+					)
+				);
+			}
+		}
+	);
+}
+
+eminence_register_consent_gate(
+	'eminence_testimonial',
+	__( 'Publishing Consent', 'eminence-consultant' ),
+	__( 'Documented consent has been obtained from the person or company named in this testimonial (required to publish).', 'eminence-consultant' )
 );
 
 /**
@@ -409,6 +433,55 @@ function eminence_get_testimonials( $type_slug ) {
 					'terms'    => $type_slug,
 				),
 			),
+		)
+	);
+}
+
+/**
+ * Gallery Photo (008-industry-leaders-page data-model.md). Same consent-gate reasoning as
+ * Testimonials (007) — a photo of an identifiable individual can't be published without
+ * consent, enforced via the shared eminence_register_consent_gate() helper above.
+ */
+add_action(
+	'init',
+	function () {
+		register_post_type(
+			'eminence_gallery',
+			array(
+				'labels'       => array(
+					'name'          => __( 'Industry Leaders Gallery', 'eminence-consultant' ),
+					'singular_name' => __( 'Gallery Photo', 'eminence-consultant' ),
+					'add_new_item'  => __( 'Add New Photo', 'eminence-consultant' ),
+				),
+				'public'       => false,
+				'show_ui'      => true,
+				'show_in_menu' => true,
+				'menu_icon'    => 'dashicons-format-gallery',
+				'supports'     => array( 'title', 'thumbnail' ),
+			)
+		);
+	}
+);
+
+eminence_register_consent_gate(
+	'eminence_gallery',
+	__( 'Publishing Permission', 'eminence-consultant' ),
+	__( 'Documented permission has been obtained from the identifiable individual(s) shown in this photo (required to publish).', 'eminence-consultant' )
+);
+
+/**
+ * Published gallery photos, for page-industry-leaders.php.
+ *
+ * @return WP_Query
+ */
+function eminence_get_gallery_photos() {
+	return new WP_Query(
+		array(
+			'post_type'      => 'eminence_gallery',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'orderby'        => 'menu_order date',
+			'order'          => 'ASC',
 		)
 	);
 }
