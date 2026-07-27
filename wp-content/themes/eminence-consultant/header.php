@@ -20,7 +20,6 @@
 </a>
 
 <?php
-$eminence_phone = get_theme_mod( 'eminence_phone_number', '' );
 // Transparent header overlaying the hero photo on Home, matching the reference design;
 // a solid header on every other page (standard pattern — the hero is Home-only, per
 // contracts/theme-shell-contract.md, so the shell only supplies the toggle, not the hero).
@@ -55,13 +54,6 @@ $eminence_header_class = is_front_page() ? 'eminence-site-header eminence-site-h
 			<?php endif; ?>
 
 			<?php get_template_part( 'template-parts/navigation' ); ?>
-
-			<?php if ( $eminence_phone ) : ?>
-				<a class="eminence-header-phone" href="<?php echo esc_attr( 'tel:' . preg_replace( '/[^0-9+]/', '', $eminence_phone ) ); ?>">
-					<svg class="eminence-header-phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.9c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z" fill="currentColor"/></svg>
-					<span><?php echo esc_html( $eminence_phone ); ?></span>
-				</a>
-			<?php endif; ?>
 		</div>
 	</header>
 

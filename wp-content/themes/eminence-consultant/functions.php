@@ -215,32 +215,6 @@ add_action(
 );
 
 /**
- * Customizer: header phone number (visual reference: reference-design screenshot's header
- * CTA). Placeholder until the business owner confirms a real number (BRD Section 9).
- */
-add_action(
-	'customize_register',
-	function ( $wp_customize ) {
-		$wp_customize->add_setting(
-			'eminence_phone_number',
-			array(
-				'default'           => '',
-				'sanitize_callback' => 'sanitize_text_field',
-			)
-		);
-
-		$wp_customize->add_control(
-			'eminence_phone_number',
-			array(
-				'label'   => __( 'Header Phone Number', 'eminence-consultant' ),
-				'section' => 'title_tagline',
-				'type'    => 'text',
-			)
-		);
-	}
-);
-
-/**
  * Fixed set of supported social platforms (data-model.md: "Platform name, not free-form").
  *
  * @return array<string, string> Map of setting key => display label.

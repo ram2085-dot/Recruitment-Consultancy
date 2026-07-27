@@ -207,22 +207,6 @@ h4 {
 	width: auto;
 }
 
-.eminence-header-phone {
-	display: none;
-	align-items: center;
-	gap: 0.5rem;
-	text-decoration: none;
-	font-weight: 600;
-	color: inherit;
-	white-space: nowrap;
-	flex: none;
-}
-
-.eminence-header-phone-icon {
-	width: 18px;
-	height: 18px;
-}
-
 .eminence-nav-toggle {
 	display: inline-flex;
 	flex-direction: column;
@@ -619,10 +603,6 @@ h4 {
 		color: inherit;
 		white-space: nowrap;
 		font-size: 0.95rem;
-	}
-
-	.eminence-header-phone {
-		display: inline-flex;
 	}
 }
 
