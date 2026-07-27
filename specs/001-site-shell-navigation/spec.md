@@ -32,9 +32,9 @@ finished.
 
 1. **Given** a visitor is on any page, **When** the page loads, **Then** a consistent header
    navigation is present linking to Home, About Us, What We Do, For Employers, For Candidates,
-   Testimonials, Industry Leaders We've Met, Contact Us, and Employee Login.
+   Testimonials, Industry Leaders We've Met, and Employee Login.
 2. **Given** a visitor is on any page, **When** the page loads, **Then** a consistent footer is
-   present, including social media links.
+   present, including a Contact Us link and social media links.
 3. **Given** a visitor is on the Home page, **When** they use the navigation, **Then** they can
    reach every other page within 2 clicks.
 4. **Given** a visitor opens the site on a narrow viewport (e.g. a phone), **When** the page
@@ -93,9 +93,11 @@ appears on the live page — independent of any specific content page being fini
 
 - **FR-001**: System MUST provide a consistent header navigation, present on every page, linking
   to Home, About Us, What We Do, For Employers, For Candidates, Testimonials, Industry Leaders
-  We've Met, Contact Us, and Employee Login.
-- **FR-002**: System MUST provide a consistent footer, present on every page, including social
-  media links and a link to the Privacy Policy page (see `010-privacy-policy-page`).
+  We've Met, and Employee Login.
+- **FR-002**: System MUST provide a consistent footer, present on every page, including a Contact
+  Us link, social media links, and a link to the Privacy Policy page (see
+  `010-privacy-policy-page`). Contact Us is intentionally footer-only, not duplicated in the
+  header nav (2026-07-27 — see Assumptions).
 - **FR-003**: Every page MUST be reachable from Home within 2 clicks via the navigation.
 - **FR-004**: Navigation MUST collapse into a mobile-friendly menu on narrow viewports without
   clipping content or requiring horizontal scrolling.
@@ -156,6 +158,10 @@ appears on the live page — independent of any specific content page being fini
 - The Privacy Policy page (`010-privacy-policy-page`) is linked from the footer rather than the
   main header navigation, which is standard practice and keeps the primary nav focused on the 8
   content pages.
+- Contact Us is footer-only, not also in the header nav (per business-owner feedback,
+  2026-07-27) — it had been in both, which read as redundant. Still reachable in 1 click from
+  every page via the footer, so this doesn't affect FR-003/SC-001 (2-click reachability from
+  Home).
 - Services and Industries were originally planned as two separate nav entries/pages but were
   merged into a single "What We Do" page (see `004-what-we-do-page`) to match the firm's actual
   scope: placement services concentrated in the Transformer industry.
