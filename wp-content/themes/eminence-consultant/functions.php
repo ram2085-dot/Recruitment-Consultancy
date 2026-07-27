@@ -269,3 +269,146 @@ function eminence_get_social_links() {
 function eminence_has_analytics_consent() {
 	return isset( $_COOKIE[ EMINENCE_CONSENT_COOKIE ] ) && 'accepted' === $_COOKIE[ EMINENCE_CONSENT_COOKIE ];
 }
+
+/**
+ * Testimonials (007-testimonials-page data-model.md).
+ * A custom post type — not plain content — because testimonials repeat with a hard
+ * consent gate (FR-008) and an "omit gracefully if empty" render rule (FR-002) that plain
+ * block-editor content can't enforce. See research.md #1.
+ */
+add_action(
+	'init',
+	function () {
+		register_post_type(
+			'eminence_testimonial',
+			array(
+				'labels'       => array(
+					'name'          => __( 'Testimonials', 'eminence-consultant' ),
+					'singular_name' => __( 'Testimonial', 'eminence-consultant' ),
+					'add_new_item'  => __( 'Add New Testimonial', 'eminence-consultant' ),
+				),
+				'public'       => false,
+				'show_ui'      => true,
+				'show_in_menu' => true,
+				'menu_icon'    => 'dashicons-format-quote',
+				'supports'     => array( 'title', 'editor', 'thumbnail' ),
+			)
+		);
+
+		register_taxonomy(
+			'testimonial_type',
+			'eminence_testimonial',
+			array(
+				'labels'            => array(
+					'name'          => __( 'Testimonial Type', 'eminence-consultant' ),
+					'singular_name' => __( 'Type', 'eminence-consultant' ),
+				),
+				'hierarchical'      => false,
+				'show_admin_column' => true,
+				'public'            => false,
+				'show_ui'           => true,
+			)
+		);
+	}
+);
+
+/**
+ * Pre-create the two fixed testimonial_type terms (data-model.md: "Platform name, not
+ * free-form" — same closed-set pattern as Social Links) so editors pick from Client /
+ * Candidate rather than inventing new types.
+ */
+add_action(
+	'init',
+	function () {
+		if ( ! term_exists( 'client', 'testimonial_type' ) ) {
+			wp_insert_term( __( 'Client', 'eminence-consultant' ), 'testimonial_type', array( 'slug' => 'client' ) );
+		}
+		if ( ! term_exists( 'candidate', 'testimonial_type' ) ) {
+			wp_insert_term( __( 'Candidate', 'eminence-consultant' ), 'testimonial_type', array( 'slug' => 'candidate' ) );
+		}
+	},
+	20
+);
+
+/**
+ * Consent meta box (research.md #2). A checkbox is the editorial interface; the real
+ * enforcement is the save_post hook below, not this control by itself.
+ */
+add_action(
+	'add_meta_boxes',
+	function () {
+		add_meta_box(
+			'eminence_testimonial_consent',
+			__( 'Publishing Consent', 'eminence-consultant' ),
+			function ( $post ) {
+				wp_nonce_field( 'eminence_testimonial_consent', 'eminence_testimonial_consent_nonce' );
+				$checked = get_post_meta( $post->ID, 'eminence_consent_obtained', true );
+				?>
+				<label>
+					<input type="checkbox" name="eminence_consent_obtained" value="1" <?php checked( $checked, '1' ); ?> />
+					<?php esc_html_e( 'Documented consent has been obtained from the person or company named in this testimonial (required to publish).', 'eminence-consultant' ); ?>
+				</label>
+				<?php
+			},
+			'eminence_testimonial',
+			'side',
+			'high'
+		);
+	}
+);
+
+/**
+ * FR-008 enforcement: a testimonial cannot be `publish` status unless consent is
+ * recorded, regardless of what the editor tried to save — see research.md #2 for why
+ * this has to be a save_post hook rather than only a UI checkbox.
+ */
+add_action(
+	'save_post_eminence_testimonial',
+	function ( $post_id ) {
+		if ( ! isset( $_POST['eminence_testimonial_consent_nonce'] )
+			|| ! wp_verify_nonce( $_POST['eminence_testimonial_consent_nonce'], 'eminence_testimonial_consent' ) ) {
+			return;
+		}
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		$consent_given = ! empty( $_POST['eminence_consent_obtained'] );
+		update_post_meta( $post_id, 'eminence_consent_obtained', $consent_given ? '1' : '' );
+
+		// wp_update_post() re-fires this same hook, but by then the post row already
+		// shows post_status = draft, so the condition below is false on that second pass
+		// and the recursion terminates itself after one extra (harmless) invocation.
+		if ( ! $consent_given && 'publish' === get_post_status( $post_id ) ) {
+			wp_update_post(
+				array(
+					'ID'          => $post_id,
+					'post_status' => 'draft',
+				)
+			);
+		}
+	}
+);
+
+/**
+ * Published testimonials of one type, for page-testimonials.php.
+ *
+ * @param string $type_slug 'client' or 'candidate'.
+ * @return WP_Query
+ */
+function eminence_get_testimonials( $type_slug ) {
+	return new WP_Query(
+		array(
+			'post_type'      => 'eminence_testimonial',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'tax_query'      => array(
+				array(
+					'taxonomy' => 'testimonial_type',
+					'field'    => 'slug',
+					'terms'    => $type_slug,
+				),
+			),
+		)
+	);
+}

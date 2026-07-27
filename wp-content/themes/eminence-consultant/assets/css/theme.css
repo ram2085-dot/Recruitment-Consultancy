@@ -444,6 +444,51 @@ h4 {
 	max-width: 75ch;
 }
 
+/* ---------- Testimonials (007-testimonials-page) ---------- */
+
+.eminence-testimonials-page .eminence-page-content {
+	max-width: none;
+}
+
+.eminence-testimonial-section {
+	margin-bottom: 2.5rem;
+}
+
+.eminence-testimonial-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.25rem;
+}
+
+.eminence-testimonial-card {
+	border: 1px solid var(--eminence-color-border);
+	border-radius: 8px;
+	padding: 1.25rem;
+}
+
+.eminence-testimonial-logo img {
+	max-height: 48px;
+	width: auto;
+	margin-bottom: 0.75rem;
+}
+
+.eminence-testimonial-quote {
+	margin: 0 0 0.75rem;
+	font-style: italic;
+}
+
+.eminence-testimonial-author {
+	margin: 0;
+	font-weight: 600;
+	color: var(--eminence-color-ink);
+}
+
+@media (min-width: 768px) {
+	.eminence-testimonial-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
 /* ---------- Cookie consent banner ---------- */
 
 .eminence-cookie-notice {
