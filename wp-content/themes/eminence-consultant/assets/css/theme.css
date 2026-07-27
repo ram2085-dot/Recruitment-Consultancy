@@ -37,10 +37,12 @@
 
 html {
 	-webkit-text-size-adjust: 100%;
+	overflow-x: hidden;
 }
 
 body {
 	margin: 0;
+	overflow-x: hidden;
 	font-family: var(--eminence-font-body);
 	font-size: 16px;
 	line-height: 1.65;
@@ -581,7 +583,14 @@ h4 {
 
 /* ---------- Breakpoints ---------- */
 
-@media (min-width: 768px) {
+/*
+ * The nav has 9 items (8 pages + Employee Login) plus a phone number — that doesn't fit
+ * comfortably alongside the logo below ~1024px without wrapping mid-label (confirmed via
+ * a headless-Chrome screenshot: at 768-1023px individual labels like "About Us" were
+ * breaking into two lines and getting clipped at the header's top edge). Kept the mobile
+ * hamburger menu through the tablet range instead of forcing a cramped inline nav.
+ */
+@media (min-width: 1024px) {
 	.eminence-nav-toggle {
 		display: none;
 	}
@@ -591,11 +600,13 @@ h4 {
 		max-height: none;
 		overflow: visible;
 		border-bottom: none;
+		background: transparent;
 	}
 
 	.eminence-primary-menu {
 		display: flex;
-		gap: 1.75rem;
+		flex-wrap: nowrap;
+		gap: 1.25rem;
 		padding: 0;
 	}
 
@@ -606,12 +617,16 @@ h4 {
 	.eminence-primary-menu a {
 		padding: 0.25rem 0;
 		color: inherit;
+		white-space: nowrap;
+		font-size: 0.95rem;
 	}
 
 	.eminence-header-phone {
 		display: inline-flex;
 	}
+}
 
+@media (min-width: 768px) {
 	.eminence-hero-title {
 		font-size: 2.75rem;
 	}

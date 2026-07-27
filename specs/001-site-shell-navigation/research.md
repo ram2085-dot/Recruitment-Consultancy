@@ -1,3 +1,4 @@
+
 # Phase 0 Research: Site Shell & Global Navigation
 
 Each entry: **Decision** — **Rationale** — **Alternatives Considered**.
