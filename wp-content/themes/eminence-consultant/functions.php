@@ -157,7 +157,7 @@ add_action(
 		$wp_customize->add_setting(
 			'eminence_hero_subtitle',
 			array(
-				'default'           => __( 'Permanent staffing and executive search, with deep expertise in the Transformer industry.', 'eminence-consultant' ),
+				'default'           => __( 'Permanent staffing and executive search, with major clients in the Transformer, wire & cables industry.', 'eminence-consultant' ),
 				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);

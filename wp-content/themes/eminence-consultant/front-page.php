@@ -24,7 +24,7 @@ $eminence_candidates_page = get_page_by_path( 'for-candidates' );
 			<?php echo esc_html( get_theme_mod( 'eminence_hero_headline', __( 'Hire the Best Talent for Your Business with Eminence Consultant', 'eminence-consultant' ) ) ); ?>
 		</h1>
 		<p class="eminence-hero-subtitle">
-			<?php echo esc_html( get_theme_mod( 'eminence_hero_subtitle', __( 'Permanent staffing and executive search, with deep expertise in the Transformer industry.', 'eminence-consultant' ) ) ); ?>
+			<?php echo esc_html( get_theme_mod( 'eminence_hero_subtitle', __( 'Permanent staffing and executive search, with major clients in the Transformer, wire & cables industry.', 'eminence-consultant' ) ) ); ?>
 		</p>
 		<div class="eminence-hero-actions">
 			<a class="eminence-btn eminence-btn--primary" href="<?php echo esc_url( $eminence_employers_page ? get_permalink( $eminence_employers_page ) : home_url( '/' ) ); ?>">
