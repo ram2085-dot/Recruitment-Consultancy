@@ -19,6 +19,8 @@
 	<?php esc_html_e( 'Skip to content', 'eminence-consultant' ); ?>
 </a>
 
+<div class="eminence-top-accent" aria-hidden="true"></div>
+
 <?php
 // Transparent header overlaying the hero photo on Home, matching the reference design;
 // a solid header on every other page (standard pattern — the hero is Home-only, per

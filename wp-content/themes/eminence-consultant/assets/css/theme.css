@@ -4,15 +4,13 @@
  * No CSS framework dependency (research.md #4) — kept deliberately small for the <3s
  * performance target (constitution Principle VII).
  *
- * Visual system updated 2026-07-26: first matched a reference recruitment-site design
- * (hero + inline nav + phone CTA), then a warmer placeholder palette, then — once the
- * business owner supplied their real logo (assets/images/logo.png, a multi-stroke "C"
- * mark in gold/orange/red/maroon/rose) — colors sampled directly from the logo itself.
- * That made the site chrome and the logo blend together (same warm hue family), so per
- * follow-up feedback this is now a deliberately CONTRASTING neutral-navy palette instead:
- * cool, understated chrome (buttons, hero, footer, links) so the logo's warm colors read
- * as the one vivid accent on the page rather than disappearing into matching buttons and
- * a matching hero. The logo's own colors are untouched — only the site's chrome changed.
+ * Visual system history: reference-design match (2026-07-26) -> warm placeholder palette
+ * -> logo-sampled palette -> contrasting navy chrome (2026-07-27) -> this pass (2026-07-31),
+ * a full richness/depth upgrade requested after the site read as "dull": design tokens
+ * (shadow/radius/gradient scale), a signature accent-gradient motif drawn from the logo's
+ * own colors and reused consistently (top bar, headings, card accents), a floating stats
+ * section, card lift/hover states, gradient buttons, and richer content typography. Colors
+ * and copy remain placeholders pending final business-owner sign-off (BRD Section 10/9).
  */
 
 :root {
@@ -22,9 +20,27 @@
 	--eminence-color-primary-dark: #15283f;
 	--eminence-color-accent: #3b7dd8;
 	--eminence-color-border: #e2e5e8;
+	--eminence-color-surface: #f5f7fa;
 	--eminence-color-footer-bg: #14181c;
+
+	/* Signature accent gradient, sampled from the business owner's logo (see git history
+	   for the palette work) — reused as a recurring motif (top bar, heading underlines,
+	   card accents) so the logo's warm colors tie into the site without repainting every
+	   button/section that color (which is what made the site and logo blend together). */
+	--eminence-accent-gradient: linear-gradient(90deg, #781828 0%, #e03018 45%, #f8b000 100%);
+
 	--eminence-font-heading: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	--eminence-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+	--eminence-radius-sm: 10px;
+	--eminence-radius-md: 16px;
+	--eminence-radius-pill: 999px;
+
+	--eminence-shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.05);
+	--eminence-shadow-md: 0 8px 20px rgba(16, 24, 40, 0.1), 0 2px 6px rgba(16, 24, 40, 0.06);
+	--eminence-shadow-lg: 0 20px 40px rgba(16, 24, 40, 0.14), 0 4px 10px rgba(16, 24, 40, 0.06);
+
+	--eminence-transition: 180ms ease;
 }
 
 /* ---------- Reset & base ---------- */
@@ -38,6 +54,7 @@
 html {
 	-webkit-text-size-adjust: 100%;
 	overflow-x: hidden;
+	scroll-behavior: smooth;
 }
 
 body {
@@ -45,7 +62,7 @@ body {
 	overflow-x: hidden;
 	font-family: var(--eminence-font-body);
 	font-size: 16px;
-	line-height: 1.65;
+	line-height: 1.7;
 	color: var(--eminence-color-body);
 	background: #ffffff;
 }
@@ -58,6 +75,7 @@ img {
 
 a {
 	color: var(--eminence-color-primary-dark);
+	transition: color var(--eminence-transition);
 }
 
 h1,
@@ -101,8 +119,20 @@ h4 {
 }
 
 :focus-visible {
-	outline: 3px solid var(--eminence-color-primary);
+	outline: 3px solid var(--eminence-color-accent);
 	outline-offset: 2px;
+}
+
+/* ---------- Signature accent bar ---------- */
+
+/*
+ * A thin hairline of the logo's own gradient at the very top of every page — the one
+ * place the logo's warm colors appear outside the mark itself, tying the two palettes
+ * together without repainting the navy chrome (see the palette-contrast decision).
+ */
+.eminence-top-accent {
+	height: 4px;
+	background: var(--eminence-accent-gradient);
 }
 
 /* ---------- Layout wrapper ---------- */
@@ -118,7 +148,13 @@ h4 {
 	width: 100%;
 	max-width: 1120px;
 	margin: 0 auto;
-	padding: 1.5rem 1.25rem 3rem;
+	padding: 2rem 1.25rem 4rem;
+}
+
+/* The Home hero must sit flush against the very top for the transparent overlay header
+   to read correctly — main's usual top padding would leave a blank strip above it. */
+body.home .eminence-site-main {
+	padding-top: 0;
 }
 
 /* ---------- Header & primary nav ---------- */
@@ -127,6 +163,7 @@ h4 {
 	position: relative;
 	background: #ffffff;
 	border-bottom: 1px solid var(--eminence-color-border);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
 	color: var(--eminence-color-ink);
 	z-index: 20;
 }
@@ -134,11 +171,12 @@ h4 {
 /* Transparent, overlaid on the hero — Home page only (header.php sets this class). */
 .eminence-site-header--overlay {
 	position: absolute;
-	top: 0;
+	top: 4px;
 	left: 0;
 	right: 0;
 	background: transparent;
 	border-bottom: none;
+	box-shadow: none;
 	color: #ffffff;
 }
 
@@ -158,6 +196,11 @@ h4 {
 	gap: 0.6rem;
 	text-decoration: none;
 	color: var(--eminence-color-ink);
+	transition: transform var(--eminence-transition);
+}
+
+.eminence-logo:hover {
+	transform: scale(1.03);
 }
 
 .eminence-site-header--overlay .eminence-logo {
@@ -185,16 +228,19 @@ h4 {
 }
 
 /*
- * No background chip behind the logo, per request. Note: assets/images/logo.png has an
- * opaque white background baked into the pixels, not real transparency (confirmed by
- * inspecting the PNG's alpha channel), so on the dark hero overlay (Home page) the
- * logo's own white square will still be visible around the mark — that's the source
- * image, not something CSS can remove. Fixed by swapping in a transparent-background
- * export of the logo when one is available.
+ * No background chip behind the logo, per request. The logo file (assets/images/logo.png)
+ * has had its background made transparent (a soft alpha-threshold pass — see git history);
+ * a professionally-exported transparent version would have cleaner edges if one becomes
+ * available.
  */
 .eminence-logo--custom {
 	display: inline-flex;
 	align-items: center;
+	transition: transform var(--eminence-transition);
+}
+
+.eminence-logo--custom:hover {
+	transform: scale(1.03);
 }
 
 .eminence-logo--custom .custom-logo-link {
@@ -215,9 +261,14 @@ h4 {
 	width: 44px;
 	height: 44px;
 	border: 1px solid var(--eminence-color-border);
-	border-radius: 4px;
+	border-radius: var(--eminence-radius-sm);
 	background: #ffffff;
 	cursor: pointer;
+	transition: border-color var(--eminence-transition), background var(--eminence-transition);
+}
+
+.eminence-nav-toggle:hover {
+	border-color: var(--eminence-color-accent);
 }
 
 .eminence-site-header--overlay .eminence-nav-toggle {
@@ -244,6 +295,7 @@ h4 {
 	top: 100%;
 	background: #ffffff;
 	border-bottom: 1px solid var(--eminence-color-border);
+	box-shadow: var(--eminence-shadow-md);
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.2s ease-in-out;
@@ -278,13 +330,31 @@ h4 {
 	width: 100vw;
 	margin-left: calc(50% - 50vw);
 	margin-right: calc(50% - 50vw);
-	min-height: 520px;
+	min-height: 560px;
 	display: flex;
 	align-items: center;
-	padding: 7rem 1.5rem 4rem;
-	background: linear-gradient(135deg, #10161c 0%, #1f3a5f 55%, #3b7dd8 130%);
+	padding: 8rem 1.5rem 7rem;
+	background:
+		radial-gradient(circle at 15% 15%, rgba(59, 125, 216, 0.35), transparent 45%),
+		radial-gradient(circle at 85% 30%, rgba(224, 164, 88, 0.16), transparent 40%),
+		linear-gradient(135deg, #0c1117 0%, #1f3a5f 55%, #3b7dd8 130%);
 	color: #ffffff;
 	overflow: hidden;
+}
+
+/* Faint diagonal texture so the gradient isn't perfectly flat — cheap, no image asset. */
+.eminence-hero::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: repeating-linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.025) 0px,
+		rgba(255, 255, 255, 0.025) 1px,
+		transparent 1px,
+		transparent 6px
+	);
+	pointer-events: none;
 }
 
 .eminence-hero::after {
@@ -303,17 +373,33 @@ h4 {
 	text-align: center;
 }
 
+.eminence-hero-eyebrow {
+	display: inline-block;
+	font-family: var(--eminence-font-heading);
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: #ffd699;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: var(--eminence-radius-pill);
+	padding: 0.4rem 1rem;
+	margin-bottom: 1.25rem;
+}
+
 .eminence-hero-title {
 	color: #ffffff;
-	font-size: 2rem;
+	font-size: clamp(2rem, 1.55rem + 2.2vw, 3.25rem);
+	text-shadow: 0 2px 24px rgba(0, 0, 0, 0.25);
 	margin-bottom: 0.75rem;
 }
 
 .eminence-hero-subtitle {
-	font-size: 1.05rem;
+	font-size: clamp(1rem, 0.92rem + 0.4vw, 1.15rem);
 	color: rgba(255, 255, 255, 0.92);
 	max-width: 46ch;
-	margin: 0 auto 1.75rem;
+	margin: 0 auto 2rem;
 }
 
 .eminence-hero-actions {
@@ -323,43 +409,162 @@ h4 {
 	justify-content: center;
 }
 
+/* ---------- Stats bar (Home page) ---------- */
+
+/*
+ * Floating stat cards that overlap the hero's bottom edge — a common, effective "premium"
+ * pattern that also gives the page a visual anchor between the hero and body content.
+ * Numbers are placeholder (BRD Section 9 content is still pending) — swap for confirmed
+ * figures before launch.
+ */
+.eminence-stats {
+	position: relative;
+	max-width: 1040px;
+	margin: -4.5rem auto 0;
+	padding: 0 1.25rem;
+	z-index: 2;
+}
+
+.eminence-stats-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
+}
+
+.eminence-stat-card {
+	position: relative;
+	overflow: hidden;
+	background: #ffffff;
+	border-radius: var(--eminence-radius-md);
+	box-shadow: var(--eminence-shadow-lg);
+	padding: 1.5rem 1.25rem;
+	text-align: center;
+}
+
+.eminence-stat-card::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4px;
+	background: var(--eminence-accent-gradient);
+}
+
+.eminence-stat-number {
+	display: block;
+	font-family: var(--eminence-font-heading);
+	font-weight: 700;
+	font-size: 1.9rem;
+	color: var(--eminence-color-primary);
+	margin-bottom: 0.15rem;
+}
+
+.eminence-stat-label {
+	display: block;
+	font-size: 0.85rem;
+	color: var(--eminence-color-body);
+}
+
 /* ---------- Footer ---------- */
 
 .eminence-site-footer {
+	position: relative;
 	background: var(--eminence-color-footer-bg);
 	color: #f2f5f5;
 	margin-top: auto;
 }
 
+.eminence-site-footer::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: var(--eminence-accent-gradient);
+}
+
 .eminence-footer-inner {
 	max-width: 1120px;
 	margin: 0 auto;
-	padding: 2.25rem 1.25rem;
+	padding: 3.5rem 1.25rem 2rem;
+}
+
+.eminence-footer-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 2.5rem;
+	padding-bottom: 2.5rem;
+}
+
+.eminence-footer-brand {
 	display: flex;
 	flex-direction: column;
-	gap: 1.25rem;
+	gap: 0.85rem;
+}
+
+.eminence-footer-brand-mark {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.eminence-footer-brand-mark img {
+	height: 44px;
+	width: auto;
+}
+
+.eminence-footer-brand-name {
+	font-family: var(--eminence-font-heading);
+	font-weight: 700;
+	font-size: 1.1rem;
+	color: #ffffff;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.eminence-footer-tagline {
+	margin: 0;
+	font-size: 0.9rem;
+	color: rgba(242, 245, 245, 0.7);
+	max-width: 32ch;
+}
+
+.eminence-footer-heading {
+	font-family: var(--eminence-font-heading);
+	font-weight: 600;
+	font-size: 0.8rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: rgba(242, 245, 245, 0.55);
+	margin: 0 0 1rem;
 }
 
 .eminence-footer-menu {
 	list-style: none;
 	display: flex;
-	flex-wrap: wrap;
-	gap: 0.75rem 1.25rem;
+	flex-direction: column;
+	gap: 0.65rem;
 	margin: 0;
 	padding: 0;
 }
 
-.eminence-footer-menu a,
-.eminence-footer-legal a {
+.eminence-footer-menu a {
 	color: #f2f5f5;
 	text-decoration: none;
+	transition: color var(--eminence-transition);
+}
+
+.eminence-footer-menu a:hover {
+	color: #ffd699;
 }
 
 .eminence-social-links {
 	list-style: none;
 	display: flex;
 	gap: 0.75rem;
-	margin: 0;
+	margin: 0 0 1.25rem;
 	padding: 0;
 }
 
@@ -367,19 +572,28 @@ h4 {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 36px;
-	height: 36px;
+	width: 38px;
+	height: 38px;
 	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.1);
+	transition: background var(--eminence-transition), transform var(--eminence-transition);
 }
 
-.eminence-footer-legal {
-	font-size: 0.875rem;
-	opacity: 0.85;
+.eminence-social-link a:hover {
+	background: rgba(255, 255, 255, 0.2);
+	transform: translateY(-2px);
+}
+
+.eminence-footer-bottom {
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	padding-top: 1.5rem;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.5rem 1rem;
+	gap: 0.75rem 1.5rem;
 	align-items: center;
+	justify-content: space-between;
+	font-size: 0.85rem;
+	color: rgba(242, 245, 245, 0.6);
 }
 
 .eminence-footer-copyright {
@@ -389,19 +603,29 @@ h4 {
 /* ---------- Buttons ---------- */
 
 .eminence-btn {
-	display: inline-block;
-	padding: 0.75rem 1.5rem;
-	border-radius: 999px;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.8rem 1.6rem;
+	border-radius: var(--eminence-radius-pill);
 	border: 2px solid transparent;
 	text-decoration: none;
 	font-weight: 600;
 	font-family: var(--eminence-font-heading);
 	cursor: pointer;
+	transition: transform var(--eminence-transition), box-shadow var(--eminence-transition),
+		background var(--eminence-transition), color var(--eminence-transition);
 }
 
 .eminence-btn--primary {
-	background: var(--eminence-color-accent);
+	background: linear-gradient(135deg, var(--eminence-color-accent), #2f63b0);
 	color: #ffffff;
+	box-shadow: var(--eminence-shadow-sm);
+}
+
+.eminence-btn--primary:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--eminence-shadow-md);
 }
 
 .eminence-btn--secondary {
@@ -410,24 +634,83 @@ h4 {
 	color: var(--eminence-color-ink);
 }
 
+.eminence-btn--secondary:hover {
+	border-color: var(--eminence-color-accent);
+	color: var(--eminence-color-accent);
+	transform: translateY(-2px);
+}
+
 .eminence-btn--outline {
 	background: transparent;
 	border-color: rgba(255, 255, 255, 0.8);
 	color: #ffffff;
 }
 
+.eminence-btn--outline:hover {
+	background: rgba(255, 255, 255, 0.15);
+	transform: translateY(-2px);
+}
+
 /* ---------- Content pages ---------- */
 
 .eminence-page-header {
-	margin-bottom: 1.5rem;
+	margin-bottom: 2rem;
+}
+
+.eminence-page-title {
+	font-size: clamp(1.75rem, 1.45rem + 1.4vw, 2.5rem);
+}
+
+/* Recurring accent-underline motif under every page title and content subheading — the
+   same gradient as the top bar, so it reads as one deliberate design system rather than
+   scattered flourishes. */
+.eminence-page-title::after,
+.eminence-content-page h2::after {
+	content: "";
+	display: block;
+	width: 56px;
+	height: 4px;
+	margin-top: 0.6rem;
+	border-radius: var(--eminence-radius-pill);
+	background: var(--eminence-accent-gradient);
 }
 
 .eminence-page-featured-image {
-	margin-bottom: 1.5rem;
+	margin-bottom: 2rem;
+	border-radius: var(--eminence-radius-md);
+	overflow: hidden;
+	box-shadow: var(--eminence-shadow-sm);
 }
 
 .eminence-page-content {
 	max-width: 75ch;
+	font-size: 1.05rem;
+}
+
+.eminence-page-content h2 {
+	margin-top: 2.25rem;
+}
+
+.eminence-page-content ul,
+.eminence-page-content ol {
+	padding-left: 1.4rem;
+}
+
+.eminence-page-content li {
+	margin-bottom: 0.4rem;
+}
+
+.eminence-page-content a {
+	text-decoration-color: var(--eminence-color-accent);
+	text-underline-offset: 2px;
+}
+
+.eminence-page-content blockquote {
+	margin: 1.5rem 0;
+	padding: 0.25rem 0 0.25rem 1.25rem;
+	border-left: 4px solid var(--eminence-color-accent);
+	font-style: italic;
+	color: var(--eminence-color-ink);
 }
 
 /* ---------- Testimonials (007-testimonials-page) ---------- */
@@ -443,13 +726,33 @@ h4 {
 .eminence-testimonial-grid {
 	display: grid;
 	grid-template-columns: 1fr;
-	gap: 1.25rem;
+	gap: 1.5rem;
 }
 
 .eminence-testimonial-card {
+	position: relative;
+	overflow: hidden;
+	background: #ffffff;
 	border: 1px solid var(--eminence-color-border);
-	border-radius: 8px;
-	padding: 1.25rem;
+	border-radius: var(--eminence-radius-md);
+	box-shadow: var(--eminence-shadow-sm);
+	padding: 1.75rem 1.5rem 1.5rem;
+	transition: transform var(--eminence-transition), box-shadow var(--eminence-transition);
+}
+
+.eminence-testimonial-card::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4px;
+	background: var(--eminence-accent-gradient);
+}
+
+.eminence-testimonial-card:hover {
+	transform: translateY(-4px);
+	box-shadow: var(--eminence-shadow-md);
 }
 
 .eminence-testimonial-logo img {
@@ -458,9 +761,33 @@ h4 {
 	margin-bottom: 0.75rem;
 }
 
-.eminence-testimonial-quote {
-	margin: 0 0 0.75rem;
+/*
+ * Scoped as .eminence-testimonial-card blockquote (not just .eminence-testimonial-quote)
+ * so this beats .eminence-page-content blockquote on specificity — without the extra
+ * ancestor, the generic content-blockquote rule (also 1 class + 1 type = equal weight to
+ * a single class) was winning by source order and stamping its left border/padding over
+ * this card's own styling. Found via screenshot: a stray blue border was showing through.
+ */
+.eminence-testimonial-card blockquote.eminence-testimonial-quote {
+	position: relative;
+	margin: 0 0 1rem;
+	padding: 0 0 0 1.75rem;
+	border-left: none;
 	font-style: italic;
+	color: var(--eminence-color-body);
+}
+
+.eminence-testimonial-quote::before {
+	content: "\201C";
+	position: absolute;
+	left: 0;
+	top: -0.5rem;
+	font-family: Georgia, serif;
+	font-size: 2.75rem;
+	font-style: normal;
+	line-height: 1;
+	color: var(--eminence-color-accent);
+	opacity: 0.35;
 }
 
 .eminence-testimonial-author {
@@ -486,45 +813,67 @@ h4 {
 	position: relative;
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 0.75rem;
 }
 
 .eminence-slider-track {
 	display: flex;
-	gap: 1rem;
+	gap: 1.25rem;
 	overflow-x: auto;
 	scroll-snap-type: x mandatory;
 	scroll-behavior: smooth;
-	padding-bottom: 0.5rem;
+	padding: 0.25rem 0.25rem 0.75rem;
 }
 
 .eminence-slider-slide {
 	flex: 0 0 min(320px, 85vw);
 	scroll-snap-align: start;
 	margin: 0;
+	border-radius: var(--eminence-radius-md);
+	overflow: hidden;
+	box-shadow: var(--eminence-shadow-sm);
+	transition: box-shadow var(--eminence-transition);
+}
+
+.eminence-slider-slide:hover {
+	box-shadow: var(--eminence-shadow-md);
 }
 
 .eminence-slider-slide img {
-	border-radius: 8px;
 	width: 100%;
+	transition: transform 260ms ease;
+}
+
+.eminence-slider-slide:hover img {
+	transform: scale(1.04);
 }
 
 .eminence-slider-slide figcaption {
-	margin-top: 0.5rem;
+	padding: 0.6rem 0.85rem 0.75rem;
 	font-size: 0.9rem;
 	color: var(--eminence-color-body);
+	background: #ffffff;
 }
 
 .eminence-slider-btn {
 	flex: none;
-	width: 40px;
-	height: 40px;
+	width: 44px;
+	height: 44px;
 	border-radius: 50%;
 	border: 1px solid var(--eminence-color-border);
 	background: #ffffff;
-	font-size: 1.25rem;
+	box-shadow: var(--eminence-shadow-sm);
+	font-size: 1.4rem;
 	line-height: 1;
 	cursor: pointer;
+	transition: background var(--eminence-transition), color var(--eminence-transition),
+		transform var(--eminence-transition);
+}
+
+.eminence-slider-btn:hover {
+	background: var(--eminence-color-accent);
+	color: #ffffff;
+	transform: scale(1.06);
 }
 
 .eminence-slider-empty {
@@ -542,9 +891,9 @@ h4 {
 	z-index: 1000;
 	background: #ffffff;
 	border: 1px solid var(--eminence-color-border);
-	border-radius: 8px;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-	padding: 1rem 1.25rem;
+	border-radius: var(--eminence-radius-md);
+	box-shadow: var(--eminence-shadow-lg);
+	padding: 1.1rem 1.35rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
@@ -568,11 +917,10 @@ h4 {
 /* ---------- Breakpoints ---------- */
 
 /*
- * The nav has 9 items (8 pages + Employee Login) plus a phone number — that doesn't fit
- * comfortably alongside the logo below ~1024px without wrapping mid-label (confirmed via
- * a headless-Chrome screenshot: at 768-1023px individual labels like "About Us" were
- * breaking into two lines and getting clipped at the header's top edge). Kept the mobile
- * hamburger menu through the tablet range instead of forcing a cramped inline nav.
+ * The nav has 8 items (7 pages + Employee Login) — doesn't fit comfortably alongside the
+ * logo below ~1024px without wrapping mid-label (confirmed via a headless-Chrome
+ * screenshot). Kept the mobile hamburger menu through the tablet range instead of forcing
+ * a cramped inline nav.
  */
 @media (min-width: 1024px) {
 	.eminence-nav-toggle {
@@ -584,13 +932,14 @@ h4 {
 		max-height: none;
 		overflow: visible;
 		border-bottom: none;
+		box-shadow: none;
 		background: transparent;
 	}
 
 	.eminence-primary-menu {
 		display: flex;
 		flex-wrap: nowrap;
-		gap: 1.25rem;
+		gap: 1.5rem;
 		padding: 0;
 	}
 
@@ -599,22 +948,39 @@ h4 {
 	}
 
 	.eminence-primary-menu a {
+		position: relative;
 		padding: 0.25rem 0;
 		color: inherit;
 		white-space: nowrap;
 		font-size: 0.95rem;
 	}
+
+	.eminence-primary-menu a::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		bottom: -4px;
+		width: 0;
+		height: 2px;
+		background: currentColor;
+		transition: width var(--eminence-transition);
+	}
+
+	.eminence-primary-menu a:hover::after,
+	.eminence-primary-menu a[aria-current="page"]::after {
+		width: 100%;
+	}
+}
+
+@media (min-width: 640px) {
+	.eminence-stats-grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
 }
 
 @media (min-width: 768px) {
-	.eminence-hero-title {
-		font-size: 2.75rem;
-	}
-
-	.eminence-footer-inner {
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
+	.eminence-footer-grid {
+		grid-template-columns: 1.4fr 1fr 1fr;
 	}
 
 	.eminence-cookie-notice {
@@ -628,10 +994,6 @@ h4 {
 
 @media (min-width: 1280px) {
 	.eminence-site-main {
-		padding-top: 2.5rem;
-	}
-
-	.eminence-hero-title {
-		font-size: 3.25rem;
+		padding-top: 3rem;
 	}
 }
