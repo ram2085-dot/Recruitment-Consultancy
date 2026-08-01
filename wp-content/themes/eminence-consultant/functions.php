@@ -181,8 +181,66 @@ add_action(
 				'type'    => 'text',
 			)
 		);
+
+		// Hero background slides — 4 fixed slots (not a CPT/repeater: a fixed set of
+		// background images, not a growing/queryable list, same reasoning as keeping
+		// About Us's leadership team as plain content instead of a custom post type).
+		// Defaults point at the theme's own bundled placeholders (assets/images/hero/)
+		// so the slider still has something to show before the business owner uploads
+		// their own images via wp-admin.
+		foreach ( range( 1, 4 ) as $eminence_slide_num ) {
+			$setting_id = "eminence_hero_slide_{$eminence_slide_num}";
+
+			$wp_customize->add_setting(
+				$setting_id,
+				array(
+					'default'           => get_template_directory_uri() . "/assets/images/hero/hero-slide-{$eminence_slide_num}.jpg",
+					'sanitize_callback' => 'esc_url_raw',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Image_Control(
+					$wp_customize,
+					$setting_id,
+					array(
+						/* translators: %d: slide position, 1-4 */
+						'label'    => sprintf( __( 'Hero Background — Slide %d', 'eminence-consultant' ), $eminence_slide_num ),
+						'section'  => 'eminence_hero',
+						'settings' => $setting_id,
+					)
+				)
+			);
+		}
 	}
 );
+
+/**
+ * Non-empty hero slide URLs, in slot order (1-4). A slot left blank (business owner
+ * clicked "Remove" in the Customizer, which clears the setting rather than restoring the
+ * default) is omitted, not rendered as a broken image — same omit-gracefully rule used
+ * for Social Links and testimonial logos.
+ *
+ * @return string[] Image URLs for the slides that actually have one set.
+ */
+function eminence_get_hero_slides() {
+	$slides = array();
+
+	foreach ( range( 1, 4 ) as $eminence_slide_num ) {
+		// The fallback here must match add_setting()'s registered default above — WP only
+		// applies the Customizer's own default inside the live-preview context; a normal
+		// front-end page load only ever sees get_theme_mod()'s own $default argument. Same
+		// duplication as eminence_hero_headline/_subtitle in front-page.php, for the same
+		// reason.
+		$default = get_template_directory_uri() . "/assets/images/hero/hero-slide-{$eminence_slide_num}.jpg";
+		$url     = get_theme_mod( "eminence_hero_slide_{$eminence_slide_num}", $default );
+		if ( ! empty( $url ) ) {
+			$slides[] = $url;
+		}
+	}
+
+	return $slides;
+}
 
 /**
  * Customizer: Social Link fields (data-model.md "Social Link").
