@@ -5,8 +5,14 @@
  * deployment, per constitution Principle I / spec 001 FR-014) plus a key-services summary
  * from the Page's own the_content(). Renders inside the Site Shell (001).
  *
- * A real photo can replace the gradient background once the business owner supplies one
- * (BRD Section 9); this is styled as a placeholder gradient hero until then.
+ * Hero background is a rotating slider of 4 generic recruitment stock images (supplied
+ * 2026-07-31, assets/images/hero/hero-slide-1..4.jpg) with the navy tint layered on top —
+ * "images on a blue background," not a full photo takeover, so the white hero text stays
+ * legible. These are decorative/atmospheric theme assets, not business-owner content, so
+ * they're referenced directly rather than going through the CMS-editable content path
+ * spec 001 FR-014 covers (that's for page text/images an editor swaps in wp-admin, not
+ * template-level design assets like this or the logo's SVG fallback). Crossfade is driven
+ * by assets/js/hero-slider.js, enqueued only on the front page.
  */
 
 get_header();
@@ -15,9 +21,27 @@ get_header();
 // wrong (or point at an unrelated page) on any other WordPress install.
 $eminence_employers_page  = get_page_by_path( 'for-employers' );
 $eminence_candidates_page = get_page_by_path( 'for-candidates' );
+
+$eminence_hero_slides = array(
+	'hero-slide-1.jpg',
+	'hero-slide-2.jpg',
+	'hero-slide-3.jpg',
+	'hero-slide-4.jpg',
+);
 ?>
 
 <section class="eminence-hero">
+	<div class="eminence-hero-slides" aria-hidden="true">
+		<?php foreach ( $eminence_hero_slides as $eminence_index => $eminence_slide ) : ?>
+			<img
+				class="eminence-hero-slide<?php echo 0 === $eminence_index ? ' is-active' : ''; ?>"
+				src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero/' . $eminence_slide ); ?>"
+				alt=""
+				<?php echo 0 === $eminence_index ? 'fetchpriority="high"' : 'loading="lazy"'; ?>
+			/>
+		<?php endforeach; ?>
+	</div>
+	<div class="eminence-hero-tint" aria-hidden="true"></div>
 	<div class="eminence-hero-inner">
 		<span class="eminence-hero-eyebrow"><?php esc_html_e( 'Recruitment Partner — Transformer Industry', 'eminence-consultant' ); ?></span>
 		<h1 class="eminence-hero-title">

@@ -334,19 +334,61 @@ body.home .eminence-site-main {
 	display: flex;
 	align-items: center;
 	padding: 8rem 1.5rem 7rem;
-	background:
-		radial-gradient(circle at 15% 15%, rgba(59, 125, 216, 0.35), transparent 45%),
-		radial-gradient(circle at 85% 30%, rgba(224, 164, 88, 0.16), transparent 40%),
-		linear-gradient(135deg, #0c1117 0%, #1f3a5f 55%, #3b7dd8 130%);
+	/* Fallback color shown before the slide images load / if they fail. */
+	background: linear-gradient(135deg, #0c1117 0%, #1f3a5f 55%, #3b7dd8 130%);
 	color: #ffffff;
 	overflow: hidden;
 }
 
-/* Faint diagonal texture so the gradient isn't perfectly flat — cheap, no image asset. */
+/*
+ * Rotating background photos (2026-07-31) — 4 generic recruitment stock images supplied
+ * by the business owner, crossfaded by assets/js/hero-slider.js. Stacked absolutely,
+ * z-index:0, sitting below the tint/texture/content layers below.
+ */
+.eminence-hero-slides {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+}
+
+.eminence-hero-slide {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0;
+	transition: opacity 1.2s ease-in-out;
+}
+
+.eminence-hero-slide.is-active {
+	opacity: 1;
+}
+
+/*
+ * The navy "blue background" tint over the photos — per request, the images sit ON the
+ * blue chrome rather than replacing it, and this is also what keeps the white hero text
+ * legible over a busy stock photo. Combines the two radial accents and the dark corner
+ * vignette that used to live on .eminence-hero::after before the photo layer existed.
+ */
+.eminence-hero-tint {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background:
+		radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.55)),
+		radial-gradient(circle at 15% 15%, rgba(59, 125, 216, 0.45), transparent 45%),
+		radial-gradient(circle at 85% 30%, rgba(224, 164, 88, 0.12), transparent 40%),
+		linear-gradient(135deg, rgba(12, 17, 23, 0.86) 0%, rgba(31, 58, 95, 0.82) 55%, rgba(59, 125, 216, 0.7) 130%);
+	pointer-events: none;
+}
+
+/* Faint diagonal texture on top of the tint so it isn't perfectly flat — cheap, no extra image asset. */
 .eminence-hero::before {
 	content: "";
 	position: absolute;
 	inset: 0;
+	z-index: 2;
 	background-image: repeating-linear-gradient(
 		135deg,
 		rgba(255, 255, 255, 0.025) 0px,
@@ -357,17 +399,9 @@ body.home .eminence-site-main {
 	pointer-events: none;
 }
 
-.eminence-hero::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45));
-	pointer-events: none;
-}
-
 .eminence-hero-inner {
 	position: relative;
-	z-index: 1;
+	z-index: 3;
 	max-width: 760px;
 	margin: 0 auto;
 	text-align: center;

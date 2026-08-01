@@ -119,6 +119,17 @@ add_action(
 				true
 			);
 		}
+
+		// Home hero background crossfade (002-home-page) — front page only.
+		if ( is_front_page() ) {
+			wp_enqueue_script(
+				'eminence-hero-slider',
+				get_template_directory_uri() . '/assets/js/hero-slider.js',
+				array(),
+				$theme_version,
+				true
+			);
+		}
 	}
 );
 
