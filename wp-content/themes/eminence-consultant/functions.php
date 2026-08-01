@@ -265,6 +265,25 @@ function eminence_get_hero_slides() {
 }
 
 /**
+ * Marks pages using a hero banner (see eminence_page_hero_templates()) with a body class,
+ * so theme.css can zero out .eminence-site-main's top padding for them — otherwise that
+ * padding shows as a visible white gap between the header and the hero. Removed when the
+ * header stopped being a transparent overlay (2026-08-01), on the reasoning that the hero
+ * no longer needed to sit flush under it; that reasoning missed that .eminence-site-main's
+ * own padding still applies regardless of the header being solid or overlaid, and the gap
+ * is exactly as visible either way. Re-added the same day once a screenshot showed it.
+ */
+add_filter(
+	'body_class',
+	function ( $classes ) {
+		if ( is_page_template( eminence_page_hero_templates() ) ) {
+			$classes[] = 'eminence-has-page-hero';
+		}
+		return $classes;
+	}
+);
+
+/**
  * Customizer: Social Link fields (data-model.md "Social Link").
  * A URL left blank means: omit that icon (spec Edge Case), enforced in
  * template-parts/footer-widgets.php, not here.

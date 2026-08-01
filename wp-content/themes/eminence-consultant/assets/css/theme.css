@@ -156,6 +156,14 @@ h4 {
 	padding: 2rem 1.25rem 4rem;
 }
 
+/* Any hero (Home, or an interior page using eminence_page_hero_templates()) sits flush
+   against the header — main's usual top padding would otherwise leave a visible white
+   gap between the header and the hero, confirmed via screenshot (2026-08-01). */
+body.home .eminence-site-main,
+body.eminence-has-page-hero .eminence-site-main {
+	padding-top: 0;
+}
+
 /* ---------- Utility bar ---------- */
 
 /*
