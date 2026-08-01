@@ -30,13 +30,33 @@ $eminence_header_class = eminence_current_page_has_hero() ? 'eminence-site-heade
 
 	<header id="masthead" class="<?php echo esc_attr( $eminence_header_class ); ?>">
 		<div class="eminence-header-inner">
-			<?php if ( has_custom_logo() ) : ?>
-				<div class="eminence-logo eminence-logo--custom">
-					<?php // the_custom_logo() prints its own <a> — do not nest inside another one. ?>
-					<?php the_custom_logo(); ?>
-				</div>
-			<?php else : ?>
-				<a class="eminence-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<?php
+			/**
+			 * One unified, fully-clickable logo lockup — mark + stacked company
+			 * name/tagline — regardless of whether the business owner has uploaded a
+			 * real logo or the theme is still showing its inline SVG fallback.
+			 * Previously the custom-logo branch rendered only the_custom_logo()'s bare
+			 * image with no company name anywhere in the header; the fallback branch
+			 * had the name but the custom-logo one (the one actually active once a
+			 * real logo is uploaded) didn't. Rebuilt 2026-08-01 after feedback
+			 * praising how a reference site (sapphirerecruitment.ae) pairs its mark
+			 * with a clearly spelled-out name — same idea, our own mark/name/tagline.
+			 */
+			?>
+			<a class="eminence-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<?php if ( has_custom_logo() ) : ?>
+					<?php
+					echo wp_get_attachment_image(
+						get_theme_mod( 'custom_logo' ),
+						'full',
+						false,
+						array(
+							'class' => 'eminence-logo-mark-image',
+							'alt'   => '',
+						)
+					);
+					?>
+				<?php else : ?>
 					<span class="eminence-logo-mark" aria-hidden="true">
 						<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="20" cy="20" r="19" fill="none" stroke="url(#eminence-logo-gradient)" stroke-width="2.5"/>
@@ -50,9 +70,12 @@ $eminence_header_class = eminence_current_page_has_hero() ? 'eminence-site-heade
 							</defs>
 						</svg>
 					</span>
-					<span class="eminence-logo-text"><?php bloginfo( 'name' ); ?></span>
-				</a>
-			<?php endif; ?>
+				<?php endif; ?>
+				<span class="eminence-logo-wordmark">
+					<span class="eminence-logo-name"><?php bloginfo( 'name' ); ?></span>
+					<span class="eminence-logo-tagline"><?php esc_html_e( 'Recruitment Specialists', 'eminence-consultant' ); ?></span>
+				</span>
+			</a>
 
 			<?php get_template_part( 'template-parts/navigation' ); ?>
 		</div>

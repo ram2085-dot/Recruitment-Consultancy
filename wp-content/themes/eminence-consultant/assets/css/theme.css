@@ -194,7 +194,7 @@ body.eminence-has-page-hero .eminence-site-main {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: 2rem;
 }
 
 .eminence-logo {
@@ -226,38 +226,49 @@ body.eminence-has-page-hero .eminence-site-main {
 	height: 100%;
 }
 
-.eminence-logo-text {
+/*
+ * No background chip behind the logo image, per earlier request. The logo file
+ * (assets/images/logo.png) has had its background made transparent (a soft
+ * alpha-threshold pass — see git history); a professionally-exported transparent
+ * version would have cleaner edges if one becomes available. Sized down from its
+ * earlier 68px (when it stood alone) now that it sits beside the wordmark — a smaller
+ * mark + visible company name reads as more considered than one large bare mark.
+ */
+.eminence-logo-mark-image {
+	display: block;
+	height: 44px;
+	width: auto;
+	flex: none;
+}
+
+/*
+ * Company name + short tagline stacked next to the mark (2026-08-01) — previously the
+ * header showed only the bare logo graphic once a real logo was uploaded, with no
+ * company name anywhere. Inherits color from .eminence-logo so it flips to white on
+ * the transparent overlay header automatically, same as the mark.
+ */
+.eminence-logo-wordmark {
+	display: flex;
+	flex-direction: column;
+	flex: none;
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+.eminence-logo-name {
 	font-family: var(--eminence-font-heading);
 	font-weight: 700;
-	font-size: 1.15rem;
+	font-size: 0.85rem;
 	letter-spacing: 0.02em;
 	text-transform: uppercase;
 }
 
-/*
- * No background chip behind the logo, per request. The logo file (assets/images/logo.png)
- * has had its background made transparent (a soft alpha-threshold pass — see git history);
- * a professionally-exported transparent version would have cleaner edges if one becomes
- * available.
- */
-.eminence-logo--custom {
-	display: inline-flex;
-	align-items: center;
-	transition: transform var(--eminence-transition);
-}
-
-.eminence-logo--custom:hover {
-	transform: scale(1.03);
-}
-
-.eminence-logo--custom .custom-logo-link {
-	display: block;
-}
-
-.eminence-logo--custom img.custom-logo {
-	display: block;
-	height: 68px;
-	width: auto;
+.eminence-logo-tagline {
+	font-size: 0.6rem;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	opacity: 0.65;
 }
 
 .eminence-nav-toggle {
@@ -1061,7 +1072,7 @@ body.eminence-has-page-hero .eminence-site-main {
 	.eminence-primary-menu {
 		display: flex;
 		flex-wrap: nowrap;
-		gap: 1.5rem;
+		gap: 1.15rem;
 		padding: 0;
 	}
 
@@ -1074,7 +1085,7 @@ body.eminence-has-page-hero .eminence-site-main {
 		padding: 0.25rem 0;
 		color: inherit;
 		white-space: nowrap;
-		font-size: 0.95rem;
+		font-size: 0.9rem;
 	}
 
 	.eminence-primary-menu a::after {
