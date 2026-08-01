@@ -1135,14 +1135,24 @@ body.eminence-has-page-hero .eminence-site-main {
 		left: 0;
 		bottom: -4px;
 		width: 0;
-		height: 2px;
-		background: currentColor;
+		height: 3px;
+		border-radius: var(--eminence-radius-pill);
+		/* Signature accent gradient (same as the top bar / heading underlines / card
+		   accents) instead of currentColor, per request (2026-08-01) — was plain
+		   black/ink since it matched the surrounding text color. */
+		background: var(--eminence-accent-gradient);
 		transition: width var(--eminence-transition);
 	}
 
 	.eminence-primary-menu a:hover::after,
 	.eminence-primary-menu a[aria-current="page"]::after {
 		width: 100%;
+	}
+
+	/* Bold, not just underlined, for the current page — per request (2026-08-01). Hover
+	   stays regular weight; bold is reserved for the page you're actually on. */
+	.eminence-primary-menu a[aria-current="page"] {
+		font-weight: 700;
 	}
 }
 
