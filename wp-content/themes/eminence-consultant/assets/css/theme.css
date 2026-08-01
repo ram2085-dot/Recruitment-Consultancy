@@ -151,9 +151,11 @@ h4 {
 	padding: 2rem 1.25rem 4rem;
 }
 
-/* The Home hero must sit flush against the very top for the transparent overlay header
-   to read correctly — main's usual top padding would leave a blank strip above it. */
-body.home .eminence-site-main {
+/* Any hero (Home, or an interior page using eminence_page_hero_templates()) must sit
+   flush against the very top for the transparent overlay header to read correctly —
+   main's usual top padding would leave a blank strip above it. */
+body.home .eminence-site-main,
+body.eminence-has-page-hero .eminence-site-main {
 	padding-top: 0;
 }
 
@@ -405,6 +407,35 @@ body.home .eminence-site-main {
 	max-width: 760px;
 	margin: 0 auto;
 	text-align: center;
+}
+
+/*
+ * Compact page hero (About Us and, per eminence_page_hero_templates(), potentially other
+ * interior pages) — same slider/tint mechanism as Home's hero, much shorter, no stats
+ * bar or CTA buttons, just the page title left-aligned over the photo.
+ */
+.eminence-hero--page {
+	min-height: 320px;
+	padding: 8.5rem 1.5rem 3rem;
+}
+
+.eminence-hero-inner--page {
+	max-width: 1120px;
+	margin: 0;
+	text-align: left;
+}
+
+.eminence-hero-inner--page .eminence-page-title {
+	color: #ffffff;
+	text-shadow: 0 2px 24px rgba(0, 0, 0, 0.3);
+	margin-bottom: 0;
+}
+
+/* The page hero has no stats bar to create separation the way Home's does, so the
+   content that follows needs its own top margin instead of relying on .eminence-site-main
+   (zeroed out for hero-bearing pages so the hero itself sits flush at the top). */
+.eminence-after-hero {
+	margin-top: 3rem;
 }
 
 .eminence-hero-eyebrow {

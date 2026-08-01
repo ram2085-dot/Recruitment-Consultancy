@@ -17,6 +17,27 @@ if ( ! defined( 'EMINENCE_GA4_ID' ) ) {
 define( 'EMINENCE_CONSENT_COOKIE', 'eminence_consent' );
 
 /**
+ * Page templates that use a hero banner (rotating background slides + transparent
+ * overlay header), beyond the front page itself. Home started this pattern; About Us
+ * (page-about-us.php) is the first interior page to reuse it (2026-08-01), with more
+ * likely to follow. Centralizing the list here — rather than checking specific template
+ * filenames separately in header.php, functions.php's script enqueue, and the CSS body
+ * class — means adding the next page only requires appending one filename in one place.
+ *
+ * @return string[] Template filenames (relative to the theme root).
+ */
+function eminence_page_hero_templates() {
+	return array( 'page-about-us.php' );
+}
+
+/**
+ * True if the current request is the front page or one of eminence_page_hero_templates().
+ */
+function eminence_current_page_has_hero() {
+	return is_front_page() || is_page_template( eminence_page_hero_templates() );
+}
+
+/**
  * Theme support and nav menu registration (FR-001, FR-002, US2 T028/T029).
  */
 add_action(
@@ -120,8 +141,9 @@ add_action(
 			);
 		}
 
-		// Home hero background crossfade (002-home-page) — front page only.
-		if ( is_front_page() ) {
+		// Hero background crossfade — any page using a hero banner (see
+		// eminence_page_hero_templates()), not just the front page.
+		if ( eminence_current_page_has_hero() ) {
 			wp_enqueue_script(
 				'eminence-hero-slider',
 				get_template_directory_uri() . '/assets/js/hero-slider.js',
@@ -241,6 +263,22 @@ function eminence_get_hero_slides() {
 
 	return $slides;
 }
+
+/**
+ * Marks pages using a hero banner (see eminence_page_hero_templates()) with a body class,
+ * so theme.css can zero out .eminence-site-main's top padding for them the same way it
+ * already does for Home (body.home) — the hero needs to sit flush against the very top
+ * for the transparent overlay header to read correctly.
+ */
+add_filter(
+	'body_class',
+	function ( $classes ) {
+		if ( is_page_template( eminence_page_hero_templates() ) ) {
+			$classes[] = 'eminence-has-page-hero';
+		}
+		return $classes;
+	}
+);
 
 /**
  * Customizer: Social Link fields (data-model.md "Social Link").

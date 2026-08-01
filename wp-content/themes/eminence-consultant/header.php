@@ -22,10 +22,9 @@
 <div class="eminence-top-accent" aria-hidden="true"></div>
 
 <?php
-// Transparent header overlaying the hero photo on Home, matching the reference design;
-// a solid header on every other page (standard pattern — the hero is Home-only, per
-// contracts/theme-shell-contract.md, so the shell only supplies the toggle, not the hero).
-$eminence_header_class = is_front_page() ? 'eminence-site-header eminence-site-header--overlay' : 'eminence-site-header';
+// Transparent header overlaying the hero photo on Home and any other page using a hero
+// banner (see eminence_page_hero_templates()); a solid header everywhere else.
+$eminence_header_class = eminence_current_page_has_hero() ? 'eminence-site-header eminence-site-header--overlay' : 'eminence-site-header';
 ?>
 <div id="page" class="eminence-site-wrapper">
 

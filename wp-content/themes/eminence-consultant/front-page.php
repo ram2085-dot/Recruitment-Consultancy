@@ -13,7 +13,10 @@
  * images supplied 2026-07-31) until the owner uploads their own. The navy tint layered on
  * top is what makes this "images on a blue background" rather than a full photo takeover —
  * keeps the white hero text legible over what would otherwise be a busy photo. Crossfade
- * is driven by assets/js/hero-slider.js, enqueued only on the front page.
+ * is driven by assets/js/hero-slider.js, enqueued on any page using a hero (see
+ * eminence_page_hero_templates() in functions.php). The slide markup itself lives in
+ * template-parts/hero-slider.php so About Us's page hero (page-about-us.php) can reuse
+ * the exact same images/markup instead of duplicating it.
  */
 
 get_header();
@@ -22,23 +25,10 @@ get_header();
 // wrong (or point at an unrelated page) on any other WordPress install.
 $eminence_employers_page  = get_page_by_path( 'for-employers' );
 $eminence_candidates_page = get_page_by_path( 'for-candidates' );
-
-$eminence_hero_slides = eminence_get_hero_slides();
 ?>
 
 <section class="eminence-hero">
-	<?php if ( ! empty( $eminence_hero_slides ) ) : ?>
-		<div class="eminence-hero-slides" aria-hidden="true">
-			<?php foreach ( $eminence_hero_slides as $eminence_index => $eminence_slide_url ) : ?>
-				<img
-					class="eminence-hero-slide<?php echo 0 === $eminence_index ? ' is-active' : ''; ?>"
-					src="<?php echo esc_url( $eminence_slide_url ); ?>"
-					alt=""
-					<?php echo 0 === $eminence_index ? 'fetchpriority="high"' : 'loading="lazy"'; ?>
-				/>
-			<?php endforeach; ?>
-		</div>
-	<?php endif; ?>
+	<?php get_template_part( 'template-parts/hero-slider' ); ?>
 	<div class="eminence-hero-tint" aria-hidden="true"></div>
 	<div class="eminence-hero-inner">
 		<span class="eminence-hero-eyebrow"><?php esc_html_e( 'Recruitment Partner — Transformer Industry', 'eminence-consultant' ); ?></span>
