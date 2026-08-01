@@ -31,7 +31,6 @@ $eminence_candidates_page = get_page_by_path( 'for-candidates' );
 	<?php get_template_part( 'template-parts/hero-slider' ); ?>
 	<div class="eminence-hero-tint" aria-hidden="true"></div>
 	<div class="eminence-hero-inner">
-		<span class="eminence-hero-eyebrow"><?php esc_html_e( 'Recruitment Partner — Transformer Industry', 'eminence-consultant' ); ?></span>
 		<h1 class="eminence-hero-title">
 			<?php echo esc_html( get_theme_mod( 'eminence_hero_headline', __( 'Hire the Best Talent for Your Business with Eminence Consultant', 'eminence-consultant' ) ) ); ?>
 		</h1>

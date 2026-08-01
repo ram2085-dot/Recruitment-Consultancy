@@ -376,10 +376,12 @@ h4 {
 	margin-right: calc(50% - 50vw);
 	min-height: 560px;
 	display: flex;
-	align-items: center;
+	/* flex-start (not center) so removing the eyebrow badge pulls the title upward
+	   instead of the block just re-centering in place, per request (2026-08-01). */
+	align-items: flex-start;
 	/* No header overlap to reserve room for now that the header is solid/in-flow above
 	   the hero (2026-08-01) — was 8rem when the header sat transparently on top of this. */
-	padding: 4.5rem 1.5rem 7rem;
+	padding: 3.5rem 1.5rem 7rem;
 	/* Fallback color shown before the slide images load / if they fail. */
 	background: linear-gradient(135deg, #150e1f 0%, #3d2a5c 60%, #52396f 130%);
 	color: #ffffff;
