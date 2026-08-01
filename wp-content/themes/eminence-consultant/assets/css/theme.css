@@ -5,23 +5,28 @@
  * performance target (constitution Principle VII).
  *
  * Visual system history: reference-design match (2026-07-26) -> warm placeholder palette
- * -> logo-sampled palette -> contrasting navy chrome (2026-07-27) -> this pass (2026-07-31),
- * a full richness/depth upgrade requested after the site read as "dull": design tokens
- * (shadow/radius/gradient scale), a signature accent-gradient motif drawn from the logo's
- * own colors and reused consistently (top bar, headings, card accents), a floating stats
- * section, card lift/hover states, gradient buttons, and richer content typography. Colors
- * and copy remain placeholders pending final business-owner sign-off (BRD Section 10/9).
+ * -> logo-sampled palette -> contrasting navy chrome (2026-07-27) -> richness/depth pass
+ * (2026-07-31) -> this pass (2026-08-01), a palette shift to deep plum + gold after the
+ * business owner pointed at sapphirerecruitment.ae as a preferred look: an editorial,
+ * "established consultancy" mood built on plum/violet chrome + gold accents + real photos
+ * with a directional (not flat) tint, award-medallion trust badges, and a jagged section
+ * divider. Adopted honestly, not cloned: the medallion visual language is reused for our
+ * own real stat numbers (years/placements/clients), not fabricated awards, and there's no
+ * utility bar or vacancies list since we don't have real content for either yet. Plum
+ * still satisfies the earlier "contrast the logo, don't match it" decision — it's just a
+ * cooler-toward-violet contrast instead of navy, not a reversion to the logo's warm hues.
+ * Colors and copy remain placeholders pending final business-owner sign-off (BRD 10/9).
  */
 
 :root {
-	--eminence-color-ink: #1a1d21;
-	--eminence-color-body: #454b52;
-	--eminence-color-primary: #1f3a5f;
-	--eminence-color-primary-dark: #15283f;
-	--eminence-color-accent: #3b7dd8;
-	--eminence-color-border: #e2e5e8;
-	--eminence-color-surface: #f5f7fa;
-	--eminence-color-footer-bg: #14181c;
+	--eminence-color-ink: #211a2b;
+	--eminence-color-body: #4a4152;
+	--eminence-color-primary: #3d2a5c;
+	--eminence-color-primary-dark: #2a1c40;
+	--eminence-color-accent: #c9a227;
+	--eminence-color-border: #e5e1ea;
+	--eminence-color-surface: #f7f5f9;
+	--eminence-color-footer-bg: #241934;
 
 	/* Signature accent gradient, sampled from the business owner's logo (see git history
 	   for the palette work) — reused as a recurring motif (top bar, heading underlines,
@@ -337,7 +342,7 @@ body.eminence-has-page-hero .eminence-site-main {
 	align-items: center;
 	padding: 8rem 1.5rem 7rem;
 	/* Fallback color shown before the slide images load / if they fail. */
-	background: linear-gradient(135deg, #0c1117 0%, #1f3a5f 55%, #3b7dd8 130%);
+	background: linear-gradient(135deg, #150e1f 0%, #3d2a5c 60%, #52396f 130%);
 	color: #ffffff;
 	overflow: hidden;
 }
@@ -368,20 +373,20 @@ body.eminence-has-page-hero .eminence-site-main {
 }
 
 /*
- * The navy "blue background" tint over the photos — per request, the images sit ON the
- * blue chrome rather than replacing it, and this is also what keeps the white hero text
- * legible over a busy stock photo. Combines the two radial accents and the dark corner
- * vignette that used to live on .eminence-hero::after before the photo layer existed.
+ * Directional plum tint over the photos (2026-08-01, inspired by sapphirerecruitment.ae's
+ * hero treatment) — strong and near-opaque behind the left-aligned text, fading toward
+ * the right so more of the actual photo shows through. More editorial/photographic than
+ * the earlier uniform corner-vignette tint; still what keeps the white hero text legible
+ * over a busy stock photo, and still "images on top of our chrome color," per the
+ * original request, just directional instead of even.
  */
 .eminence-hero-tint {
 	position: absolute;
 	inset: 0;
 	z-index: 1;
 	background:
-		radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.55)),
-		radial-gradient(circle at 15% 15%, rgba(59, 125, 216, 0.45), transparent 45%),
-		radial-gradient(circle at 85% 30%, rgba(224, 164, 88, 0.12), transparent 40%),
-		linear-gradient(135deg, rgba(12, 17, 23, 0.86) 0%, rgba(31, 58, 95, 0.82) 55%, rgba(59, 125, 216, 0.7) 130%);
+		radial-gradient(circle at 90% 15%, rgba(201, 162, 39, 0.14), transparent 40%),
+		linear-gradient(90deg, rgba(21, 14, 31, 0.92) 0%, rgba(61, 42, 92, 0.84) 45%, rgba(61, 42, 92, 0.55) 80%, rgba(61, 42, 92, 0.4) 100%);
 	pointer-events: none;
 }
 
@@ -401,28 +406,28 @@ body.eminence-has-page-hero .eminence-site-main {
 	pointer-events: none;
 }
 
+/*
+ * Left-aligned throughout (2026-08-01, matching the sapphirerecruitment.ae reference) —
+ * previously Home's hero centered its text in a narrow column while page heroes were
+ * left-aligned; unified to one editorial left-aligned treatment everywhere, which also
+ * simplified this from two alignment systems down to one.
+ */
 .eminence-hero-inner {
 	position: relative;
 	z-index: 3;
-	max-width: 760px;
-	margin: 0 auto;
-	text-align: center;
+	max-width: 1120px;
+	margin: 0;
+	text-align: left;
 }
 
 /*
  * Compact page hero (About Us and, per eminence_page_hero_templates(), potentially other
  * interior pages) — same slider/tint mechanism as Home's hero, much shorter, no stats
- * bar or CTA buttons, just the page title left-aligned over the photo.
+ * bar or CTA buttons, just the page title over the photo.
  */
 .eminence-hero--page {
 	min-height: 320px;
 	padding: 8.5rem 1.5rem 3rem;
-}
-
-.eminence-hero-inner--page {
-	max-width: 1120px;
-	margin: 0;
-	text-align: left;
 }
 
 .eminence-hero-inner--page .eminence-page-title {
@@ -453,9 +458,9 @@ body.eminence-has-page-hero .eminence-site-main {
 	font-weight: 600;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	color: #ffd699;
-	background: rgba(255, 255, 255, 0.1);
-	border: 1px solid rgba(255, 255, 255, 0.25);
+	color: #ecd48a;
+	background: rgba(201, 162, 39, 0.12);
+	border: 1px solid rgba(201, 162, 39, 0.4);
 	border-radius: var(--eminence-radius-pill);
 	padding: 0.4rem 1rem;
 	margin-bottom: 1.25rem;
@@ -471,15 +476,45 @@ body.eminence-has-page-hero .eminence-site-main {
 .eminence-hero-subtitle {
 	font-size: clamp(1rem, 0.92rem + 0.4vw, 1.15rem);
 	color: rgba(255, 255, 255, 0.92);
-	max-width: 46ch;
-	margin: 0 auto 2rem;
+	max-width: 52ch;
+	margin: 0 0 2rem;
 }
 
 .eminence-hero-actions {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.85rem;
-	justify-content: center;
+	justify-content: flex-start;
+}
+
+/* Slide-position dots, bottom-left of the hero. */
+.eminence-hero-dots {
+	position: absolute;
+	left: 1.5rem;
+	bottom: 1.25rem;
+	z-index: 3;
+	display: flex;
+	gap: 0.5rem;
+}
+
+.eminence-hero-dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	background: rgba(255, 255, 255, 0.25);
+	padding: 0;
+	cursor: pointer;
+	transition: background var(--eminence-transition), transform var(--eminence-transition);
+}
+
+.eminence-hero-dot:hover {
+	transform: scale(1.15);
+}
+
+.eminence-hero-dot.is-active {
+	background: var(--eminence-color-accent);
+	border-color: var(--eminence-color-accent);
 }
 
 /* ---------- Stats bar (Home page) ---------- */
@@ -541,21 +576,32 @@ body.eminence-has-page-hero .eminence-site-main {
 
 /* ---------- Footer ---------- */
 
+/*
+ * Jagged/mountain divider (2026-08-01, inspired by sapphirerecruitment.ae) between the
+ * page content and the footer — replaces the earlier plain 3px accent line, which would
+ * otherwise sit redundantly right against this. A pure CSS clip-path zigzag, no image
+ * asset, same "no framework" cost discipline as the rest of the theme.
+ */
+.eminence-footer-divider {
+	/* Was on .eminence-site-footer before this divider existed — moved here so the
+	   "stick to the bottom on short pages" space lands above the zigzag, keeping the
+	   divider and footer glued together instead of a gap opening up between them on a
+	   short page like the Employee Login placeholder. */
+	margin-top: auto;
+	height: 44px;
+	background: var(--eminence-color-surface);
+	clip-path: polygon(
+		0% 0%, 100% 0%, 100% 100%,
+		95% 35%, 90% 100%, 85% 35%, 80% 100%, 75% 35%, 70% 100%, 65% 35%,
+		60% 100%, 55% 35%, 50% 100%, 45% 35%, 40% 100%, 35% 35%, 30% 100%,
+		25% 35%, 20% 100%, 15% 35%, 10% 100%, 5% 35%, 0% 100%
+	);
+}
+
 .eminence-site-footer {
 	position: relative;
 	background: var(--eminence-color-footer-bg);
 	color: #f2f5f5;
-	margin-top: auto;
-}
-
-.eminence-site-footer::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 3px;
-	background: var(--eminence-accent-gradient);
 }
 
 .eminence-footer-inner {
@@ -630,7 +676,7 @@ body.eminence-has-page-hero .eminence-site-main {
 }
 
 .eminence-footer-menu a:hover {
-	color: #ffd699;
+	color: #ecd48a;
 }
 
 .eminence-social-links {
@@ -691,7 +737,7 @@ body.eminence-has-page-hero .eminence-site-main {
 }
 
 .eminence-btn--primary {
-	background: linear-gradient(135deg, var(--eminence-color-accent), #2f63b0);
+	background: linear-gradient(135deg, var(--eminence-color-primary), var(--eminence-color-primary-dark));
 	color: #ffffff;
 	box-shadow: var(--eminence-shadow-sm);
 }

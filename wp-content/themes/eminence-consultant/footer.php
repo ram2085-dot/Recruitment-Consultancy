@@ -7,6 +7,8 @@
 ?>
 	</main><!-- #eminence-main-content -->
 
+	<div class="eminence-footer-divider" aria-hidden="true"></div>
+
 	<footer id="colophon" class="eminence-site-footer">
 		<?php get_template_part( 'template-parts/footer-widgets' ); ?>
 	</footer>
