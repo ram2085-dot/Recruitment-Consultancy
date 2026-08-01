@@ -380,8 +380,10 @@ h4 {
 	   instead of the block just re-centering in place, per request (2026-08-01). */
 	align-items: flex-start;
 	/* No header overlap to reserve room for now that the header is solid/in-flow above
-	   the hero (2026-08-01) — was 8rem when the header sat transparently on top of this. */
-	padding: 3.5rem 1.5rem 7rem;
+	   the hero (2026-08-01) — was 8rem when the header sat transparently on top of this.
+	   Bottom trimmed from 7rem the same day — too much empty space below the CTA buttons
+	   before the stat cards' overlap began. */
+	padding: 3.5rem 1.5rem 4rem;
 	/* Fallback color shown before the slide images load / if they fail. */
 	background: linear-gradient(135deg, #150e1f 0%, #3d2a5c 60%, #52396f 130%);
 	color: #ffffff;
@@ -570,7 +572,7 @@ h4 {
 .eminence-stats {
 	position: relative;
 	max-width: 1040px;
-	margin: -4.5rem auto 0;
+	margin: -3rem auto 0;
 	padding: 0 1.25rem;
 	z-index: 2;
 }
