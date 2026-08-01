@@ -1,6 +1,6 @@
 <?php
 /**
- * Site header: <head>, skip link, logo, primary navigation.
+ * Site header: <head>, skip link, utility bar, logo, primary navigation.
  * Every content page template calls get_header() to render this — see
  * specs/001-site-shell-navigation/contracts/theme-shell-contract.md #1.
  */
@@ -22,25 +22,56 @@
 <div class="eminence-top-accent" aria-hidden="true"></div>
 
 <?php
-// Transparent header overlaying the hero photo on Home and any other page using a hero
-// banner (see eminence_page_hero_templates()); a solid header everywhere else.
-$eminence_header_class = eminence_current_page_has_hero() ? 'eminence-site-header eminence-site-header--overlay' : 'eminence-site-header';
+$eminence_social_links  = eminence_get_social_links();
+$eminence_contact_page  = get_page_by_path( 'contact-us' );
 ?>
 <div id="page" class="eminence-site-wrapper">
 
-	<header id="masthead" class="<?php echo esc_attr( $eminence_header_class ); ?>">
+	<?php
+	/**
+	 * Slim utility bar above the main header (2026-08-01, matching the two-tier header
+	 * on sapphirerecruitment.ae). No phone number here — per explicit prior decision
+	 * (2026-07-27) it stays on Contact Us only, not duplicated in the header; the
+	 * reference's "Call Us" item is deliberately not carried over. No "Current
+	 * Vacancies" link either — that needs a job-listing feature we don't have yet.
+	 */
+	?>
+	<div class="eminence-utility-bar">
+		<div class="eminence-utility-bar-inner">
+			<?php if ( $eminence_contact_page ) : ?>
+				<a class="eminence-utility-link" href="<?php echo esc_url( get_permalink( $eminence_contact_page ) ); ?>">
+					<?php esc_html_e( 'Contact Us', 'eminence-consultant' ); ?>
+				</a>
+			<?php else : ?>
+				<span></span>
+			<?php endif; ?>
+
+			<?php if ( ! empty( $eminence_social_links ) ) : ?>
+				<div class="eminence-utility-social">
+					<span class="eminence-utility-social-label"><?php esc_html_e( 'Get Social', 'eminence-consultant' ); ?></span>
+					<ul class="eminence-social-links eminence-social-links--utility">
+						<?php foreach ( $eminence_social_links as $platform => $url ) : ?>
+							<li class="eminence-social-link eminence-social-link--<?php echo esc_attr( $platform ); ?>">
+								<a href="<?php echo esc_url( $url ); ?>" rel="noopener noreferrer" target="_blank">
+									<span class="screen-reader-text"><?php echo esc_html( ucfirst( $platform ) ); ?></span>
+								</a>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
+
+	<header id="masthead" class="eminence-site-header">
 		<div class="eminence-header-inner">
 			<?php
 			/**
-			 * One unified, fully-clickable logo lockup — mark + stacked company
-			 * name/tagline — regardless of whether the business owner has uploaded a
-			 * real logo or the theme is still showing its inline SVG fallback.
-			 * Previously the custom-logo branch rendered only the_custom_logo()'s bare
-			 * image with no company name anywhere in the header; the fallback branch
-			 * had the name but the custom-logo one (the one actually active once a
-			 * real logo is uploaded) didn't. Rebuilt 2026-08-01 after feedback
-			 * praising how a reference site (sapphirerecruitment.ae) pairs its mark
-			 * with a clearly spelled-out name — same idea, our own mark/name/tagline.
+			 * Vertically-stacked, centered logo lockup (mark above name above tagline) —
+			 * changed 2026-08-01 from an earlier horizontal (icon-beside-text) layout to
+			 * match the reference's composition. One unified, fully-clickable block
+			 * regardless of whether the business owner has uploaded a real logo or the
+			 * theme is still showing its inline SVG fallback.
 			 */
 			?>
 			<a class="eminence-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">

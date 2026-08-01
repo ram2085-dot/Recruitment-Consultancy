@@ -156,12 +156,58 @@ h4 {
 	padding: 2rem 1.25rem 4rem;
 }
 
-/* Any hero (Home, or an interior page using eminence_page_hero_templates()) must sit
-   flush against the very top for the transparent overlay header to read correctly —
-   main's usual top padding would leave a blank strip above it. */
-body.home .eminence-site-main,
-body.eminence-has-page-hero .eminence-site-main {
-	padding-top: 0;
+/* ---------- Utility bar ---------- */
+
+/*
+ * Slim bar above the main header (2026-08-01, matching the two-tier header on
+ * sapphirerecruitment.ae). Deliberately no phone number (stays on Contact Us only —
+ * explicit prior decision, 2026-07-27) and no "Current Vacancies" link (needs a
+ * job-listing feature we don't have yet) — see the code comment in header.php.
+ */
+.eminence-utility-bar {
+	background: var(--eminence-color-primary-dark);
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.eminence-utility-bar-inner {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0.5rem 1.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	font-size: 0.8rem;
+}
+
+.eminence-utility-link {
+	color: inherit;
+	text-decoration: none;
+}
+
+.eminence-utility-link:hover {
+	color: #ffffff;
+}
+
+.eminence-utility-social {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.eminence-utility-social-label {
+	font-weight: 600;
+	letter-spacing: 0.04em;
+}
+
+.eminence-social-links--utility {
+	margin: 0;
+}
+
+.eminence-social-links--utility .eminence-social-link a {
+	width: 26px;
+	height: 26px;
+	background: rgba(255, 255, 255, 0.14);
 }
 
 /* ---------- Header & primary nav ---------- */
@@ -175,18 +221,6 @@ body.eminence-has-page-hero .eminence-site-main {
 	z-index: 20;
 }
 
-/* Transparent, overlaid on the hero — Home page only (header.php sets this class). */
-.eminence-site-header--overlay {
-	position: absolute;
-	top: 4px;
-	left: 0;
-	right: 0;
-	background: transparent;
-	border-bottom: none;
-	box-shadow: none;
-	color: #ffffff;
-}
-
 .eminence-header-inner {
 	max-width: 1200px;
 	margin: 0 auto;
@@ -197,10 +231,16 @@ body.eminence-has-page-hero .eminence-site-main {
 	gap: 2rem;
 }
 
+/*
+ * Vertically stacked, centered lockup (mark above name above tagline) — changed
+ * 2026-08-01 from an earlier horizontal layout to match the reference's composition.
+ */
 .eminence-logo {
 	display: inline-flex;
+	flex-direction: column;
 	align-items: center;
-	gap: 0.6rem;
+	text-align: center;
+	gap: 0.3rem;
 	text-decoration: none;
 	color: var(--eminence-color-ink);
 	transition: transform var(--eminence-transition);
@@ -210,14 +250,10 @@ body.eminence-has-page-hero .eminence-site-main {
 	transform: scale(1.03);
 }
 
-.eminence-site-header--overlay .eminence-logo {
-	color: #ffffff;
-}
-
 .eminence-logo-mark {
 	display: inline-flex;
-	width: 32px;
-	height: 32px;
+	width: 40px;
+	height: 40px;
 	flex: none;
 }
 
@@ -230,26 +266,25 @@ body.eminence-has-page-hero .eminence-site-main {
  * No background chip behind the logo image, per earlier request. The logo file
  * (assets/images/logo.png) has had its background made transparent (a soft
  * alpha-threshold pass — see git history); a professionally-exported transparent
- * version would have cleaner edges if one becomes available. Sized down from its
- * earlier 68px (when it stood alone) now that it sits beside the wordmark — a smaller
- * mark + visible company name reads as more considered than one large bare mark.
+ * version would have cleaner edges if one becomes available.
  */
 .eminence-logo-mark-image {
 	display: block;
-	height: 44px;
+	height: 48px;
 	width: auto;
 	flex: none;
 }
 
 /*
- * Company name + short tagline stacked next to the mark (2026-08-01) — previously the
- * header showed only the bare logo graphic once a real logo was uploaded, with no
- * company name anywhere. Inherits color from .eminence-logo so it flips to white on
- * the transparent overlay header automatically, same as the mark.
+ * Company name + short tagline stacked below the mark (2026-08-01, centered as part of
+ * the vertical lockup) — previously the header showed only the bare logo graphic once a
+ * real logo was uploaded, with no company name anywhere. Inherits color from
+ * .eminence-logo, same as the mark.
  */
 .eminence-logo-wordmark {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	flex: none;
 	line-height: 1.2;
 	white-space: nowrap;
@@ -289,21 +324,12 @@ body.eminence-has-page-hero .eminence-site-main {
 	border-color: var(--eminence-color-accent);
 }
 
-.eminence-site-header--overlay .eminence-nav-toggle {
-	background: rgba(255, 255, 255, 0.12);
-	border-color: rgba(255, 255, 255, 0.4);
-}
-
 .eminence-nav-toggle-bar {
 	display: block;
 	width: 20px;
 	height: 2px;
 	margin: 0 auto;
 	background: var(--eminence-color-ink);
-}
-
-.eminence-site-header--overlay .eminence-nav-toggle-bar {
-	background: #ffffff;
 }
 
 .eminence-primary-nav {
@@ -351,7 +377,9 @@ body.eminence-has-page-hero .eminence-site-main {
 	min-height: 560px;
 	display: flex;
 	align-items: center;
-	padding: 8rem 1.5rem 7rem;
+	/* No header overlap to reserve room for now that the header is solid/in-flow above
+	   the hero (2026-08-01) — was 8rem when the header sat transparently on top of this. */
+	padding: 4.5rem 1.5rem 7rem;
 	/* Fallback color shown before the slide images load / if they fail. */
 	background: linear-gradient(135deg, #150e1f 0%, #3d2a5c 60%, #52396f 130%);
 	color: #ffffff;
@@ -437,8 +465,9 @@ body.eminence-has-page-hero .eminence-site-main {
  * bar or CTA buttons, just the page title over the photo.
  */
 .eminence-hero--page {
-	min-height: 320px;
-	padding: 8.5rem 1.5rem 3rem;
+	min-height: 260px;
+	/* No header overlap to reserve room for, same reasoning as .eminence-hero above. */
+	padding: 3rem 1.5rem 3rem;
 }
 
 .eminence-hero-inner--page .eminence-page-title {
