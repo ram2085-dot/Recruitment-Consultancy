@@ -18,16 +18,16 @@ define( 'EMINENCE_CONSENT_COOKIE', 'eminence_consent' );
 
 /**
  * Page templates that use a hero banner (rotating background slides + transparent
- * overlay header), beyond the front page itself. Home started this pattern; About Us
- * (page-about-us.php) is the first interior page to reuse it (2026-08-01), with more
- * likely to follow. Centralizing the list here — rather than checking specific template
- * filenames separately in header.php, functions.php's script enqueue, and the CSS body
- * class — means adding the next page only requires appending one filename in one place.
+ * overlay header), beyond the front page itself (2026-08-01, rolled out to every content
+ * page except the Employee Login placeholder and 404 — see page-with-hero.php for why
+ * those two are excluded). Centralizing the list here — rather than checking specific
+ * template filenames separately in header.php, functions.php's script enqueue, and the
+ * CSS body class — means adding another page only requires appending one filename here.
  *
  * @return string[] Template filenames (relative to the theme root).
  */
 function eminence_page_hero_templates() {
-	return array( 'page-about-us.php' );
+	return array( 'page-with-hero.php', 'page-testimonials.php', 'page-industry-leaders.php' );
 }
 
 /**

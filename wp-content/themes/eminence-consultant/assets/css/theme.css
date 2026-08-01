@@ -431,6 +431,14 @@ body.eminence-has-page-hero .eminence-site-main {
 	margin-bottom: 0;
 }
 
+/* Optional subtitle line under a page-hero title (e.g. Industry Leaders' tagline) —
+   .eminence-hero-subtitle's base rule center-aligns the block itself via auto margins,
+   which needs overriding here since the page hero is left-aligned throughout. */
+.eminence-hero-inner--page .eminence-hero-subtitle {
+	margin: 1rem 0 0;
+	max-width: 60ch;
+}
+
 /* The page hero has no stats bar to create separation the way Home's does, so the
    content that follows needs its own top margin instead of relying on .eminence-site-main
    (zeroed out for hero-bearing pages so the hero itself sits flush at the top). */
@@ -869,9 +877,12 @@ body.eminence-has-page-hero .eminence-site-main {
 
 /* ---------- Industry Leaders slider (008-industry-leaders-page) ---------- */
 
+/* Now rendered inside the page hero as an .eminence-hero-subtitle (white/rgba, sized for
+   the dark background) — this only adds the italic accent on top, not a color override,
+   since a same-specificity rule defined later here would otherwise beat hero-subtitle's
+   own color and make the tagline unreadable against the navy tint. */
 .eminence-industry-leaders-tagline {
 	font-style: italic;
-	color: var(--eminence-color-body);
 }
 
 .eminence-slider {

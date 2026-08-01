@@ -15,8 +15,8 @@
  * keeps the white hero text legible over what would otherwise be a busy photo. Crossfade
  * is driven by assets/js/hero-slider.js, enqueued on any page using a hero (see
  * eminence_page_hero_templates() in functions.php). The slide markup itself lives in
- * template-parts/hero-slider.php so About Us's page hero (page-about-us.php) can reuse
- * the exact same images/markup instead of duplicating it.
+ * template-parts/hero-slider.php so every other hero-bearing page/template (see
+ * page-with-hero.php) can reuse the exact same images/markup instead of duplicating it.
  */
 
 get_header();

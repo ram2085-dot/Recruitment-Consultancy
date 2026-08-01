@@ -6,6 +6,10 @@
  * testimonial_type. Each section (client/candidate) is omitted entirely when it has no
  * published entries (FR-002) rather than rendering an empty heading. Assign this template
  * to the Testimonials page in wp-admin.
+ *
+ * Page hero added 2026-08-01 (same rotating slider as every other content page — see
+ * eminence_page_hero_templates()); listed on that function directly since this template
+ * also needs the CPT query logic below, which page-with-hero.php doesn't have.
  */
 
 get_header();
@@ -14,11 +18,15 @@ $eminence_client_testimonials    = eminence_get_testimonials( 'client' );
 $eminence_candidate_testimonials = eminence_get_testimonials( 'candidate' );
 ?>
 
-<article class="eminence-content-page eminence-testimonials-page">
-	<header class="eminence-page-header">
+<section class="eminence-hero eminence-hero--page">
+	<?php get_template_part( 'template-parts/hero-slider' ); ?>
+	<div class="eminence-hero-tint" aria-hidden="true"></div>
+	<div class="eminence-hero-inner eminence-hero-inner--page">
 		<h1 class="eminence-page-title"><?php the_title(); ?></h1>
-	</header>
+	</div>
+</section>
 
+<article class="eminence-content-page eminence-after-hero eminence-testimonials-page">
 	<div class="eminence-page-content">
 
 		<?php if ( $eminence_client_testimonials->have_posts() ) : ?>
