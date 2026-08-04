@@ -16,9 +16,9 @@
  *
  * Deliberately NOT applied to the Employee Login placeholder or the 404 page — those are
  * utility pages, not marketing content, and a photo hero would misrepresent them as more
- * built-out than they are. Testimonials and Industry Leaders get the same hero treatment
- * too, but via their own dedicated templates (page-testimonials.php,
- * page-industry-leaders.php) since those also need their CPT query logic — see
+ * built-out than they are. The merged Testimonials & Industry Leaders page gets the same
+ * hero treatment too, but via its own dedicated template (page-community.php, 2026-08-04)
+ * since it needs CPT query logic this generic template doesn't have — see
  * eminence_page_hero_templates() for the full list of hero-bearing templates.
  */
 

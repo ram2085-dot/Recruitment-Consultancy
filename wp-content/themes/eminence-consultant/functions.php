@@ -27,7 +27,7 @@ define( 'EMINENCE_CONSENT_COOKIE', 'eminence_consent' );
  * @return string[] Template filenames (relative to the theme root).
  */
 function eminence_page_hero_templates() {
-	return array( 'page-with-hero.php', 'page-testimonials.php', 'page-industry-leaders.php' );
+	return array( 'page-with-hero.php', 'page-community.php' );
 }
 
 /**
@@ -129,12 +129,13 @@ add_action(
 			)
 		);
 
-		// Slider controls only where the slider actually is (008-industry-leaders-page) —
-		// no reason to ship this JS to every page.
-		if ( is_page_template( 'page-industry-leaders.php' ) ) {
+		// Slider controls only where a content slider actually is (page-community.php,
+		// which has two independent sliders side by side — content-slider.js wires up
+		// every .eminence-slider on the page, not just the first, since 2026-08-04).
+		if ( is_page_template( 'page-community.php' ) ) {
 			wp_enqueue_script(
-				'eminence-industry-leaders-slider',
-				get_template_directory_uri() . '/assets/js/industry-leaders-slider.js',
+				'eminence-content-slider',
+				get_template_directory_uri() . '/assets/js/content-slider.js',
 				array(),
 				$theme_version,
 				true
@@ -499,24 +500,20 @@ eminence_register_consent_gate(
 );
 
 /**
- * Published testimonials of one type, for page-testimonials.php.
+ * All published testimonials regardless of type, for page-community.php's single combined
+ * slider (2026-08-04) — client and candidate testimonials no longer sit in two separately
+ * headed sections; each slide shows its own type badge instead (see testimonial-card.php).
  *
- * @param string $type_slug 'client' or 'candidate'.
  * @return WP_Query
  */
-function eminence_get_testimonials( $type_slug ) {
+function eminence_get_all_testimonials() {
 	return new WP_Query(
 		array(
 			'post_type'      => 'eminence_testimonial',
 			'post_status'    => 'publish',
 			'posts_per_page' => -1,
-			'tax_query'      => array(
-				array(
-					'taxonomy' => 'testimonial_type',
-					'field'    => 'slug',
-					'terms'    => $type_slug,
-				),
-			),
+			'orderby'        => 'date',
+			'order'          => 'DESC',
 		)
 	);
 }
@@ -554,7 +551,7 @@ eminence_register_consent_gate(
 );
 
 /**
- * Published gallery photos, for page-industry-leaders.php.
+ * Published gallery photos, for page-community.php.
  *
  * @return WP_Query
  */

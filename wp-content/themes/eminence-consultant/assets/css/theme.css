@@ -884,20 +884,67 @@ body.eminence-has-page-hero .eminence-site-main {
 	color: var(--eminence-color-ink);
 }
 
-/* ---------- Testimonials (007-testimonials-page) ---------- */
+/* ---------- Testimonials & Industry Leaders (page-community.php) ---------- */
 
-.eminence-testimonials-page .eminence-page-content {
+/*
+ * Merged page (2026-08-04) — Testimonials and Industry Leaders We've Met used to be two
+ * separate pages; now one page split into two vertical halves, each its own slider. See
+ * page-community.php for the "why".
+ */
+.eminence-community-page .eminence-page-content {
 	max-width: none;
 }
 
-.eminence-testimonial-section {
-	margin-bottom: 2.5rem;
-}
-
-.eminence-testimonial-grid {
+.eminence-community-grid {
 	display: grid;
 	grid-template-columns: 1fr;
-	gap: 1.5rem;
+	gap: 2.5rem;
+}
+
+.eminence-community-half h2 {
+	margin-bottom: 0.5rem;
+}
+
+.eminence-community-tagline {
+	font-style: italic;
+	color: var(--eminence-color-body);
+	margin-top: 0;
+	margin-bottom: 1.25rem;
+}
+
+@media (min-width: 900px) {
+	.eminence-community-grid {
+		/* The "half vertical page" split — each column takes half the width, full height
+		   of whichever side has more content, side by side rather than stacked. */
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+	}
+}
+
+/*
+ * A testimonial card sits inside a slider slide (.eminence-slider-slide), unlike the
+ * gallery's plain <img> slides — the wrapper needs its own overflow/shadow/radius turned
+ * off so it doesn't double up with (or clip) the card's own styling below.
+ */
+.eminence-slider-slide--card {
+	overflow: visible;
+	border-radius: 0;
+	box-shadow: none;
+	background: none;
+}
+
+.eminence-testimonial-type {
+	display: inline-block;
+	font-family: var(--eminence-font-heading);
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--eminence-color-accent);
+	background: rgba(201, 162, 39, 0.12);
+	border-radius: var(--eminence-radius-pill);
+	padding: 0.2rem 0.65rem;
+	margin-bottom: 0.75rem;
 }
 
 .eminence-testimonial-card {
@@ -967,21 +1014,7 @@ body.eminence-has-page-hero .eminence-site-main {
 	color: var(--eminence-color-ink);
 }
 
-@media (min-width: 768px) {
-	.eminence-testimonial-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-
-/* ---------- Industry Leaders slider (008-industry-leaders-page) ---------- */
-
-/* Now rendered inside the page hero as an .eminence-hero-subtitle (white/rgba, sized for
-   the dark background) — this only adds the italic accent on top, not a color override,
-   since a same-specificity rule defined later here would otherwise beat hero-subtitle's
-   own color and make the tagline unreadable against the navy tint. */
-.eminence-industry-leaders-tagline {
-	font-style: italic;
-}
+/* ---------- Shared slider (testimonials + industry leaders, page-community.php) ---------- */
 
 .eminence-slider {
 	position: relative;
