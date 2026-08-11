@@ -39,7 +39,7 @@ $eminence_gallery_photos  = eminence_get_gallery_photos();
 				<h2><?php esc_html_e( 'What People Say', 'eminence-consultant' ); ?></h2>
 
 				<?php if ( $eminence_testimonials->have_posts() ) : ?>
-					<div class="eminence-slider">
+					<div class="eminence-slider eminence-slider--single">
 						<button type="button" class="eminence-slider-btn eminence-slider-prev" aria-label="<?php esc_attr_e( 'Previous', 'eminence-consultant' ); ?>">&#8249;</button>
 
 						<div class="eminence-slider-track">
@@ -65,14 +65,11 @@ $eminence_gallery_photos  = eminence_get_gallery_photos();
 				<?php endif; ?>
 			</div>
 
-			<div class="eminence-community-half">
+			<div class="eminence-community-half eminence-community-half--leaders">
 				<h2><?php esc_html_e( "Industry Leaders We've Met", 'eminence-consultant' ); ?></h2>
-				<p class="eminence-community-tagline">
-					<?php esc_html_e( "Building relationships with the people shaping India's workforce", 'eminence-consultant' ); ?>
-				</p>
 
 				<?php if ( $eminence_gallery_photos->have_posts() ) : ?>
-					<div class="eminence-slider">
+					<div class="eminence-slider eminence-slider--large">
 						<button type="button" class="eminence-slider-btn eminence-slider-prev" aria-label="<?php esc_attr_e( 'Previous', 'eminence-consultant' ); ?>">&#8249;</button>
 
 						<div class="eminence-slider-track">

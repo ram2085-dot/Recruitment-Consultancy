@@ -6,16 +6,25 @@
  *
  * Visual system history: reference-design match (2026-07-26) -> warm placeholder palette
  * -> logo-sampled palette -> contrasting navy chrome (2026-07-27) -> richness/depth pass
- * (2026-07-31) -> this pass (2026-08-01), a palette shift to deep plum + gold after the
- * business owner pointed at sapphirerecruitment.ae as a preferred look: an editorial,
- * "established consultancy" mood built on plum/violet chrome + gold accents + real photos
- * with a directional (not flat) tint, award-medallion trust badges, and a jagged section
- * divider. Adopted honestly, not cloned: the medallion visual language is reused for our
- * own real stat numbers (years/placements/clients), not fabricated awards, and there's no
- * utility bar or vacancies list since we don't have real content for either yet. Plum
- * still satisfies the earlier "contrast the logo, don't match it" decision — it's just a
- * cooler-toward-violet contrast instead of navy, not a reversion to the logo's warm hues.
- * Colors and copy remain placeholders pending final business-owner sign-off (BRD 10/9).
+ * (2026-07-31) -> palette shift to deep plum + gold (2026-08-01) after the business owner
+ * pointed at sapphirerecruitment.ae as a preferred look: an editorial, "established
+ * consultancy" mood built on plum/violet chrome + gold accents + real photos with a
+ * directional (not flat) tint. Plum still satisfies the earlier "contrast the logo, don't
+ * match it" decision — it's just a cooler-toward-violet contrast instead of navy, not a
+ * reversion to the logo's warm hues. Colors and copy remain placeholders pending final
+ * business-owner sign-off (BRD 10/9).
+ *
+ * Frontend-design skill pass (2026-08-05): the plum/gold palette and layout stay — the
+ * owner already iterated and signed off on those — but two structural devices were
+ * borrowed wholesale from the sapphirerecruitment.ae reference with no connection to this
+ * business: a generic "floating white card" stat bar (a pattern that fits literally any
+ * consultancy site) and a jagged mountain-range footer divider (a pure aesthetic import
+ * with no tie to recruitment or to this client's actual specialty). Replaced both with
+ * devices grounded in the one thing that's actually specific to this business — its
+ * client base is the Transformer and wire & cable manufacturing industry: the stat bar
+ * is now styled as an equipment rating plate (dark engraved plate, corner rivets), and
+ * the footer divider is now a coil-winding line (the schematic symbol for an inductor)
+ * instead of a decorative zigzag. See .eminence-stats-grid and .eminence-footer-divider.
  */
 
 :root {
@@ -382,7 +391,6 @@ body.eminence-has-page-hero .eminence-site-main {
 	width: 100vw;
 	margin-left: calc(50% - 50vw);
 	margin-right: calc(50% - 50vw);
-	min-height: 560px;
 	display: flex;
 	/* flex-start (not center) so removing the eyebrow badge pulls the title upward
 	   instead of the block just re-centering in place, per request (2026-08-01). */
@@ -390,8 +398,17 @@ body.eminence-has-page-hero .eminence-site-main {
 	/* No header overlap to reserve room for now that the header is solid/in-flow above
 	   the hero (2026-08-01) — was 8rem when the header sat transparently on top of this.
 	   Bottom trimmed from 7rem the same day — too much empty space below the CTA buttons
-	   before the stat cards' overlap began. */
-	padding: 3.5rem 1.5rem 4rem;
+	   before the stat cards' overlap began. min-height (was 560px) dropped entirely
+	   (2026-08-11, "hero image size to be less... just till below For Employers/For
+	   Candidates") — the fixed height was leaving a tall stretch of empty background photo
+	   below the CTA buttons; height now just follows the content, so the hero ends shortly
+	   after the buttons. Top padding trimmed further and bottom padding increased slightly
+	   right after (same day, "shift the text... up... so it dont overlap with 4 boxes") —
+	   once the hero stopped reserving extra height, the CTA buttons sat close enough to the
+	   bottom edge that the stats bar's -3rem overlap (see .eminence-stats) nearly covered
+	   them; shifting the whole content block up (here + .eminence-hero-subtitle's
+	   margin-bottom below) opens clearance without regrowing the hero. */
+	padding: 2.75rem 1.5rem 3rem;
 	/* Fallback color shown before the slide images load / if they fail. */
 	background: linear-gradient(135deg, #150e1f 0%, #3d2a5c 60%, #52396f 130%);
 	color: #ffffff;
@@ -529,7 +546,9 @@ body.eminence-has-page-hero .eminence-site-main {
 	font-size: clamp(1rem, 0.92rem + 0.4vw, 1.15rem);
 	color: rgba(255, 255, 255, 0.92);
 	max-width: 52ch;
-	margin: 0 0 2rem;
+	/* Trimmed from 2rem (2026-08-11) as part of pulling the CTA buttons clear of the
+	   stats bar's overlap — see .eminence-hero's padding comment. */
+	margin: 0 0 1.25rem;
 }
 
 .eminence-hero-actions {
@@ -572,10 +591,11 @@ body.eminence-has-page-hero .eminence-site-main {
 /* ---------- Stats bar (Home page) ---------- */
 
 /*
- * Floating stat cards that overlap the hero's bottom edge — a common, effective "premium"
- * pattern that also gives the page a visual anchor between the hero and body content.
- * Numbers are placeholder (BRD Section 9 content is still pending) — swap for confirmed
- * figures before launch.
+ * Styled as an equipment rating plate — the engraved metal plate riveted to a transformer
+ * giving its rated figures — rather than four generic floating cards (2026-08-05 design
+ * pass). One continuous dark plate instead of four separate white cards; hairline rules
+ * divide the figures the way a real nameplate's row/column rules do. Numbers are still
+ * placeholder (BRD Section 9 content is pending) — swap for confirmed figures before launch.
  */
 .eminence-stats {
 	position: relative;
@@ -586,29 +606,40 @@ body.eminence-has-page-hero .eminence-site-main {
 }
 
 .eminence-stats-grid {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 1rem;
-}
-
-.eminence-stat-card {
 	position: relative;
 	overflow: hidden;
-	background: #ffffff;
-	border-radius: var(--eminence-radius-md);
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	border-radius: var(--eminence-radius-sm);
 	box-shadow: var(--eminence-shadow-lg);
-	padding: 1.5rem 1.25rem;
-	text-align: center;
+	/* Four corner rivets + brushed-metal plate base, layered as backgrounds so no extra
+	   markup is needed for the rivet dots. */
+	background:
+		radial-gradient(circle 2.5px at 14px 14px, rgba(255, 255, 255, 0.55), transparent 65%),
+		radial-gradient(circle 2.5px at calc(100% - 14px) 14px, rgba(255, 255, 255, 0.55), transparent 65%),
+		radial-gradient(circle 2.5px at 14px calc(100% - 14px), rgba(255, 255, 255, 0.55), transparent 65%),
+		radial-gradient(circle 2.5px at calc(100% - 14px) calc(100% - 14px), rgba(255, 255, 255, 0.55), transparent 65%),
+		linear-gradient(155deg, #34313a 0%, #1c1a20 100%);
 }
 
-.eminence-stat-card::before {
+.eminence-stats-grid::before {
 	content: "";
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
-	height: 4px;
+	height: 3px;
 	background: var(--eminence-accent-gradient);
+}
+
+.eminence-stat-card {
+	position: relative;
+	padding: 1.75rem 1.25rem 1.5rem;
+	text-align: center;
+}
+
+.eminence-stat-card:not(:first-child) {
+	border-left: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .eminence-stat-number {
@@ -616,38 +647,51 @@ body.eminence-has-page-hero .eminence-site-main {
 	font-family: var(--eminence-font-heading);
 	font-weight: 700;
 	font-size: 1.9rem;
-	color: var(--eminence-color-primary);
-	margin-bottom: 0.15rem;
+	letter-spacing: 0.01em;
+	font-variant-numeric: tabular-nums;
+	background: var(--eminence-accent-gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	margin-bottom: 0.3rem;
 }
 
 .eminence-stat-label {
 	display: block;
-	font-size: 0.85rem;
-	color: var(--eminence-color-body);
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.68);
+}
+
+@media (max-width: 639px) {
+	.eminence-stat-card:nth-child(n + 3) {
+		border-top: 1px solid rgba(255, 255, 255, 0.14);
+	}
 }
 
 /* ---------- Footer ---------- */
 
 /*
- * Jagged/mountain divider (2026-08-01, inspired by sapphirerecruitment.ae) between the
- * page content and the footer — replaces the earlier plain 3px accent line, which would
- * otherwise sit redundantly right against this. A pure CSS clip-path zigzag, no image
- * asset, same "no framework" cost discipline as the rest of the theme.
+ * Coil-winding divider (2026-08-05, replaces an earlier jagged mountain-range divider that
+ * was a pure aesthetic import from sapphirerecruitment.ae with no tie to this business) —
+ * a tiled row of loops in the accent gold, the schematic symbol for a wire winding/coil.
+ * Grounded in what's actually specific to this client: recruitment for the Transformer and
+ * wire & cable manufacturing industry. An inline SVG data URI, no extra image asset, same
+ * "no framework" cost discipline as the rest of the theme.
  */
 .eminence-footer-divider {
 	/* Was on .eminence-site-footer before this divider existed — moved here so the
-	   "stick to the bottom on short pages" space lands above the zigzag, keeping the
-	   divider and footer glued together instead of a gap opening up between them on a
-	   short page like the Employee Login placeholder. */
+	   "stick to the bottom on short pages" space lands above it, keeping the divider and
+	   footer glued together instead of a gap opening up between them on a short page like
+	   the Employee Login placeholder. */
 	margin-top: auto;
-	height: 44px;
-	background: var(--eminence-color-surface);
-	clip-path: polygon(
-		0% 0%, 100% 0%, 100% 100%,
-		95% 35%, 90% 100%, 85% 35%, 80% 100%, 75% 35%, 70% 100%, 65% 35%,
-		60% 100%, 55% 35%, 50% 100%, 45% 35%, 40% 100%, 35% 35%, 30% 100%,
-		25% 35%, 20% 100%, 15% 35%, 10% 100%, 5% 35%, 0% 100%
-	);
+	height: 34px;
+	background-color: var(--eminence-color-surface);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='34' viewBox='0 0 40 34'%3E%3Cpath d='M0 17 Q10 2 20 17 T40 17' fill='none' stroke='%23c9a227' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+	background-repeat: repeat-x;
+	background-position: center;
 }
 
 .eminence-site-footer {
@@ -905,18 +949,13 @@ body.eminence-has-page-hero .eminence-site-main {
 	margin-bottom: 0.5rem;
 }
 
-.eminence-community-tagline {
-	font-style: italic;
-	color: var(--eminence-color-body);
-	margin-top: 0;
-	margin-bottom: 1.25rem;
-}
-
 @media (min-width: 900px) {
 	.eminence-community-grid {
 		/* The "half vertical page" split — each column takes half the width, full height
-		   of whichever side has more content, side by side rather than stacked. */
-		grid-template-columns: 1fr 1fr;
+		   of whichever side has more content, side by side rather than stacked. Weighted
+		   slightly toward the leaders column (2026-08-04: "make industry leaders bigger")
+		   rather than a strict 1fr 1fr. */
+		grid-template-columns: 0.9fr 1.1fr;
 		gap: 3rem;
 	}
 }
@@ -1040,6 +1079,23 @@ body.eminence-has-page-hero .eminence-site-main {
 	overflow: hidden;
 	box-shadow: var(--eminence-shadow-sm);
 	transition: box-shadow var(--eminence-transition);
+}
+
+/*
+ * "What People Say" (2026-08-04): one testimonial fully in view at a time instead of the
+ * default fixed-width slide that let the next card peek in on wide columns — each click of
+ * prev/next now advances exactly one testimonial.
+ */
+.eminence-slider--single .eminence-slider-slide {
+	flex-basis: 100%;
+}
+
+/*
+ * Industry Leaders gallery (2026-08-04: "make industry leaders we met bigger") — larger
+ * photos than the default slide size, paired with the wider grid column above.
+ */
+.eminence-slider--large .eminence-slider-slide {
+	flex-basis: min(460px, 90vw);
 }
 
 .eminence-slider-slide:hover {

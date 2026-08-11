@@ -57,7 +57,7 @@ $eminence_home_stats = array(
 	array( 'number' => '10+', 'label' => __( 'Years of Recruitment Experience', 'eminence-consultant' ) ),
 	array( 'number' => '500+', 'label' => __( 'Candidates Placed', 'eminence-consultant' ) ),
 	array( 'number' => '50+', 'label' => __( 'Client Companies Served', 'eminence-consultant' ) ),
-	array( 'number' => '1', 'label' => __( 'Industry Focus: Transformer', 'eminence-consultant' ) ),
+	array( 'number' => '2', 'label' => __( 'Industry Focus: Transformer & Wire & Cables', 'eminence-consultant' ) ),
 );
 ?>
 <div class="eminence-stats">
