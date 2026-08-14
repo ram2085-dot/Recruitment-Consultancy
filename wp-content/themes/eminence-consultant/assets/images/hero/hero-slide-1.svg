@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Abstract illustration of a wound copper coil, evoking transformer winding">
+	<title>Coil winding</title>
+	<defs>
+		<linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="0%" stop-color="#150e1f" />
+			<stop offset="55%" stop-color="#3d2a5c" />
+			<stop offset="100%" stop-color="#52396f" />
+		</linearGradient>
+		<linearGradient id="coilGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+			<stop offset="0%" stop-color="#781828" />
+			<stop offset="45%" stop-color="#e03018" />
+			<stop offset="100%" stop-color="#f8b000" />
+		</linearGradient>
+		<radialGradient id="glow1" cx="70%" cy="45%" r="55%">
+			<stop offset="0%" stop-color="#f8b000" stop-opacity="0.22" />
+			<stop offset="100%" stop-color="#f8b000" stop-opacity="0" />
+		</radialGradient>
+	</defs>
+
+	<rect width="1600" height="900" fill="url(#bgGrad1)" />
+	<rect width="1600" height="900" fill="url(#glow1)" />
+
+	<!-- Bobbin core, cropped top/bottom for an incidental "detail shot" framing -->
+	<g stroke="#f2e9d8" stroke-opacity="0.18" stroke-width="3" fill="none">
+		<line x1="990" y1="-80" x2="990" y2="980" />
+		<line x1="1270" y1="-80" x2="1270" y2="980" />
+	</g>
+
+	<!-- Wound loops -->
+	<g fill="none" stroke-linecap="round">
+		<ellipse cx="1130" cy="-40" rx="185" ry="50" transform="rotate(-6 1130 -40)" stroke="url(#coilGrad1)" stroke-width="9" opacity="0.55" />
+		<ellipse cx="1130" cy="70" rx="185" ry="50" transform="rotate(-6 1130 70)" stroke="url(#coilGrad1)" stroke-width="9" opacity="0.7" />
+		<ellipse cx="1130" cy="180" rx="185" ry="50" transform="rotate(-6 1130 180)" stroke="url(#coilGrad1)" stroke-width="10" opacity="0.85" />
+		<ellipse cx="1130" cy="290" rx="185" ry="50" transform="rotate(-6 1130 290)" stroke="url(#coilGrad1)" stroke-width="10" opacity="1" />
+		<ellipse cx="1130" cy="400" rx="185" ry="50" transform="rotate(-6 1130 400)" stroke="url(#coilGrad1)" stroke-width="10" opacity="0.85" />
+		<ellipse cx="1130" cy="510" rx="185" ry="50" transform="rotate(-6 1130 510)" stroke="url(#coilGrad1)" stroke-width="9" opacity="0.7" />
+		<ellipse cx="1130" cy="620" rx="185" ry="50" transform="rotate(-6 1130 620)" stroke="url(#coilGrad1)" stroke-width="9" opacity="0.55" />
+		<ellipse cx="1130" cy="730" rx="185" ry="50" transform="rotate(-6 1130 730)" stroke="url(#coilGrad1)" stroke-width="8" opacity="0.4" />
+		<ellipse cx="1130" cy="840" rx="185" ry="50" transform="rotate(-6 1130 840)" stroke="url(#coilGrad1)" stroke-width="8" opacity="0.28" />
+	</g>
+
+	<!-- Faint secondary coil, upper-left, smaller scale for depth -->
+	<g fill="none" stroke="#f2e9d8" stroke-opacity="0.08" stroke-width="5" stroke-linecap="round">
+		<ellipse cx="260" cy="150" rx="110" ry="30" transform="rotate(8 260 150)" />
+		<ellipse cx="260" cy="230" rx="110" ry="30" transform="rotate(8 260 230)" />
+		<ellipse cx="260" cy="310" rx="110" ry="30" transform="rotate(8 260 310)" />
+	</g>
+
+	<!-- Rivet-like accent dots, echoing the site's rating-plate motif -->
+	<g fill="#f8b000" opacity="0.5">
+		<circle cx="1350" cy="120" r="4" />
+		<circle cx="1400" cy="460" r="4" />
+		<circle cx="1320" cy="760" r="4" />
+	</g>
+</svg>

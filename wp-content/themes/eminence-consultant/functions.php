@@ -229,7 +229,7 @@ add_action(
 			$wp_customize->add_setting(
 				$setting_id,
 				array(
-					'default'           => get_template_directory_uri() . "/assets/images/hero/hero-slide-{$eminence_slide_num}.jpg",
+					'default'           => get_template_directory_uri() . "/assets/images/hero/hero-slide-{$eminence_slide_num}.svg",
 					'sanitize_callback' => 'esc_url_raw',
 				)
 			);
@@ -267,7 +267,7 @@ function eminence_get_hero_slides() {
 		// front-end page load only ever sees get_theme_mod()'s own $default argument. Same
 		// duplication as eminence_hero_headline/_subtitle in front-page.php, for the same
 		// reason.
-		$default = get_template_directory_uri() . "/assets/images/hero/hero-slide-{$eminence_slide_num}.jpg";
+		$default = get_template_directory_uri() . "/assets/images/hero/hero-slide-{$eminence_slide_num}.svg";
 		$url     = get_theme_mod( "eminence_hero_slide_{$eminence_slide_num}", $default );
 		if ( ! empty( $url ) ) {
 			$slides[] = $url;

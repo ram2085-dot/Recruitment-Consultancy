@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Abstract illustration of an engraved equipment rating plate">
+	<title>Rating plate</title>
+	<defs>
+		<linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="0%" stop-color="#150e1f" />
+			<stop offset="55%" stop-color="#3d2a5c" />
+			<stop offset="100%" stop-color="#52396f" />
+		</linearGradient>
+		<linearGradient id="plateGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="0%" stop-color="#3a3742" />
+			<stop offset="100%" stop-color="#201e26" />
+		</linearGradient>
+		<linearGradient id="accentGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+			<stop offset="0%" stop-color="#781828" />
+			<stop offset="45%" stop-color="#e03018" />
+			<stop offset="100%" stop-color="#f8b000" />
+		</linearGradient>
+		<radialGradient id="glow2" cx="72%" cy="40%" r="60%">
+			<stop offset="0%" stop-color="#f8b000" stop-opacity="0.16" />
+			<stop offset="100%" stop-color="#f8b000" stop-opacity="0" />
+		</radialGradient>
+	</defs>
+
+	<rect width="1600" height="900" fill="url(#bgGrad2)" />
+	<rect width="1600" height="900" fill="url(#glow2)" />
+
+	<!-- Large plate, gently rotated and cropped off the right/bottom edge for an incidental,
+	     photographic framing rather than a centered logo-like composition -->
+	<g transform="rotate(-4 1180 420)">
+		<rect x="760" y="110" width="760" height="620" rx="18" fill="url(#plateGrad2)" stroke="#0f0d13" stroke-width="2" />
+		<rect x="760" y="110" width="760" height="10" rx="5" fill="url(#accentGrad2)" />
+
+		<!-- Corner rivets -->
+		<circle cx="800" cy="150" r="7" fill="#f2ede4" opacity="0.45" />
+		<circle cx="1480" cy="150" r="7" fill="#f2ede4" opacity="0.45" />
+		<circle cx="800" cy="690" r="7" fill="#f2ede4" opacity="0.45" />
+		<circle cx="1480" cy="690" r="7" fill="#f2ede4" opacity="0.45" />
+
+		<!-- Engraved spec rows -->
+		<g stroke="#f2ede4" stroke-opacity="0.28" stroke-width="3">
+			<line x1="820" y1="230" x2="1420" y2="230" />
+			<line x1="820" y1="320" x2="1420" y2="320" />
+			<line x1="820" y1="410" x2="1420" y2="410" />
+			<line x1="820" y1="500" x2="1420" y2="500" />
+			<line x1="820" y1="590" x2="1420" y2="590" />
+		</g>
+		<g fill="#f2ede4" opacity="0.4">
+			<rect x="820" y="196" width="220" height="16" rx="3" />
+			<rect x="820" y="286" width="160" height="16" rx="3" />
+			<rect x="820" y="376" width="260" height="16" rx="3" />
+			<rect x="820" y="466" width="190" height="16" rx="3" />
+			<rect x="820" y="556" width="230" height="16" rx="3" />
+		</g>
+	</g>
+
+	<!-- Faint duplicate plate edge, upper-left, for depth -->
+	<g transform="rotate(3 220 210)" opacity="0.1">
+		<rect x="60" y="90" width="320" height="240" rx="14" fill="none" stroke="#f2ede4" stroke-width="3" />
+	</g>
+</svg>

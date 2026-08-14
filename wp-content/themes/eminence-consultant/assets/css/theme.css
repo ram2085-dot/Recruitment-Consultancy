@@ -503,9 +503,13 @@ body.eminence-has-page-hero .eminence-site-main {
  * bar or CTA buttons, just the page title over the photo.
  */
 .eminence-hero--page {
-	min-height: 260px;
+	/* Trimmed to ~60% of the original 260px/3rem (2026-08-15), then another 10% right
+	   after — it was pushing the page content well down the viewport on every interior
+	   page for a hero that's just a title over a photo, no stats bar/CTAs to justify the
+	   height the way Home's hero has. */
+	min-height: 140px;
 	/* No header overlap to reserve room for, same reasoning as .eminence-hero above. */
-	padding: 3rem 1.5rem 3rem;
+	padding: 1.6rem 1.5rem;
 }
 
 .eminence-hero-inner--page .eminence-page-title {

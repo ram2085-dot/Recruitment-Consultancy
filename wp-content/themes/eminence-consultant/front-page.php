@@ -9,14 +9,19 @@
  * (Appearance -> Customize -> Homepage Hero -> "Hero Background — Slide 1-4") so the
  * business owner can swap them from wp-admin without a deployment — see
  * eminence_get_hero_slides() in functions.php. Defaults to the theme's bundled
- * placeholders (assets/images/hero/hero-slide-1..4.jpg, 4 generic recruitment stock
- * images supplied 2026-07-31) until the owner uploads their own. The navy tint layered on
- * top is what makes this "images on a blue background" rather than a full photo takeover —
- * keeps the white hero text legible over what would otherwise be a busy photo. Crossfade
- * is driven by assets/js/hero-slider.js, enqueued on any page using a hero (see
- * eminence_page_hero_templates() in functions.php). The slide markup itself lives in
- * template-parts/hero-slider.php so every other hero-bearing page/template (see
- * page-with-hero.php) can reuse the exact same images/markup instead of duplicating it.
+ * placeholders (assets/images/hero/hero-slide-1..4.svg) until the owner uploads their own.
+ * These were originally 4 stock photos the owner supplied (2026-07-31), replaced
+ * (2026-08-15, "make this website more authentic") with custom-illustrated SVGs in the
+ * site's own visual language — coil winding, rating plate, cable cross-section, circuit
+ * blueprint — rather than generic recruitment stock photography or AI-generated "photos"
+ * of people/offices, either of which would have undercut authenticity rather than helped
+ * it. The navy/plum tint layered on top is what makes this "images on a blue background"
+ * rather than a full photo takeover — keeps the white hero text legible over what would
+ * otherwise be a busy background. Crossfade is driven by assets/js/hero-slider.js,
+ * enqueued on any page using a hero (see eminence_page_hero_templates() in functions.php).
+ * The slide markup itself lives in template-parts/hero-slider.php so every other
+ * hero-bearing page/template (see page-with-hero.php) can reuse the exact same
+ * images/markup instead of duplicating it.
  */
 
 get_header();
