@@ -162,7 +162,9 @@ h4 {
 	width: 100%;
 	max-width: 1120px;
 	margin: 0 auto;
-	padding: 2rem 1.25rem 4rem;
+	/* Bottom padding widened 4rem -> 6rem (2026-08-14 "luxury" pass) — more generous
+	   breathing room below content before the footer divider. */
+	padding: 2rem 1.25rem 6rem;
 }
 
 /* Any hero (Home, or an interior page using eminence_page_hero_templates()) sits flush
@@ -434,6 +436,13 @@ body.eminence-has-page-hero .eminence-site-main {
 	object-fit: cover;
 	opacity: 0;
 	transition: opacity 1.2s ease-in-out;
+	/* Heavy blur + desaturation (2026-08-14, "luxury top class" pass) — the source photos
+	   have a literal word-cloud graphic baked in (RECRUITMENT, JOB, TEAMWORK...) that reads
+	   as generic stock-template imagery once it's sharp enough to read. Blurred this hard,
+	   it dissolves into soft atmospheric texture/light instead of competing with the
+	   headline — scale(1.08) hides the blur's edge softening at the viewport edge. */
+	filter: blur(6px) saturate(0.85) brightness(0.9);
+	transform: scale(1.08);
 }
 
 .eminence-hero-slide.is-active {
@@ -517,7 +526,7 @@ body.eminence-has-page-hero .eminence-site-main {
    content that follows needs its own top margin instead of relying on .eminence-site-main
    (zeroed out for hero-bearing pages so the hero itself sits flush at the top). */
 .eminence-after-hero {
-	margin-top: 3rem;
+	margin-top: 3.5rem;
 }
 
 .eminence-hero-eyebrow {
@@ -537,9 +546,14 @@ body.eminence-has-page-hero .eminence-site-main {
 
 .eminence-hero-title {
 	color: #ffffff;
-	font-size: clamp(2rem, 1.55rem + 2.2vw, 3.25rem);
+	/* Sized up and tightened (2026-08-14 "luxury" pass) — a larger, more confident scale
+	   with slightly negative letter-spacing and tighter line-height reads more editorial;
+	   the previous size/spacing was correct but safe. */
+	font-size: clamp(2.25rem, 1.6rem + 3vw, 3.75rem);
+	line-height: 1.08;
+	letter-spacing: -0.01em;
 	text-shadow: 0 2px 24px rgba(0, 0, 0, 0.25);
-	margin-bottom: 0.75rem;
+	margin-bottom: 0.85rem;
 }
 
 .eminence-hero-subtitle {
@@ -866,6 +880,30 @@ body.eminence-has-page-hero .eminence-site-main {
 	transform: translateY(-2px);
 }
 
+/*
+ * Scroll reveal (2026-08-14, "luxury top class" pass) — assets/js/scroll-reveal.js adds
+ * .eminence-reveal (and later .is-revealed) via JS, so if the script fails to load these
+ * elements just render normally rather than staying invisible.
+ */
+.eminence-reveal {
+	opacity: 0;
+	transform: translateY(18px);
+	transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.eminence-reveal.is-revealed {
+	opacity: 1;
+	transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.eminence-reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}
+
 /* ---------- Content pages ---------- */
 
 .eminence-page-header {
@@ -903,16 +941,101 @@ body.eminence-has-page-hero .eminence-site-main {
 }
 
 .eminence-page-content h2 {
-	margin-top: 2.25rem;
+	/* Widened 2.25rem -> 3.25rem (2026-08-14 "luxury" pass) — more separation between
+	   content sections. */
+	margin-top: 3.25rem;
 }
 
-.eminence-page-content ul,
+.eminence-page-content h2:first-child {
+	margin-top: 0;
+}
+
+/*
+ * Content-page lists (2026-08-14 design pass) — plain WordPress editor output was
+ * rendering as default browser bullets/numbers with zero visual structure, the most
+ * generic-looking part of the site. Two treatments:
+ *
+ * Ordered lists become numbered process steps with an accent-gradient badge and a
+ * connecting guide line — earned here (not decorative) because content like "For
+ * Employers"' How It Works genuinely is a sequence where the order matters.
+ *
+ * Unordered lists get a small accent-gradient dot in place of the default bullet — a
+ * restrained, consistent marker rather than a checkmark-list cliché, reusing the same
+ * gradient motif as the stat numbers and section underlines.
+ */
+.eminence-page-content ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.eminence-page-content ul li {
+	position: relative;
+	padding-left: 1.5rem;
+}
+
+.eminence-page-content ul li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.6em;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--eminence-accent-gradient);
+}
+
 .eminence-page-content ol {
-	padding-left: 1.4rem;
+	list-style: none;
+	padding-left: 0;
+	counter-reset: eminence-step;
+	position: relative;
+}
+
+.eminence-page-content ol::before {
+	content: "";
+	position: absolute;
+	left: 1.125rem;
+	top: 1.125rem;
+	bottom: 1.125rem;
+	width: 2px;
+	background: var(--eminence-color-border);
+}
+
+.eminence-page-content ol li {
+	counter-increment: eminence-step;
+	position: relative;
+	padding: 0.35rem 0 0.35rem 3.25rem;
+	min-height: 2.25rem;
+	display: flex;
+	align-items: center;
+}
+
+.eminence-page-content ol li::before {
+	content: counter(eminence-step);
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 50%;
+	background: var(--eminence-accent-gradient);
+	color: #ffffff;
+	font-family: var(--eminence-font-heading);
+	font-weight: 700;
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: var(--eminence-shadow-sm);
+	z-index: 1;
 }
 
 .eminence-page-content li {
 	margin-bottom: 0.4rem;
+}
+
+.eminence-page-content ol li {
+	margin-bottom: 0.75rem;
 }
 
 .eminence-page-content a {

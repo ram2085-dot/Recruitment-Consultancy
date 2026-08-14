@@ -153,6 +153,18 @@ add_action(
 				true
 			);
 		}
+
+		// Fade-up entrance for content sections/cards (2026-08-14 "luxury" pass) — sitewide
+		// since the selectors it targets (.eminence-page-content children, stat cards,
+		// community-page halves) simply won't match on pages without them; no per-template
+		// gating needed the way the slider scripts above require.
+		wp_enqueue_script(
+			'eminence-scroll-reveal',
+			get_template_directory_uri() . '/assets/js/scroll-reveal.js',
+			array(),
+			$theme_version,
+			true
+		);
 	}
 );
 
