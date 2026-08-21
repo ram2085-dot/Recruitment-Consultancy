@@ -1,0 +1,58 @@
+/*
+ * Eminence Portal styles — login form + authenticated landing area on the Employee Login
+ * page (specs/011-employee-login). Only enqueued on that one page (eminence-portal.php).
+ *
+ * Reuses the theme's own CSS custom properties (--eminence-*) since this markup is always
+ * rendered inside eminence-consultant's page chrome — a soft coupling, acceptable for a
+ * single-theme project, that keeps the login form visually consistent with the rest of
+ * the site for free instead of duplicating a parallel design system in the plugin. Falls
+ * back to plain, readable defaults if those properties are ever unavailable.
+ */
+
+.eminence-portal-login,
+.eminence-portal-landing {
+	max-width: 420px;
+	background: #ffffff;
+	border: 1px solid var(--eminence-color-border, #e5e1ea);
+	border-radius: var(--eminence-radius-md, 16px);
+	box-shadow: var(--eminence-shadow-sm, 0 1px 3px rgba(16, 24, 40, 0.08));
+	padding: 1.75rem 1.5rem;
+}
+
+.eminence-portal-notice {
+	margin: 0 0 1.25rem;
+	padding: 0.75rem 1rem;
+	border-radius: var(--eminence-radius-sm, 10px);
+	background: var(--eminence-color-surface, #f7f5f9);
+	color: var(--eminence-color-body, #4a4152);
+	font-size: 0.95rem;
+}
+
+.eminence-portal-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	margin: 0 0 1rem;
+}
+
+.eminence-portal-field label {
+	font-weight: 600;
+	color: var(--eminence-color-ink, #211a2b);
+}
+
+.eminence-portal-field input {
+	padding: 0.6rem 0.75rem;
+	border: 1px solid var(--eminence-color-border, #e5e1ea);
+	border-radius: var(--eminence-radius-sm, 10px);
+	font: inherit;
+}
+
+.eminence-portal-welcome {
+	font-size: 1.05rem;
+	color: var(--eminence-color-ink, #211a2b);
+	margin-bottom: 1.25rem;
+}
+
+.eminence-portal-logout-form {
+	margin-top: 1rem;
+}
