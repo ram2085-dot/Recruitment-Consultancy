@@ -18,16 +18,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'EMINENCE_ACCOUNTS_PAGE_SLUG', 'eminence-employee-accounts' );
 define( 'EMINENCE_ACCOUNTS_NONCE_ACTION', 'eminence_manage_employees' );
 
+// 2026-08-21 (012-candidate-database, research.md #7): moved from its own top-level menu
+// into a submenu of the shared Employee Portal parent (dashboard.php) — still gated on
+// EMINENCE_CAP_MANAGE_EMPLOYEES specifically, so a Recruiter (who lacks that capability,
+// only EMINENCE_CAP_MANAGE_CANDIDATES) sees the parent menu and its other items but not
+// this one; WordPress hides an individual submenu item the current user can't access.
 add_action( 'admin_menu', 'eminence_portal_register_admin_menu' );
 function eminence_portal_register_admin_menu() {
-	add_menu_page(
+	add_submenu_page(
+		EMINENCE_DASHBOARD_PAGE_SLUG,
 		__( 'Employee Accounts', 'eminence-portal' ),
 		__( 'Employee Accounts', 'eminence-portal' ),
 		EMINENCE_CAP_MANAGE_EMPLOYEES,
 		EMINENCE_ACCOUNTS_PAGE_SLUG,
-		'eminence_portal_render_accounts_page',
-		'dashicons-groups',
-		58
+		'eminence_portal_render_accounts_page'
 	);
 }
 

@@ -13,6 +13,15 @@ define( 'EMINENCE_ROLE_RECRUITER', 'eminence_recruiter' );
 define( 'EMINENCE_ROLE_ADMIN', 'eminence_portal_admin' );
 define( 'EMINENCE_CAP_MANAGE_EMPLOYEES', 'eminence_manage_employees' );
 
+// 012-candidate-database (research.md #6): both roles can add/search/review candidates;
+// only Admin can edit/delete a record someone else added.
+define( 'EMINENCE_CAP_MANAGE_CANDIDATES', 'eminence_manage_candidates' );
+define( 'EMINENCE_CAP_EDIT_ANY_CANDIDATE', 'eminence_edit_any_candidate' );
+
+// Shared parent menu slug (research.md #7) — Dashboard, Employee Accounts, Candidates, Add
+// Candidate, and Pending Review are all registered as submenus of this one top-level page.
+define( 'EMINENCE_DASHBOARD_PAGE_SLUG', 'eminence-dashboard' );
+
 /**
  * The two roles this plugin manages, in a fixed order — not an open-ended/growing list
  * (data-model.md "Role").

@@ -56,3 +56,65 @@
 .eminence-portal-logout-form {
 	margin-top: 1rem;
 }
+
+/*
+ * 012-candidate-database additions below — the public CV form (front-end, reuses the
+ * .eminence-portal-field/.eminence-portal-notice styles above) and the wp-admin screens
+ * (Dashboard cards, duplicate-comparison callout). wp-admin already provides its own base
+ * styling (widefat, form-table, notice, button) — these only add what it doesn't.
+ */
+
+.eminence-public-cv-form {
+	max-width: 480px;
+	background: #ffffff;
+	border: 1px solid var(--eminence-color-border, #e5e1ea);
+	border-radius: var(--eminence-radius-md, 16px);
+	box-shadow: var(--eminence-shadow-sm, 0 1px 3px rgba(16, 24, 40, 0.08));
+	padding: 1.75rem 1.5rem;
+	margin: 1.5rem 0;
+}
+
+.eminence-dashboard-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 1rem;
+	margin: 1.5rem 0;
+	max-width: 720px;
+}
+
+.eminence-dashboard-card {
+	background: #ffffff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	padding: 1.25rem;
+	text-align: center;
+}
+
+.eminence-dashboard-card-number {
+	display: block;
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 1;
+	margin-bottom: 0.4rem;
+}
+
+.eminence-dashboard-card-label {
+	display: block;
+	font-size: 0.85rem;
+	color: #646970;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.eminence-duplicate-compare table {
+	margin-top: 0.5rem;
+}
+
+.eminence-candidate-profile {
+	background: #ffffff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	padding: 1.25rem 1.5rem;
+	margin: 1rem 0;
+	max-width: 640px;
+}

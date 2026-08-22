@@ -20,7 +20,7 @@ An employee (Admin or Recruiter) opens the Employee Login page — today a "comi
 
 **Acceptance Scenarios**:
 
-1. **Given** an active employee account and its correct credentials, **When** the employee submits them on the login page, **Then** they are signed in and land on an authenticated landing area showing their name and role (Admin or Recruiter).
+1. **Given** an active employee account and its correct credentials, **When** the employee submits them on the login page, **Then** they are signed in. A Recruiter lands on an authenticated landing area showing their name and role; an Admin lands directly on the account-management screen (their "dashboard" — 2026-08-21 refinement), since that is the one thing an Admin's login exists to reach.
 2. **Given** incorrect credentials, **When** they are submitted, **Then** login is refused with a single generic error message that does not reveal whether the account exists or which field was wrong.
 3. **Given** no active session, **When** anyone requests a URL that lives behind the login (including the authenticated landing area), **Then** they are redirected to the login page instead of seeing any internal content.
 4. **Given** an account that has been deactivated by an Admin, **When** that person attempts to log in with their previously-correct credentials, **Then** login is refused.

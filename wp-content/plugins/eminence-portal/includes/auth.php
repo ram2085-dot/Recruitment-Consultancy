@@ -84,7 +84,17 @@ function eminence_portal_handle_login_submission() {
 	update_user_meta( $user->ID, 'eminence_last_activity', time() );
 	eminence_portal_log_signin( $identifier, 'success' );
 
-	wp_safe_redirect( eminence_portal_login_page_url() );
+	// An Admin's "dashboard" is now the real Employee Portal Dashboard (012-candidate-
+	// database, research.md #7) — originally this pointed at the Employee Accounts screen
+	// (2026-08-21, "admin shall land on his dashboard") as the closest stand-in before a
+	// real dashboard existed; corrected now that one does. A Recruiter still lands on the
+	// front-end confirmation area, same as before — spec 012's User Story 4 only asked for
+	// the Admin's post-login target to change, not a Recruiter's.
+	if ( user_can( $user, EMINENCE_CAP_MANAGE_EMPLOYEES ) ) {
+		wp_safe_redirect( admin_url( 'admin.php?page=' . EMINENCE_DASHBOARD_PAGE_SLUG ) );
+	} else {
+		wp_safe_redirect( eminence_portal_login_page_url() );
+	}
 	exit;
 }
 
